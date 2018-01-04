@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Daftar Bawahan</title>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">List of Subordinates</h4>
+                            <p class="category">Daftar Bawahan</p>
+                        </div>
+                        <div class="content table-responsive table-full-width">
+                            <table class="table table-bordered">
+                                <thead >
+                                <th>No.</th>
+                                <th>Nama</th>
+                                <th>Devisi</th>
+                                <th>Jenis Kelamin</th>
+                                <th th:colspan="2">Aksi</th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Gifar Haidar</td>
+                                    <td>sadds</td>
+                                    <td>Laki-Laki</td>
+                                    <td><a th:href="@{/daftarbawahan/detail}" target="_blank" class="btn btn-primary">Lihat Detail</a></td>
+                                    <td><a th:href="@{/daftarbawahan/detail}" target="_blank" class="btn btn-warning">Lihat Komentar</a></td>
+                                </tr>
+
+                                <tr>
+                                    <td>2</td>
+                                    <td>Intan Nabila</td>
+                                    <td>sddas</td>
+                                    <td>Perempuan</td>
+                                    <td><button type="submit" class="btn btn-primary">Lihat detail</button></td>
+                                    <td><button type="submit" class="btn btn-warning">Lihat Komentar</button></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
