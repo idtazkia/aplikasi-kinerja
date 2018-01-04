@@ -8,4 +8,7 @@ public class BawahanController {
 
     @GetMapping("/daftarbawahan/list")
     public void list(){}
+
+    @GetMapping("/daftarbawahan/detail")
+    public void detail(){}
 }
