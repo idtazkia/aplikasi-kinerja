@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class BawahanController {
+public class DaftarBawahanController {
 
     @GetMapping("/daftarbawahan/list")
     public void list(){}
@@ -12,6 +12,4 @@ public class BawahanController {
     @GetMapping("/daftarbawahan/detail")
     public void detail(){}
 
-    @GetMapping("/daftarbawahan/komen")
-    public void komen(){}
 }
