@@ -11,6 +11,7 @@
 
 <body>
 <section layout:fragment="content">
+
     <br/>
     <div class="content">
         <div class="container-fluid">
@@ -51,7 +52,49 @@
                                                     mahasiswa S2 STEI Tazkia</td>
                                             </tbody>
                                         </table>
+
+                                        <!--Section Bukti-->
+
+                                        <button type="button" class="btn btn-info hover-shadow cursor" onclick="openModal();currentSlide(1)">Lihat Bukti Kinerja</button>
+
+
+                                        <div id="myModal" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close cursor" onclick="closeModal()">&times;</span>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/4.pdf" style="width:100%;height:665px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/4.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/java.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/4.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                                                <div class="caption-container">
+                                                    <p id="caption"></p>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+
+                                        <!-- END Section Bukti-->
+
                                     </div>
+
+
                                     <br/><br/>
                                     <div class="col-sm-5">
                                         <table class="table">
@@ -184,7 +227,9 @@
                                                         mahasiswa S2 STEI Tazkia</td>
                                                 </tbody>
                                             </table>
+
                                         </div>
+
                                         <br/><br/>
                                         <div class="col-sm-5">
                                             <table class="table">
@@ -308,4 +353,6 @@
 </section>
 
 </body>
+
+
 </html>

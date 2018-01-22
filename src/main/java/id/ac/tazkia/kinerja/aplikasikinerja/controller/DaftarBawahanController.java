@@ -12,4 +12,7 @@ public class DaftarBawahanController {
     @GetMapping("/daftarbawahan/detail")
     public void detail(){}
 
+    @GetMapping("/daftarbawahan/komen")
+    public void komen(){}
+
 }
