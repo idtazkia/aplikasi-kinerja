@@ -50,26 +50,20 @@
                 </a>
             </div>
 
-            <ul class="nav">
+            <ul class="nav" >
                 <li class="active">
                     <a th:href="@{/index}">
                         <i class="ti-panel"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li>
-                    <a th:href="@{/kinerjastaf/form}">
-                        <i class="ti-star"></i>
-                        <p>Input Nilai KPI</p>
-                    </a>
-                </li>
-                <li>
+                <li >
                     <a th:href="@{/daftarbawahan/list}">
                         <i class="ti-user"></i>
                         <p>Daftar Bawahan</p>
                     </a>
                 </li>
-                <li>
+                <li >
                     <a th:href="@{/lihatpenilaian/list}">
                         <i class="ti-book"></i>
                         <p>Lihat Penilaian</p>
@@ -95,18 +89,26 @@
 
                 <div class="collapse navbar-collapse dropdown">
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
+                        <li class="dropdown">
                             <a class="btn btn-secondary dropdown-toggle"
                                type="button" id="dropdownMenu1" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 <i class="ti-settings"></i>
                                 <p>Settings</p>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <a class="dropdown-item" href="#!"><i class="ti-panel">Action</i></a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#!">Another action</a>
-                            </div>
+                            <ul class="dropdown-menu">
+                                <li><center>
+                                    <button class="btn btn-info btn-lg">
+                                        <span class="ti-user"></span>
+                                        User</button>
+                                </center></li>
+                                <form name="f" th:action="@{/logout}" method="post">
+                                    <li><center><button class="btn btn-danger btn-lg">
+                                        <span class="ti-layout-tab-v"></span>
+                                        Logout</button>
+                                    </center></li>
+                                </form>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -216,6 +218,10 @@
         dots[slideIndex-1].className += " active";
         captionText.innerHTML = dots[slideIndex-1].alt;
     }
+
+
+
+
 </script>
 </body>
 
