@@ -13,6 +13,6 @@ public class DaftarBawahanController {
     public void detail(){}
 
     @GetMapping("/daftarbawahan/komen")
-    public void komen(){}
+    public void komens(){}
 
 }
