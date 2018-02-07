@@ -21,42 +21,38 @@
                             <h4 class="title">List of Subordinates</h4>
                             <p class="category">Daftar Bawahan</p>
                         </div>
+
+
                         <div class="content table-responsive table-full-width">
                             <table class="table table-bordered">
                                 <thead >
                                 <th>No.</th>
                                 <th>Nama</th>
-                                <th>Devisi</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Tanggal Lahir</th>
-                                <th>Alamat</th>
+                                <th>Nik</th>
+                                <th>Pangkat</th>
+                                <th>Nama Jabatan</th>
+                                <th>Departemen</th>
+                                <th>Atasan</th>
+                                <th>Area</th>
                                 <th>Aksi</th>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Gifar Haidar</td>
-                                    <td>sadds</td>
-                                    <td>Laki-Laki</td>
-                                    <td>31-Juli-1999</td>
-                                    <td>Tugu</td>
+                                <tr th:each="sd : ${daftarBawahan}">
+                                    <td th:text="${sd.id}"></td>
+                                    <td th:text="${sd.name}"></td>
+                                    <td th:text="${sd.number}"></td>
+                                    <td th:text="${sd.jobLevel}"></td>
+                                    <td th:text="${sd.jobTitle}"></td>
+                                    <td th:text="${sd.department}"></td>
+                                    <td th:text="${sd.idSuperior}"></td>
+                                    <td th:text="${sd.area}"></td>
                                     <td><a th:href="@{/daftarbawahan/komen}" class="btn btn-warning">Lihat Komentar</a></td>
                                 </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <td>Intan Nabila</td>
-                                    <td>sddas</td>
-                                    <td>Perempuan</td>
-                                    <td>04-Juni-1999</td>
-                                    <td>Cisarua</td>
-                                    <td><button type="submit" class="btn btn-warning">Lihat Komentar</button></td>
-                                </tr>
-
                                 </tbody>
                             </table>
-
                         </div>
+
+
                     </div>
                 </div>
             </div>
