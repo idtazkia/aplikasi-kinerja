@@ -65,14 +65,17 @@
                 <div class="tabs-content">
                     <!-- TABS CONTENT LOGIN -->
                     <div id="login-tab-content" class="active">
-                        <span style="color: white"><p><small>Enter either the <strong>username</strong> on the account and <strong>Reset</strong></p>
-                        <p>We'll email instructions on how to reset your password.</p></small></span>
+                        <span style="color: white"><p><small>Enter your <strong>username</strong> on the account and <strong>Reset</strong></small></p>
+                        </small></span>
                         <form id="sign_in" method="POST" th:action="@{/reset}">
                             <input type="text" class="input" id="user" name="user" placeholder="Enter Username Here">
                             <button type="submit" class="btn btn-success">Reset</button>
                         </form>
                     </div>
 
+                    <div class="help-action">
+                        <p><i class="fa fa-arrow-left" aria-hidden="true"></i><a class="" href="/login">Back to login form</a></p>
+                    </div>
 
                 </div>
             </div>
