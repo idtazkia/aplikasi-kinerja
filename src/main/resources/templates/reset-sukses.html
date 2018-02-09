@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html class='' xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='UTF-8' />
+    <meta name="robots" content="noindex" />
+
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+</head>
+<body>
+<!-- LOGIN MODULE -->
+<div class="login">
+    <div class="wrap">
+        <!-- TOGGLE -->
+        <div id="toggle-wrap">
+            <div id="toggle-terms">
+                <div id="cross">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECOVERY -->
+
+
+        <!-- SLIDER -->
+        <div class="content">
+            <!-- LOGO -->
+            <div class="logo">
+                <a href=""><img src="https://res.cloudinary.com/dpcloudinary/image/upload/v1506186248/logo.png" alt=""></a>
+            </div>
+            <!-- SLIDESHOW -->
+            <div id="slideshow">
+                <div class="one">
+                    <h2><span>KPI</span></h2>
+                    <p>STEI TAZKIA</p>
+                </div>
+                <div class="two">
+                    <h2><span>KPI App</span></h2>
+                    <p>Performance assessment</p>
+                </div>
+                <div class="three">
+                    <h2><span>STEI TAZKIA</span></h2>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+        <!-- LOGIN FORM -->
+        <div class="user">
+            <!-- ACTIONS
+            <div class="actions">
+                <a class="help" href="#signup-tab-content">Sign Up</a><a class="faq" href="#login-tab-content">Login</a>
+            </div>
+            -->
+            <div class="form-wrap">
+                <!-- TABS -->
+                <div class="">
+                    <h3 class="login-tab"><span style="color: white">Thank you<span></span></span></h3>
+
+                </div>
+                <!-- TABS CONTENT -->
+                <div class="tabs-content">
+                    <!-- TABS CONTENT LOGIN -->
+                    <div id="login-tab-content" class="active">
+                        <span style="color: white"><p>Check your <strong>email</strong> </p>
+                        <p>We'll email the instructions on how to reset your password.</p></span>
+                    </div>
+
+                    <div class="help-action">
+                        <p><i class="fa fa-arrow-left" aria-hidden="true"></i><a class="" href="/login">Back to login form</a></p>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script >/* LOGIN - MAIN.JS - dp 2017 */
+
+// SLIDESHOW
+$(function() {
+    $('#slideshow > div:gt(0)').hide();
+    setInterval(function() {
+        $('#slideshow > div:first')
+            .fadeOut(1000)
+            .next()
+            .fadeIn(1000)
+            .end()
+            .appendTo('#slideshow');
+    }, 3850);
+});
+
+
+</script>
+</body></html>
