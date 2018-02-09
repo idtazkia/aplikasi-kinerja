@@ -29,7 +29,8 @@ public class ResetController {
     @RequestMapping(value = "/reset-sukses", method = RequestMethod.GET)
     public void sukses(){}
 
-
+    @RequestMapping(value = "/confirm", method = RequestMethod.GET)
+    public void confirm(){}
 
     @PostMapping(value = "/reset")
     public String reset(@Valid @RequestParam String user){
