@@ -47,6 +47,9 @@ public class KonfigurasiSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/daftarbawahan/list").hasAuthority("VIEW_SUPERIOR")
+                .antMatchers("/daftarbawahan/komen").hasAuthority("VIEW_SUPERIOR")
+                .antMatchers("/daftarbawahan/detail").hasAuthority("VIEW_SUPERIOR")
                 .anyRequest().authenticated()
                 .and().logout().permitAll()
                 .and().formLogin().defaultSuccessUrl("/index")
@@ -66,6 +69,7 @@ public class KonfigurasiSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/")
                 .antMatchers("/reset-sukses")
                 .antMatchers("/reset")
+                .antMatchers("/404")
                 .antMatchers("/confirm")
                 .antMatchers("/fonts/*")
                 .antMatchers("/css/*");
