@@ -30,7 +30,7 @@
         <div class="content">
             <!-- LOGO -->
             <div class="logo">
-                <a href=""><img src="https://res.cloudinary.com/dpcloudinary/image/upload/v1506186248/logo.png" alt=""></a>
+                <!--<a href=""><img src="https://res.cloudinary.com/dpcloudinary/image/upload/v1506186248/logo.png" alt=""></a>-->
             </div>
             <!-- SLIDESHOW -->
             <div id="slideshow">
@@ -67,9 +67,10 @@
                     <div id="login-tab-content" class="active">
                         <span style="color: white"><p><small>Enter your <strong>New Password</strong></small></p>
                             </small></span>
-                        <form id="sign_in" method="POST">
-                            <input type="password" class="input" id="password" name="user" required placeholder="Type New Password">
+                        <form th:action="@{/confirm}" th:object="${confirm}"  id="sign_in" method="POST">
+                            <input type="password" class="input" id="password"  name="password" required placeholder="Type New Password">
                             <input type="password" class="input" id="confirm_password" required name="user" placeholder="Re-type New Password">
+                            <input type="hidden" id="code" name="code" th:value="${code}">
                             <button type="submit" class="btn btn-success">Submit</button>
                         </form>
                     </div>
