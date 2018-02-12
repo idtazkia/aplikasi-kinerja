@@ -1,6 +1,8 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="utf-8" />
 
@@ -57,13 +59,13 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li >
+                <li sec:authorize="hasAuthority('VIEW_SUPERIOR')" >
                     <a th:href="@{/daftarbawahan/list}">
                         <i class="ti-user"></i>
                         <p>Daftar Bawahan</p>
                     </a>
                 </li>
-                <li >
+                <li>
                     <a th:href="@{/lihatpenilaian/list}">
                         <i class="ti-book"></i>
                         <p>Lihat Penilaian</p>
