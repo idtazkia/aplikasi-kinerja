@@ -6,6 +6,7 @@
     <meta name="robots" content="noindex" />
 
     <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
 </head>
 <body>
@@ -21,6 +22,7 @@
                         </div>
                     </div>
                 </div>
+
 
                 <!-- SLIDER -->
                 <div class="content">
@@ -60,12 +62,16 @@
                     	<div class="tabs-content">
                             <!-- TABS CONTENT LOGIN -->
                     		<div id="login-tab-content" class="active">
-                    			<form class="login-form" action="" method="post">
-                    				<input type="text" class="input" id="username" name="username" autocomplete="off" placeholder="Email or Username">
-                    				<input type="password" class="input" id="password" name="password" autocomplete="off" placeholder="Password">
-                    				<input type="submit" class="button" value="Login">
+                                <form id="sign_in" method="POST"  th:action="@{/login}">
+                                    <input type="text" class="input" name="username" placeholder="Username" required autofocus>
+                                    <input type="password" class="input" name="password" placeholder="Password" required>
+                                    <button type="submit" class="btn btn-info">Login</button>
                     			</form>
                     		</div>
+
+                            <div class="help-action">
+                                <p><i class="fa fa-arrow-left" aria-hidden="true"></i><a class="" href="/reset">Forgot your password?</a></p>
+                            </div>
 
                     	</div>
                 	</div>
