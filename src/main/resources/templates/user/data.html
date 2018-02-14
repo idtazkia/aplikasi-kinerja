@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Daftar Bawahan</title>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-md-7">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Your Profile</h4>
+                        </div>
+                        <div class="content">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Company</label>
+                                            <input type="text" class="form-control border-input" disabled placeholder="Company" value="STEI TAZKIA">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control border-input" readonly placeholder="Username" value="michael23">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>NIK</label>
+                                            <input type="email" class="form-control border-input" readonly placeholder="Email">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Job Level</label>
+                                            <input type="text" class="form-control border-input" readonly placeholder="First Name" value="Chet">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Job Title</label>
+                                            <input type="text" class="form-control border-input" readonly placeholder="Last Name" value="Faker">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Department</label>
+                                            <input type="text" class="form-control border-input" readonly placeholder="Home Address" value="Melbourne, Australia">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Area</label>
+                                            <input type="text" class="form-control border-input" placeholder="City" value="Melbourne">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Username</label>
+                                            <input type="text" class="form-control border-input" placeholder="Country" value="Australia">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
