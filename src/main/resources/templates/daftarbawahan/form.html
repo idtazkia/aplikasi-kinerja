@@ -37,21 +37,27 @@
                             <div role="tabpanel" class="tab-pane fade in active" id="individual">
                               <div class="container">
                                   <!---->
-                                <div class="row form-group has-danger">
+                                  <span th:each="k,row : ${individual}">
+                                <div class="row form-group has-danger" >
                                     <div class="col-sm-5">
-                                        <table class="table table-striped">
+                                        <table class="table table-striped" >
                                             <thead>
+
                                             <tr>
                                                 <th>Key Result Area</th>
                                             </tr>
                                             </thead>
+
                                             <tbody>
                                             <tr>
-                                                <td><h3>1</h3></td>
-                                                <td>Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                <td th:text="${(row.index + 1)}"><h3>1</h3></td>
+                                                <td th:text="${k.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                     mahasiswa S2 STEI Tazkia</td>
+                                            </tr>
                                             </tbody>
+
                                         </table>
+
 
                                         <!--Section Bukti-->
 
@@ -100,11 +106,11 @@
                                         <table class="table">
                                             <tbody>
                                             <tr>
-                                                <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10,00</td>
-                                                <td>Target : 5</td>
+                                                <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.kpi.weight}" ></span></td>
+                                                <td>Target : <span th:text="${k.kpi.target}"></span></td>
                                             </tr>
                                             <tr>
-                                                <td>Base line : 4</td>
+                                                <td>Base line : <span th:text="${k.kpi.baseLine}" ></span></td>
                                                 <td>Hasil &nbsp;&nbsp;: </td>
                                             </tr>
                                             <tr>
@@ -122,58 +128,10 @@
                                   <button type="button" class="btn btn-success"><b>2</b> . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
                                   <button type="button" class="btn btn-success"><b>1</b> . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
 
-
-
-                                  <!---->
-
-                                  <!---->
-                                  <div class="row form-group has-danger">
-                                      <div class="col-sm-5">
-                                          <table class="table table-striped">
-                                              <thead>
-                                              <tr>
-                                                  <th>Key Result Area</th>
-                                              </tr>
-                                              </thead>
-                                              <tbody>
-                                              <tr>
-                                                  <td><h3>2</h3></td>
-                                                  <td>Pengajuam NIRM ke Depag</td>
-                                              </tbody>
-                                          </table>
-                                      </div>
-                                      <br/><br/>
-                                      <div class="col-sm-5">
-                                          <table class="table">
-                                              <tbody>
-                                              <tr>
-                                                  <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10,00</td>
-                                                  <td>Target : 5</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Base line : 4</td>
-                                                  <td>Hasil &nbsp;&nbsp;: </td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
-                                                  <td></td>
-                                              </tr>
-                                              </tbody>
-                                          </table>
-                                      </div>
-                                  </div>
-
-                                  <button type="button" class="btn btn-success"><b>5</b> .  NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
-                                  <button type="button" class="btn btn-success"><b>4</b> . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
-                                  <button type="button" class="btn btn-success"><b>3</b> . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
-                                  <button type="button" class="btn btn-success"><b>2</b> . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
-                                  <button type="button" class="btn btn-success"><b>1</b> . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
+</span>
 
                                   <!---->
 
-                              </div>
-
-                            </div>
 
 
                             <!--TAZKI VALUE PANEL-->
