@@ -20,7 +20,7 @@
                         <div class="header">
                             <h4 class="title">Your Profile</h4>
                         </div>
-                        <div class="content">
+                        <div class="content" th:each="sd : ${data}">
                             <form>
                                 <div class="row">
                                     <div class="col-md-5">
@@ -29,16 +29,16 @@
                                             <input type="text" class="form-control border-input" disabled placeholder="Company" value="STEI TAZKIA">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input type="text" class="form-control border-input" readonly placeholder="Username" value="michael23">
+                                            <input type="text" th:value="${sd.employeeName}" class="form-control border-input" readonly placeholder="Username">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label>NIK</label>
-                                            <input type="email" class="form-control border-input" readonly placeholder="Email">
+                                            <input type="email" th:value="${sd.employeeNumber}" class="form-control border-input" readonly placeholder="Email">
                                         </div>
                                     </div>
                                 </div>
@@ -47,13 +47,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Job Level</label>
-                                            <input type="text" class="form-control border-input" readonly placeholder="First Name" value="Chet">
+                                            <input type="text" th:value="${sd.jobLevel}" class="form-control border-input" readonly placeholder="First Name" value="Chet">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Job Title</label>
-                                            <input type="text" class="form-control border-input" readonly placeholder="Last Name" value="Faker">
+                                            <input type="text" th:value="${sd.jobTitle}" class="form-control border-input" readonly placeholder="Last Name" value="Faker">
                                         </div>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Department</label>
-                                            <input type="text" class="form-control border-input" readonly placeholder="Home Address" value="Melbourne, Australia">
+                                            <input type="text" th:value="${sd.department}" class="form-control border-input" readonly placeholder="Home Address" value="Melbourne, Australia">
                                         </div>
                                     </div>
                                 </div>
@@ -71,13 +71,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Area</label>
-                                            <input type="text" class="form-control border-input" placeholder="City" value="Melbourne">
+                                            <input type="text" readonly th:value="${sd.area}" class="form-control border-input" placeholder="City" value="Melbourne">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" class="form-control border-input" placeholder="Country" value="Australia">
+                                            <input type="text" readonly th:value="${sd.user.username}" class="form-control border-input" placeholder="Country" value="Australia">
                                         </div>
                                     </div>
                                 </div>
