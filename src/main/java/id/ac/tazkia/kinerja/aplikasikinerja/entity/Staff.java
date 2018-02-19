@@ -1,7 +1,6 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -39,10 +38,10 @@ public class Staff {
     @NotNull
     private String department;
 
-    @Column(nullable = false)
     @NotNull
-    @NotEmpty
-    private String idSuperior;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "id_superior")
+    private Staff superior;
 
 
     @Column(nullable = false)

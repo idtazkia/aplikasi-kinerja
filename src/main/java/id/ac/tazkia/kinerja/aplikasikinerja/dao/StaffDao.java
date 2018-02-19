@@ -9,9 +9,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
 
 
-public interface StaffDao extends PagingAndSortingRepository<Staff, String> {
+public interface StaffDao  extends PagingAndSortingRepository<Staff, String> {
     Staff findByUser (User u);
 
-    List<Staff> findAllByIdSuperiorOrderByEmployeeName (String superior);
+    List<Staff> findAllBySuperiorIdOrderByEmployeeName(String staff);
+
 
 }
