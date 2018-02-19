@@ -37,14 +37,14 @@
                                 <th>Aksi</th>
                                 </thead>
                                 <tbody>
-                                <tr th:each="sd : ${daftarBawahan}">
-                                    <td th:text="${sd.id}"></td>
-                                    <td th:text="${sd.name}"></td>
-                                    <td th:text="${sd.number}"></td>
+                                <tr th:each="sd,row : ${detailStaff}">
+                                    <td th:text="${(row.index + 1)}"></td>
+                                    <td th:text="${sd.employeeName}"></td>
+                                    <td th:text="${sd.employeeNumber}"></td>
                                     <td th:text="${sd.jobLevel}"></td>
                                     <td th:text="${sd.jobTitle}"></td>
                                     <td th:text="${sd.department}"></td>
-                                    <td th:text="${sd.idSuperior}"></td>
+                                    <td th:text="${sd.superior.employeeName}"></td>
                                     <td th:text="${sd.area}"></td>
                                     <td><a th:href="@{/daftarbawahan/komen}" class="btn btn-warning">Lihat Komentar</a></td>
                                 </tr>

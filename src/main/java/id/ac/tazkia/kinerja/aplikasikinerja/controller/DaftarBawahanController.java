@@ -57,7 +57,15 @@ public class DaftarBawahanController {
 
 
     @GetMapping("/daftarbawahan/detail")
-    public void detail(){}
+    public void detail(@RequestParam(required = false)String id, Model m, Pageable page) {
+        if (StringUtils.hasText(id)) {
+            m.addAttribute("nama", id);
+            m.addAttribute("detailStaff", staffDao.findById(id, page));
+        } else {
+            m.addAttribute("detailStaff", staffDao.findAll(page));
+        }
+
+    }
 
     @GetMapping("/daftarbawahan/komen")
     public void komens(){}
