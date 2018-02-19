@@ -50,7 +50,7 @@ public class DaftarBawahanController {
             return;
         }
 
-        model.addAttribute("list", staffDao.findAllByIdSuperiorOrderByEmployeeName(p.getId()));
+        model.addAttribute("list", staffDao.findAllBySuperiorIdOrderByEmployeeName(p.getId()));
 
 
     }
