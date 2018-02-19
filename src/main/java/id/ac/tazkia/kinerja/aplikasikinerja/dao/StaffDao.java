@@ -14,5 +14,6 @@ public interface StaffDao  extends PagingAndSortingRepository<Staff, String> {
 
     List<Staff> findAllBySuperiorIdOrderByEmployeeName(String staff);
 
+    Page<Staff> findById (String id, Pageable page);
 
 }
