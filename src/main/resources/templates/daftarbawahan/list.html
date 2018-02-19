@@ -38,7 +38,7 @@
                                     <td th:text="${sd.area}">Puket I</td>
                                     <td><a th:href="@{/daftarbawahan/detail(id=${sd.id})}" target="_blank" class="btn btn-primary">Lihat Detail</a></td>
                                     <td><a th:href="@{/daftarbawahan/form}"  class="btn btn-warning">Input Nilai</a></td>
-                                    <td><a th:href="@{/daftarbawahan/komen}" target="_blank" class="btn btn-info">Lihat Komentar</a></td>
+                                    <td><a th:href="@{/daftarbawahan/komen(id=${sd.id})}" target="_blank" class="btn btn-info">Lihat Komentar</a></td>
                                 </tr>
 
                                 </tbody>
