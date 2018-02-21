@@ -46,7 +46,7 @@ public class ResetController {
         ResetPassword resetPassword = resetDao.findByCode(code);
 
         if (resetPassword == null){
-            return "redirect:404";
+            return "redirect:/404";
         }
 
         if (code != null && !code.isEmpty()){
