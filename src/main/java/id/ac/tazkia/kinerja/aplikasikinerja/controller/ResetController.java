@@ -45,19 +45,20 @@ public class ResetController {
     public String confirm(@RequestParam String code,Model m) {
         ResetPassword resetPassword = resetDao.findByCode(code);
 
+        if (resetPassword == null){
+            return "redirect:404";
+        }
+
         if (code != null && !code.isEmpty()){
             UserPassword userPassword= userPasswordDao.findOne(resetPassword.getUser().getId());
             if (userPassword != null){
                 m.addAttribute("confirm", userPassword);
                 System.out.println("as" + userPassword);
             }
+
         }
 
         if(resetPassword.getExpired().isBefore(LocalDate.now())){
-            return "redirect:404";
-        }
-
-        if (resetPassword == null){
             return "redirect:404";
         }
 
