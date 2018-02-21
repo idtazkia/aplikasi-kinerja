@@ -1,10 +1,7 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.UserDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Staff;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.User;
-import org.hibernate.SQLQuery;
+import id.ac.tazkia.kinerja.aplikasikinerja.dao.*;
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -24,6 +21,14 @@ public class DaftarBawahanController {
 
     @Autowired
     private StaffDao staffDao;
+
+    @Autowired private KpiDao kpiDao;
+
+    @Autowired
+    private StaffKpiDao staffKpiDao;
+
+    @Autowired
+    private IndicatorsDao indicatorsDao;
 
     @RequestMapping("/daftarbawahan/list")
     public void  daftarStaff(Model model,String user, Authentication currentUser)throws Exception{
@@ -55,6 +60,13 @@ public class DaftarBawahanController {
 
     }
 
+    @RequestMapping("/daftarbawahan/form")
+    public void  daftarKpi(String id, Model m, Pageable page){
+
+        m.addAttribute("individual", staffKpiDao.findAllByStaff_IdAndKpi_Category_Id(id,"001"));
+        m.addAttribute("tazkiaValue", staffKpiDao.findAllByStaff_IdAndKpi_Category_Id(id,"002"));
+
+    }
 
     @GetMapping("/daftarbawahan/detail")
     public void detail(@RequestParam(required = false)String id, Model m, Pageable page) {
