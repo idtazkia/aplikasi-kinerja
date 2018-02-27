@@ -50,7 +50,7 @@ public class LihatPenilaianController {
             return;
         }
 
-        model.addAttribute("individual",scoreDao.findAllByStaffKpi_Staff_IdAndStaffKpi_Kpi_Category_id(u.getId(),"001"));
-        model.addAttribute("tazkiaValue",scoreDao.findAllByStaffKpi_Staff_IdAndStaffKpi_Kpi_Category_id(u.getId(),"002"));
+        model.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryId(u.getId(),"001"));
+        model.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryId(u.getId(),"002"));
     }
 }
