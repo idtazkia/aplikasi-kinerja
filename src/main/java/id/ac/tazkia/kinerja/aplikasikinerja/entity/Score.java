@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity @Data
+
 public class Score {
     @Id
     @GeneratedValue(generator = "uuid" )
@@ -33,4 +34,6 @@ public class Score {
 
     @OneToMany(mappedBy = "score", fetch = FetchType.EAGER)
     private List<Evidence> evidence;
+
 }
+
