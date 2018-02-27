@@ -52,6 +52,5 @@ public class LihatPenilaianController {
 
         model.addAttribute("individual",scoreDao.findAllByStaffKpi_Staff_IdAndStaffKpi_Kpi_Category_id(u.getId(),"001"));
         model.addAttribute("tazkiaValue",scoreDao.findAllByStaffKpi_Staff_IdAndStaffKpi_Kpi_Category_id(u.getId(),"002"));
-
     }
 }
