@@ -50,12 +50,13 @@ CREATE TABLE indicators (
 CREATE TABLE score (
   id VARCHAR(36)not null,
   id_staff_kpi VARCHAR(36) NOT NULL ,
-  score VARCHAR(36) NOT NULL ,
-  remark VARCHAR(255) NOT NULL ,
-  total VARCHAR (255) NOT NULL,
+  score VARCHAR(36)  ,
+  remark VARCHAR(255)  ,
+  total VARCHAR (255) ,
   employee_comments VARCHAR (255),
   evidence VARCHAR (255),
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_staff_kpi) REFERENCES staff_kpi(id)
 );
 
 
