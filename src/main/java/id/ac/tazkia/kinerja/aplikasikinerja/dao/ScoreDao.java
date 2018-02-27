@@ -10,5 +10,4 @@ import java.util.List;
 
 public interface ScoreDao extends PagingAndSortingRepository<Score, String> {
     List<Score> findAllByStaffKpi_Staff_IdAndStaffKpi_Kpi_Category_id(String id, String a);
-
 }
