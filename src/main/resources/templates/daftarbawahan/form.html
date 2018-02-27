@@ -34,6 +34,8 @@
                         </ul>
 
                         <!-- Tab panes -->
+                        <form th:action="@{/daftarbawahan/form}" method="post">
+
                         <span class="tab-content">
 
                             <div role="tabpanel" class="tab-pane fade in active" id="individual">
@@ -71,27 +73,24 @@
                                                 <span class="close cursor" onclick="closeModal()">&times;</span>
 
                                                 <div class="mySlides">
-                                                    <embed src="../img/4.pdf" style="width:100%;height:665px;" type='application/pdf'>
+                                                    <embed src="" style="width:100%;height:665px;" type='application/pdf'>
                                                 </div>
 
                                                 <div class="mySlides">
-                                                    <embed src="../img/4.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                    <embed src="" style="width:100%;height:800px;" type='application/pdf'>
                                                 </div>
 
                                                 <div class="mySlides">
-                                                    <embed src="../img/java_tutorial.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                    <embed src="" style="width:100%;height:800px;" type='application/pdf'>
                                                 </div>
 
                                                 <div class="mySlides">
-                                                    <embed src="../img/java.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                    <embed src="" style="width:100%;height:800px;" type='application/pdf'>
                                                 </div>
 
                                                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                                                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-                                                <div class="caption-container">
-                                                    <p id="caption"></p>
-                                                </div>
 
 
 
@@ -131,16 +130,21 @@
                                         <div class="btn-group-vertical" role="group" aria-label="Basic example">
                                              <span th:text="${ind.score}" class="input-group-text">Left addon</span><button th:text="${ind.content}" type="button" class="btn btn-secondary"></button>
                                         </div>
-                                     </td>-->
+                                     </td>
+                                     </tr>-->
 
-                                     <!--<td>
-                                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                         <label class="btn btn-secondary">
-                                           <b> <input type="radio" th:text="${ind.score}" name="options" id="option1" autocomplete="off"> </b> <span th:text="${ind.content}"></span>
-                                         </label>
+                                     <br>
+                                        <table class="table table-hover">
+                                     <tr >
+                                       <div  class="input-group-text">
+                                             <td ><b> <input type="radio"   th:value="${ind.id}"  th:text="${ind.score}"  th:name="${k.kpi.id+'-score'}" autocomplete="off"> </b> </td>
                                        </div>
-                                     </td>-->
-                                    <div class="input-group">
+                                             <td th:text="${ind.content}"></td>
+                                     </tr>
+                                        </table>
+                                 </tr>
+
+                                    <!--<div class="input-group">
                                         <br>
                                         <table class="table table-hover">
                                             <tr>
@@ -149,7 +153,8 @@
                                             </tr>
                                         </table>
                                     </div>
-                                 </tr>
+                                 </tr>-->
+
 
                                  </span>
                               </div>
@@ -186,44 +191,43 @@
                                                 </tbody>
                                             </table>
 
-                                        </div>
-
-                                        <!--Section Bukti-->
-
-                                        <button type="button" class="btn btn-info hover-shadow cursor" onclick="openModal();currentSlide(1)">Lihat Bukti Kinerja</button>
 
 
-                                        <div id="myModal" class="modal">
+                                                    <button type="button" class="btn btn-info hover-shadow cursor" onclick="openModal();currentSlide(1)">Lihat Bukti Kinerja</button>
+
+                                        <div id="myModaltazkia" class="modal">
                                             <div class="modal-content">
                                                 <span class="close cursor" onclick="closeModal()">&times;</span>
 
                                                 <div class="mySlides">
-                                                    <embed src="../img/4.pdf" style="width:100%;height:665px;" type='application/pdf'>
+                                                    <embed src="" style="width:100%;height:665px;" type='application/pdf'>
                                                 </div>
 
                                                 <div class="mySlides">
-                                                    <embed src="../img/4.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                    <embed src="" style="width:100%;height:800px;" type='application/pdf'>
                                                 </div>
 
                                                 <div class="mySlides">
-                                                    <embed src="../img/java_tutorial.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                    <embed src="" style="width:100%;height:800px;" type='application/pdf'>
                                                 </div>
 
                                                 <div class="mySlides">
-                                                    <embed src="../img/java.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                    <embed src="" style="width:100%;height:800px;" type='application/pdf'>
                                                 </div>
 
                                                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                                                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-                                                <div class="caption-container">
-                                                    <p id="caption"></p>
-                                                </div>
 
 
 
                                             </div>
                                         </div>
+                                        </div>
+
+                                        <!--Section Bukti-->
+
+
 
 
                                         <!-- END Section Bukti-->
@@ -260,26 +264,29 @@
                                             <input th:text="${ind.score}" type="radio" aria-label="Radio button for following text input"><span th:text="${ind.content}"></span>
                                         </div>
                                       </div>-->
-                                    <!--<td>
-                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-secondary">
-                                          <b> <input type="radio" th:text="${ind.score}" name="options" id="option1" autocomplete="off"> </b> <span th:text="${ind.content}"></span>
-                                        </label>
-                                      </div>
-                                    </td>-->
 
-                                    <div class="input-group">
-                                            <div class="input-group-prepend">
-                                              <button th:text="${ind.score}" class="btn btn-success" type="button"></button>
-                                            </div>
+                                    <br>
+                                        <table class="table table-hover">
+                                     <tr >
+                                       <div  class="input-group-text">
+                                             <td ><b> <input type="radio"   th:value="${ind.id}"  th:text="${ind.score}" name="options" autocomplete="off"> </b> </td>
+                                       </div>
+                                             <td th:text="${ind.content}"></td>
+                                     </tr>
+                                        </table>
+                                 </tr>
+
+                                   <!-- <div class="input-group">
+
                                         <br>
                                         <table class="table table-hover">
                                             <tr>
+                                              <td><button th:text="${ind.score}" class="btn btn-success" type="button"></button></td>
                                               <td th:text="${ind.content}"></td>
                                             </tr>
                                         </table>
                                     </div>
-                                 </tr>
+                                 </tr>-->
                                     <!---->
 
                                     </span>
@@ -291,6 +298,17 @@
 
 
                         </span>
+
+                            <center>
+                            <div class="row form-group has-danger">
+                               <div class="card-footer">
+                                   <button class="btn btn-info" type="submit">NILAI</button>
+                               </div>
+                            </div>
+                            </center>
+
+
+                        </form>
                     </div>
                 </div>
             </div>
