@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Penilaian Kinerja Staf</title>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="title">Penilaian Kinerja</h2>
+                            <p class="category"></p>
+                        </div>
+                        <hr/>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#individual" role="tab" data-toggle="tab">Invidiual Achievment Score</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tazkiavalue" role="tab" data-toggle="tab">Tazkia Value Score</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="individual">
+                                <div class="container">
+                                    <!---->
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="content table-responsive table-full-width">
+                                                            <table class="table table-bordered">
+                                                                <thead >
+                                                                <th>No.</th>
+                                                                <th>Key Result</th>
+                                                                <th>Score</th>
+                                                                <th>Remark</th>
+                                                                <th>Total</th>
+                                                                <th>Employee Comment(s)</th>
+                                                                <th><center>Aksi</center></th>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>Menjadikan nilai-nilai Islam sebagai landasan dalam mengambil keputusan</td>
+                                                                    <td>4</td>
+                                                                    <td>Senantiasa bersandar pada syariah Islam pada saat mengambil keputusan.</td>
+                                                                    <td>5</td>
+                                                                    <td>Saya sudah melengkapi tugas dari Bapak.</td>
+                                                                    <td><a href="" class="btn btn-warning">Submit Your Comment</a></td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <!---->
+
+                                </div>
+
+
+
+                            </div>
+
+
+                            <!--TAZKI VALUE PANEL-->
+                            <div role="tabpanel" class="tab-pane fade" id="tazkiavalue">
+
+                                <div class="container">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="content table-responsive table-full-width">
+                                                        <table class="table table-bordered">
+                                                            <thead >
+                                                            <th>No.</th>
+                                                            <th>Key Result</th>
+                                                            <th>Score</th>
+                                                            <th>Remark</th>
+                                                            <th>Total</th>
+                                                            <th>Employee Comment(s)</th>
+                                                            <th><center>Aksi</center></th>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>Menjadikan nilai-nilai Islam sebagai landasan dalam mengambil keputusan</td>
+                                                                <td>4</td>
+                                                                <td>Senantiasa bersandar pada syariah Islam pada saat mengambil keputusan.</td>
+                                                                <td>5</td>
+                                                                <td>Saya sudah melengkapi tugas dari Bapak.</td>
+                                                                <td><a href="" class="btn btn-warning">Submit Your Comment</a></td>
+                                                            </tr>
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!---->
+
+
+
+                                </div>
+
+                            </div>
+                            <!--ENDTAZKIAVALUE-->
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

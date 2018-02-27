@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Penilaian Kinerja Staf</title>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="title">Penilaian Kinerja</h2>
+                            <p class="category"></p>
+                        </div>
+                        <hr/>
+
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#individual" role="tab" data-toggle="tab">Invidiual Achievment Score</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tazkiavalue" role="tab" data-toggle="tab">Tazkia Value Score</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <span class="tab-content">
+
+                            <div role="tabpanel" class="tab-pane fade in active" id="individual">
+                              <div class="container">
+                                  <!---->
+                                  <span th:each="k,row : ${individual}">
+                                <div class="row form-group has-danger" >
+                                    <div class="col-sm-5">
+                                        <table class="table table-striped" >
+                                            <thead>
+
+                                            <tr>
+                                                <th>Key Result Area</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            <tr>
+                                                <td th:text="${(row.index + 1)}"><h3>1</h3></td>
+                                                <td th:text="${k.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                    mahasiswa S2 STEI Tazkia</td>
+                                            </tr>
+                                            </tbody>
+
+                                        </table>
+
+
+                                        <!--Section Bukti-->
+
+                                        <button type="button" class="btn btn-info hover-shadow cursor" onclick="openModal();currentSlide(1)">Lihat Bukti Kinerja</button>
+
+
+                                        <div id="myModalindividual" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close cursor" onclick="closeModal()">&times;</span>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/4.pdf" style="width:100%;height:665px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/4.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/java_tutorial.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/java.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                                                <div class="caption-container">
+                                                    <p id="caption"></p>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- END Section Bukti-->
+
+                                    </div>
+
+
+                                    <br/><br/>
+                                    <div class="col-sm-5">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.kpi.weight}" ></span></td>
+                                                <td>Target : <span th:text="${k.kpi.target}"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Base line : <span th:text="${k.kpi.baseLine}" ></span></td>
+                                                <td>Hasil &nbsp;&nbsp;: </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+<br>
+
+                                 <tr th:each="ind,row : ${k.kpi.indicatorsList}">
+                                     <!--<td>
+                                        <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                                             <span th:text="${ind.score}" class="input-group-text">Left addon</span><button th:text="${ind.content}" type="button" class="btn btn-secondary"></button>
+                                        </div>
+                                     </td>-->
+
+                                     <!--<td>
+                                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                         <label class="btn btn-secondary">
+                                           <b> <input type="radio" th:text="${ind.score}" name="options" id="option1" autocomplete="off"> </b> <span th:text="${ind.content}"></span>
+                                         </label>
+                                       </div>
+                                     </td>-->
+                                    <div class="input-group">
+                                        <br>
+                                        <table class="table table-hover">
+                                            <tr>
+                                              <td><button th:text="${ind.score}" class="btn btn-success" type="button"></button></td>
+                                              <td th:text="${ind.content}"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                 </tr>
+
+                                 </span>
+                              </div>
+                            </div>
+
+                                  <!---->
+
+
+
+
+
+
+
+
+                            <!--TAZKIA VALUE PANEL-->
+                            <div role="tabpanel" class="tab-pane fade" id="tazkiavalue">
+                                <div class="container">
+                                    <span th:each="k,row : ${tazkiaValue}">
+
+                                    <div class="row form-group has-danger">
+                                        <div class="col-sm-5">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Key Result Area</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td th:text="${(row.index + 1)}"><h3>1</h3></td>
+                                                    <td th:text="${k.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                        mahasiswa S2 STEI Tazkia</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                        <!--Section Bukti-->
+
+                                        <button type="button" class="btn btn-info hover-shadow cursor" onclick="openModal();currentSlide(1)">Lihat Bukti Kinerja</button>
+
+
+                                        <div id="myModal" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close cursor" onclick="closeModal()">&times;</span>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/4.pdf" style="width:100%;height:665px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/4.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/java_tutorial.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/java.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                                                <div class="caption-container">
+                                                    <p id="caption"></p>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- END Section Bukti-->
+
+
+                                        <br/><br/>
+                                        <div class="col-sm-5">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr>
+                                                    <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.kpi.weight}" ></span></td>
+                                                    <td>Target : <span th:text="${k.kpi.target}"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Base line : <span th:text="${k.kpi.baseLine}" ></span></td>
+                                                    <td>Hasil &nbsp;&nbsp;: </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+
+                                <br>
+
+                                    <tr th:each="ind,row : ${k.kpi.indicatorsList}">
+                                      <!--<div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <input th:text="${ind.score}" type="radio" aria-label="Radio button for following text input"><span th:text="${ind.content}"></span>
+                                        </div>
+                                      </div>-->
+                                    <!--<td>
+                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary">
+                                          <b> <input type="radio" th:text="${ind.score}" name="options" id="option1" autocomplete="off"> </b> <span th:text="${ind.content}"></span>
+                                        </label>
+                                      </div>
+                                    </td>-->
+
+                                    <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <button th:text="${ind.score}" class="btn btn-success" type="button"></button>
+                                            </div>
+                                        <br>
+                                        <table class="table table-hover">
+                                            <tr>
+                                              <td th:text="${ind.content}"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                 </tr>
+                                    <!---->
+
+                                    </span>
+                                </div>
+                            </div>
+                            <!--ENDTAZKIAVALUE-->
+
+
+
+
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+</body>
+
+
+</html>
