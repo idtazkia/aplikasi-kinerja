@@ -53,10 +53,19 @@ CREATE TABLE score (
   score VARCHAR(36)  ,
   remark VARCHAR(255)  ,
   total VARCHAR (255) ,
-  employee_comments VARCHAR (255),
+  employee_comment VARCHAR (255),
   evidence VARCHAR (255),
   PRIMARY KEY (id),
   FOREIGN KEY (id_staff_kpi) REFERENCES staff_kpi(id)
+);
+
+CREATE TABLE evidence (
+  id VARCHAR (36)NOT NULL ,
+  id_score VARCHAR (36)NOT NULL ,
+  file_name VARCHAR (225) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_score) REFERENCES score(id)
+
 );
 
 

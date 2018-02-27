@@ -487,17 +487,13 @@ INSERT INTO indicators (id,id_kpi,score,content) VALUES
 ('250','050','1','Tidak memberikan jawaban atas pertanyaan teknis');
 
 
-INSERT INTO score (id,id_staff_kpi,score,remark,total,employee_comments,evidence) VALUES
-('001','082','','','','',''),
-('002','082','','','','',''),
-('003','082','','','','',''),
-('004','082','','','','',''),
-('005','082','','','','',''),
-('006','082','','','','',''),
-('007','082','','','','',''),
-('008','082','','','','',''),
-('009','082','','','','',''),
-('010','082','','','','','');
+INSERT INTO score (id,id_staff_kpi,score,remark,total,employee_comment,evidence) VALUES
+('001','041','5','dfgfdg','3','',''),
+('002','041','5','dfgfdg','3','',''),
+('003','041','5','dfgfdg','3','',''),
+('004','041','5','dfgfdg','3','',''),
+('005','041','5','dfgfdg','3','','');
+
 
 INSERT INTO periode (id,periode_name,description,start_date,end_date,active) VALUES
 ('001','2017-2018','Tahun Ajaran 2017-2018','01-07-2017','30-06-2018','FALSE'),

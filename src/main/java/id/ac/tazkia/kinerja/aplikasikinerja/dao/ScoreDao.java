@@ -1,9 +1,19 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.dao;
 
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.Score;
 
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.Score;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface ScoreDao extends PagingAndSortingRepository<Score,String> {
 
+import java.util.List;
+
+public interface ScoreDao extends PagingAndSortingRepository<Score, String> {
+    Page<Score> findById(String id, Pageable page);
+
+    List<Score> findByStaffKpiStaffIdAndStaffKpiKpiCategoryId(String id, String a);
 }
+
+
