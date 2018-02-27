@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html class='' xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='UTF-8' />
+    <meta name="robots" content="noindex" />
+
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+</head>
+<body>
+<!-- LOGIN MODULE -->
+<div class="login">
+    <div class="wrap">
+        <!-- TOGGLE -->
+        <div id="toggle-wrap">
+            <div id="toggle-terms">
+                <div id="cross">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECOVERY -->
+
+
+        <!-- SLIDER -->
+        <div class="content">
+            <!-- LOGO -->
+            <div class="logo">
+                <!--<a href=""><img src="https://res.cloudinary.com/dpcloudinary/image/upload/v1506186248/logo.png" alt=""></a>-->
+            </div>
+            <!-- SLIDESHOW -->
+            <div id="slideshow">
+                <div class="one">
+                    <h2><span>KPI</span></h2>
+                    <p>STEI TAZKIA</p>
+                </div>
+                <div class="two">
+                    <h2><span>KPI App</span></h2>
+                    <p>Performance assessment</p>
+                </div>
+                <div class="three">
+                    <h2><span>STEI TAZKIA</span></h2>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+        <!-- LOGIN FORM -->
+        <div class="user">
+            <!-- ACTIONS
+            <div class="actions">
+                <a class="help" href="#signup-tab-content">Sign Up</a><a class="faq" href="#login-tab-content">Login</a>
+            </div>
+            -->
+            <div class="form-wrap">
+                <!-- TABS -->
+                <div class="">
+                    <h3 class="login-tab"><span style="color: white">Create New Password<span></span></span></h3>
+
+                </div>
+                <!-- TABS CONTENT -->
+                <div class="tabs-content">
+                    <!-- TABS CONTENT LOGIN -->
+                    <div id="login-tab-content" class="active">
+                        <span style="color: white"><p><small>Enter your <strong>New Password</strong></small></p>
+                            </small></span>
+                        <form th:action="@{/confirm}" th:object="${confirm}"  id="sign_in" method="POST">
+                            <input type="password" class="input" id="password"  name="password" required placeholder="Type New Password">
+                            <input type="password" class="input" id="confirm_password" required name="user" placeholder="Re-type New Password">
+                            <input type="hidden" id="code" name="code" th:value="${code}">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </form>
+                    </div>
+
+                    <div class="help-action">
+                        <p><i class="fa fa-arrow-left" aria-hidden="true"></i><a class="" href="/login">Back to login form</a></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script >/* LOGIN - MAIN.JS - dp 2017 */
+
+// SLIDESHOW
+$(function() {
+    $('#slideshow > div:gt(0)').hide();
+    setInterval(function() {
+        $('#slideshow > div:first')
+            .fadeOut(1000)
+            .next()
+            .fadeIn(1000)
+            .end()
+            .appendTo('#slideshow');
+    }, 3850);
+});
+
+//Confirm password
+var password = document.getElementById("password")
+    , confirm_password = document.getElementById("confirm_password");
+
+function validatePassword(){
+    if(password.value != confirm_password.value) {
+        confirm_password.setCustomValidity("Passwords Don't Match");
+    } else {
+        confirm_password.setCustomValidity('');
+    }
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+
+// CUSTOM JQUERY FUNCTION FOR SWAPPING CLASSES
+(function($) {
+    'use strict';
+    $.fn.swapClass = function(remove, add) {
+        this.removeClass(remove).addClass(add);
+        return this;
+    };
+}(jQuery));
+
+// SHOW/HIDE PANEL ROUTINE (needs better methods)
+// I'll optimize when time permits.
+$(function() {
+    $('.agree,.forgot, #toggle-terms, .log-in, .sign-up').on('click', function(event) {
+        event.preventDefault();
+        var terms = $('.terms'),
+            recovery = $('.recovery'),
+            close = $('#toggle-terms'),
+            arrow = $('.tabs-content .fa');
+        if ($(this).hasClass('agree') || $(this).hasClass('log-in') || ($(this).is('#toggle-terms')) && terms.hasClass('open')) {
+            if (terms.hasClass('open')) {
+                terms.swapClass('open', 'closed');
+                close.swapClass('open', 'closed');
+                arrow.swapClass('active', 'inactive');
+            } else {
+                if ($(this).hasClass('log-in')) {
+                    return;
+                }
+                terms.swapClass('closed', 'open').scrollTop(0);
+                close.swapClass('closed', 'open');
+                arrow.swapClass('inactive', 'active');
+            }
+        }
+        else if ($(this).hasClass('forgot') || $(this).hasClass('sign-up') || $(this).is('#toggle-terms')) {
+            if (recovery.hasClass('open')) {
+                recovery.swapClass('open', 'closed');
+                close.swapClass('open', 'closed');
+                arrow.swapClass('active', 'inactive');
+            } else {
+                if ($(this).hasClass('sign-up')) {
+                    return;
+                }
+                recovery.swapClass('closed', 'open');
+                close.swapClass('closed', 'open');
+                arrow.swapClass('inactive', 'active');
+            }
+        }
+    });
+});
+
+// DISPLAY MSSG
+$(function() {
+    $('.recovery .button').on('click', function(event) {
+        event.preventDefault();
+        $('.recovery .mssg').addClass('animate');
+        setTimeout(function() {
+            $('.recovery').swapClass('open', 'closed');
+            $('#toggle-terms').swapClass('open', 'closed');
+            $('.tabs-content .fa').swapClass('active', 'inactive');
+            $('.recovery .mssg').removeClass('animate');
+        }, 2500);
+    });
+});
+
+// DISABLE SUBMIT FOR DEMO
+$(function() {
+    $('.button').on('click', function(event) {
+        $(this).stop();
+        event.preventDefault();
+        return false;
+    });
+});
+//# sourceURL=pen.js
+</script>
+</body></html>
