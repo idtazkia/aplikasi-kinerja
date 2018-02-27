@@ -23,6 +23,7 @@
                             <p class="category"></p>
                         </div>
                         <hr/>
+
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" href="#individual" role="tab" data-toggle="tab">Invidiual Achievment Score</a>
@@ -33,7 +34,8 @@
                         </ul>
 
                         <!-- Tab panes -->
-                        <div class="tab-content">
+                        <span class="tab-content">
+
                             <div role="tabpanel" class="tab-pane fade in active" id="individual">
                               <div class="container">
                                   <!---->
@@ -58,6 +60,133 @@
 
                                         </table>
 
+
+                                        <!--Section Bukti-->
+
+                                        <button type="button" class="btn btn-info hover-shadow cursor" onclick="openModal();currentSlide(1)">Lihat Bukti Kinerja</button>
+
+
+                                        <div id="myModalindividual" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close cursor" onclick="closeModal()">&times;</span>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/4.pdf" style="width:100%;height:665px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/4.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/java_tutorial.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <div class="mySlides">
+                                                    <embed src="../img/java.pdf" style="width:100%;height:800px;" type='application/pdf'>
+                                                </div>
+
+                                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                                                <div class="caption-container">
+                                                    <p id="caption"></p>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+
+
+                                        <!-- END Section Bukti-->
+
+                                    </div>
+
+
+                                    <br/><br/>
+                                    <div class="col-sm-5">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.kpi.weight}" ></span></td>
+                                                <td>Target : <span th:text="${k.kpi.target}"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Base line : <span th:text="${k.kpi.baseLine}" ></span></td>
+                                                <td>Hasil &nbsp;&nbsp;: </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+<br>
+
+                                 <tr th:each="ind,row : ${k.kpi.indicatorsList}">
+                                     <!--<td>
+                                        <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                                             <span th:text="${ind.score}" class="input-group-text">Left addon</span><button th:text="${ind.content}" type="button" class="btn btn-secondary"></button>
+                                        </div>
+                                     </td>-->
+
+                                     <!--<td>
+                                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                         <label class="btn btn-secondary">
+                                           <b> <input type="radio" th:text="${ind.score}" name="options" id="option1" autocomplete="off"> </b> <span th:text="${ind.content}"></span>
+                                         </label>
+                                       </div>
+                                     </td>-->
+                                    <div class="input-group">
+                                        <br>
+                                        <table class="table table-hover">
+                                            <tr>
+                                              <td><button th:text="${ind.score}" class="btn btn-success" type="button"></button></td>
+                                              <td th:text="${ind.content}"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                 </tr>
+
+                                 </span>
+                              </div>
+                            </div>
+
+                                  <!---->
+
+
+
+
+
+
+
+
+                            <!--TAZKIA VALUE PANEL-->
+                            <div role="tabpanel" class="tab-pane fade" id="tazkiavalue">
+                                <div class="container">
+                                    <span th:each="k,row : ${tazkiaValue}">
+
+                                    <div class="row form-group has-danger">
+                                        <div class="col-sm-5">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Key Result Area</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td th:text="${(row.index + 1)}"><h3>1</h3></td>
+                                                    <td th:text="${k.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                        mahasiswa S2 STEI Tazkia</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
 
                                         <!--Section Bukti-->
 
@@ -96,188 +225,78 @@
                                             </div>
                                         </div>
 
+
                                         <!-- END Section Bukti-->
 
+
+                                        <br/><br/>
+                                        <div class="col-sm-5">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr>
+                                                    <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.kpi.weight}" ></span></td>
+                                                    <td>Target : <span th:text="${k.kpi.target}"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Base line : <span th:text="${k.kpi.baseLine}" ></span></td>
+                                                    <td>Hasil &nbsp;&nbsp;: </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
 
 
-                                    <br/><br/>
-                                    <div class="col-sm-5">
-                                        <table class="table">
-                                            <tbody>
+
+                                <br>
+
+                                    <tr th:each="ind,row : ${k.kpi.indicatorsList}">
+                                      <!--<div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <input th:text="${ind.score}" type="radio" aria-label="Radio button for following text input"><span th:text="${ind.content}"></span>
+                                        </div>
+                                      </div>-->
+                                    <!--<td>
+                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary">
+                                          <b> <input type="radio" th:text="${ind.score}" name="options" id="option1" autocomplete="off"> </b> <span th:text="${ind.content}"></span>
+                                        </label>
+                                      </div>
+                                    </td>-->
+
+                                    <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <button th:text="${ind.score}" class="btn btn-success" type="button"></button>
+                                            </div>
+                                        <br>
+                                        <table class="table table-hover">
                                             <tr>
-                                                <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.kpi.weight}" ></span></td>
-                                                <td>Target : <span th:text="${k.kpi.target}"></span></td>
+                                              <td th:text="${ind.content}"></td>
                                             </tr>
-                                            <tr>
-                                                <td>Base line : <span th:text="${k.kpi.baseLine}" ></span></td>
-                                                <td>Hasil &nbsp;&nbsp;: </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
-                                                <td></td>
-                                            </tr>
-                                            </tbody>
                                         </table>
                                     </div>
+                                 </tr>
+                                    <!---->
+
+                                    </span>
                                 </div>
-
-                                  <button type="button" class="btn btn-success"><b>5</b> .  NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
-                                  <button type="button" class="btn btn-success"><b>4</b> . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
-                                  <button type="button" class="btn btn-success"><b>3</b> . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
-                                  <button type="button" class="btn btn-success"><b>2</b> . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
-                                  <button type="button" class="btn btn-success"><b>1</b> . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</button>
-
-</span>
-
-                                  <!---->
-
-
-
-                            <!--TAZKI VALUE PANEL-->
-                            <div role="tabpanel" class="tab-pane fade" id="tazkiavalue">
-
-                                <div class="container">
-                            <h3>Tauhid</h3>
-                                    <hr/>
-                                    <div class="row form-group has-danger">
-                                        <div class="col-sm-5">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <tr>
-                                                    <th>Key Result Area</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td><h3>1</h3></td>
-                                                    <td>Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
-                                                        mahasiswa S2 STEI Tazkia</td>
-                                                </tbody>
-                                            </table>
-
-                                        </div>
-
-                                        <br/><br/>
-                                        <div class="col-sm-5">
-                                            <table class="table">
-                                                <tbody>
-                                                <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10,00</td>
-                                                    <td>Target : 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Base line : 4</td>
-                                                    <td>Hasil &nbsp;&nbsp;: </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
-                                                    <td></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div class="funkyradio">
-                                        <div class="funkyradio-success">
-                                            <input type="radio" name="radio3" id="3radio2"/>
-                                            <label for="3radio2"><b>5 . Data base mahasiswa dan NIM sudah siap sebelum</b> </label>
-                                        </div>
-                                        <div class="funkyradio-primary">
-                                            <input type="radio" name="radio3" id="3radio3" />
-                                            <label for="3radio3"><b>4 . Mahasiswa sudah mendapatkan NIM sebelum perkuliahan dimulai</b></label>
-                                        </div>
-                                        <div class="funkyradio-info">
-                                            <input type="radio" name="radio3" id="3radio4" />
-                                            <label for="3radio4"><b>3 . 20% mahasiswa mendapatkan NIM ketika kuliah dimulai</b></label>
-                                        </div>
-                                        <div class="funkyradio-warning">
-                                            <input type="radio" name="radio3" id="3radio5" />
-                                            <label for="3radio5"><b>2 . Terjadi kesalahan data base mahasiswa sebesar 25%</b></label>
-                                        </div>
-                                        <div class="funkyradio-danger">
-                                            <input type="radio" name="radio3" id="3radio6" />
-                                            <label for="3radio6"><b>1 . terjadi kesalahan data base mahasiswa sebesar 50%</b></label>
-                                        </div>
-                                    </div>
-                                    <!---->
-
-                                    <!---->
-                                    <div class="row form-group has-danger">
-                                        <div class="col-sm-5">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <tr>
-                                                    <th>Key Result Area</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td><h3>2</h3></td>
-                                                    <td>Pengajuam NIRM ke Depag</td>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <br/><br/>
-                                        <div class="col-sm-5">
-                                            <table class="table">
-                                                <tbody>
-                                                <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10,00</td>
-                                                    <td>Target : 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Base line : 4</td>
-                                                    <td>Hasil &nbsp;&nbsp;: </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
-                                                    <td></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div class="funkyradio">
-                                        <div class="funkyradio-success">
-                                            <input type="radio" name="radio4" id="4radio2"/>
-                                            <label for="4radio2"><b>5 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                        </div>
-                                        <div class="funkyradio-primary">
-                                            <input type="radio" name="radio4" id="4radio3" />
-                                            <label for="4radio3"><b>4 . NIRM diajukan ke Kemenag sebelum jadual UTS semester berjalan</b></label>
-                                        </div>
-                                        <div class="funkyradio-info">
-                                            <input type="radio" name="radio4" id="4radio4" />
-                                            <label for="4radio4"><b>3 . NIRM diajukan ke Kemenag sebelum jadual UTS semester berjalan</b></label>
-                                        </div>
-                                        <div class="funkyradio-warning">
-                                            <input type="radio" name="radio4" id="4radio5" />
-                                            <label for="4radio5"><b>2 . NIRM diajukan ke Kemenag sebelum jadual UTS semester berjalan</b></label>
-                                        </div>
-                                        <div class="funkyradio-danger">
-                                            <input type="radio" name="radio4" id="4radio6" />
-                                            <label for="4radio6"><b>1 . NIRM diajukan ke Kemenag sebelum jadual UTS semester berikutnya berjalan</b></label>
-                                        </div>
-                                    </div>
-                                    <!---->
-
-                                </div>
-
                             </div>
                             <!--ENDTAZKIAVALUE-->
 
-                        </div>
 
 
 
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </section>
 
 </body>
