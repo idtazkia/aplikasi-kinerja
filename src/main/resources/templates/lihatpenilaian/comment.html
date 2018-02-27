@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Penilaian Kinerja Staf</title>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="title">Penilaian Kinerja</h2>
+                            <p class="category"></p>
+                        </div>
+                        <hr/>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="individual">
+                                <form th:action="@{/lihatpenilaian/comment}" method="post" th:object="${score}" enctype="multipart/form-data">
+                                <div class="container" th:each="score : ${score}">
+                                    <!---->
+                                    <div class="row form-group has-danger">
+                                        <div class="col-sm-5">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Key Result Area</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td><h3>1</h3></td>
+                                                    <td th:text="${score.staffKpi.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                        mahasiswa S2 STEI Tazkia</td>
+                                                <tr>
+                                                    <td><b>Employee Comments :</b></td>
+                                                    <td>
+                                                        <div class="col-sm-10 ">
+                                                        <textarea id="komen" type="text"
+                                                                  th:field="*{employeeComment}"
+                                                                  name="employeeComment" required
+                                                                  th:value="${score.employeeComment}"
+                                                                  placeholder="Silahkan masukan komentar anda." ></textarea>
+                                                            <input type="hidden" name="id" th:value="${score.id}">
+                                                            <input type="hidden" name="score" th:value="${score.score}">
+                                                            <input type="hidden" name="remark" th:value="${score.remark}">
+                                                            <input type="hidden" name="total" th:value="${score.total}">
+                                                            <input type="hidden" name="staffKpi" th:value="${score.staffKpi.id}">
+                                                            <input type="hidden" name="evidence" th:value="${score.id}">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr th:object="${evidence}">
+                                                    <td><b>Upload Bukti</b></td>
+                                                    <td>
+                                                        <input required type="file" name="fileBukti"
+                                                               class="form-control"/><br>
+                                                        <small style="color: red">maximum file uploaded <b>2Mb</b></small>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br/><br/>
+                                        <div class="col-sm-5">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr>
+                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${score.staffKpi.kpi.weight}">10,00</span></td>
+                                                    <td>Target : <span th:text="${score.staffKpi.kpi.target}">5</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Base line : <span th:text="${score.staffKpi.kpi.baseLine}">4</span></td>
+                                                    <td>Hasil &nbsp;&nbsp;: <span th:text="${score.score}">7</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${score.total}">79</span></td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio">
+                                        <div class="funkyradio-success">
+                                            <label><b><span th:text="${score.score}">5</span> . <span th:text="${score.remark}">NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</span></b> </label>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="funkyradio">
+                                        <center>
+                                            <div class="funkyradio-success">
+                                                <button type="submit" class="btn btn-success">Submit your comment</button>
+                                                <a th:href="@{/lihatpenilaian/list}" class="btn btn-danger">Back to assessment list</a>
+                                            </div>
+                                        </center>
+                                    </div>
+
+                                    <br>
+                                    <!---->
+
+                                </div>
+                                </form>
+
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
+<script>
+    function close_window() {
+        window.close();
+    }
+</script>

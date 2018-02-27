@@ -122,7 +122,8 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div>src/main/resources/templates/daftarbawahan/list.html
+
 <br>
 
                                  <tr th:each="ind,row : ${k.kpi.indicatorsList}">
@@ -269,7 +270,7 @@
                                         <table class="table table-hover">
                                      <tr >
                                        <div  class="input-group-text">
-                                             <td ><b> <input type="radio"   th:value="${ind.id}"  th:text="${ind.score}" name="options" autocomplete="off"> </b> </td>
+                                             <td ><b> <input type="radio"   th:value="${ind.id}"  th:text="${ind.score}"  th:name="${k.kpi.id+'-score'}" autocomplete="off"> </b> </td>
                                        </div>
                                              <td th:text="${ind.content}"></td>
                                      </tr>

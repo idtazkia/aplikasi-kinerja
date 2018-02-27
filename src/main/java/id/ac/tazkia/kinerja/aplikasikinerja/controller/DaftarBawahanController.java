@@ -9,9 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class DaftarBawahanController {
@@ -29,6 +30,9 @@ public class DaftarBawahanController {
 
     @Autowired
     private IndicatorsDao indicatorsDao;
+
+    @Autowired
+    private ScoreDao scoreDao;
 
     @RequestMapping("/daftarbawahan/list")
     public void  daftarStaff(Model model,String user, Authentication currentUser)throws Exception{
@@ -60,13 +64,28 @@ public class DaftarBawahanController {
 
     }
 
-    @RequestMapping("/daftarbawahan/form")
+    @GetMapping("/daftarbawahan/form")
     public void  daftarKpi(String id, Model m, Pageable page){
 
         m.addAttribute("individual", staffKpiDao.findAllByStaff_IdAndKpi_Category_Id(id,"001"));
         m.addAttribute("tazkiaValue", staffKpiDao.findAllByStaff_IdAndKpi_Category_Id(id,"002"));
 
     }
+
+    @ModelAttribute("daftarIndicators")
+    public Iterable<Indicators> daftarIndicators(){
+        return indicatorsDao.findAll();
+    }
+
+
+
+    @PostMapping(value = "/daftarbawahan/form")
+    public String prosesForm(@Valid Score s, BindingResult errors){
+        scoreDao.save(s);
+        return "redirect:list";
+    }
+
+
 
     @GetMapping("/daftarbawahan/detail")
     public void detail(@RequestParam(required = false)String id, Model m, Pageable page) {

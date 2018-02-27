@@ -36,39 +36,39 @@
                             <div role="tabpanel" class="tab-pane fade in active" id="individual">
                                 <div class="container">
                                     <!---->
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="card">
-                                                        <div class="content table-responsive table-full-width">
-                                                            <table class="table table-bordered">
-                                                                <thead >
-                                                                <th>No.</th>
-                                                                <th>Key Result</th>
-                                                                <th>Score</th>
-                                                                <th>Remark</th>
-                                                                <th>Total</th>
-                                                                <th>Employee Comment(s)</th>
-                                                                <th><center>Aksi</center></th>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>Menjadikan nilai-nilai Islam sebagai landasan dalam mengambil keputusan</td>
-                                                                    <td>4</td>
-                                                                    <td>Senantiasa bersandar pada syariah Islam pada saat mengambil keputusan.</td>
-                                                                    <td>5</td>
-                                                                    <td>Saya sudah melengkapi tugas dari Bapak.</td>
-                                                                    <td><a href="" class="btn btn-warning">Submit Your Comment</a></td>
-                                                                </tr>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="content table-responsive table-full-width">
+                                                        <table class="table table-bordered">
+                                                            <thead >
+                                                            <th>No.</th>
+                                                            <th>Key Result</th>
+                                                            <th>Score</th>
+                                                            <th>Remark</th>
+                                                            <th>Total</th>
+                                                            <th>Employee Comment(s)</th>
+                                                            <th><center>Aksi</center></th>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr th:each="sd,row  : ${individual}">
+                                                                <td th:text="${(row.index + 1)}"></td>
+                                                                <td th:text="${sd.staffKpi.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
+                                                                <td th:text="${sd.score}">Prodi Bisnis & Manajemen Islam</td>
+                                                                <td th:text="${sd.remark}">Puket I</td>
+                                                                <td th:text="${sd.total}" >sadsad</td>
+                                                                <td th:text="${sd.employeeComment}" >sadsad</td>
+                                                                <td><a th:href="@{/lihatpenilaian/comment(id=${sd.id})}" class="btn btn-info">Submit your comment</a></td>
+                                                            </tr>
 
-                                                                </tbody>
-                                                            </table>
+                                                            </tbody>
+                                                        </table>
 
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                     </div>
                                     <!---->
 
@@ -99,14 +99,15 @@
                                                             <th><center>Aksi</center></th>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Menjadikan nilai-nilai Islam sebagai landasan dalam mengambil keputusan</td>
-                                                                <td>4</td>
-                                                                <td>Senantiasa bersandar pada syariah Islam pada saat mengambil keputusan.</td>
-                                                                <td>5</td>
-                                                                <td>Saya sudah melengkapi tugas dari Bapak.</td>
-                                                                <td><a href="" class="btn btn-warning">Submit Your Comment</a></td>
+                                                            <span></span>
+                                                            <tr th:each="tv,row  : ${tazkiaValue}">
+                                                                <td th:text="${(row.index + 1)}"></td>
+                                                                <td th:text="${tv.staffKpi.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
+                                                                <td th:text="${tv.score}">Prodi Bisnis & Manajemen Islam</td>
+                                                                <td th:text="${tv.remark}">Puket I</td>
+                                                                <td th:text="${tv.total}" >sadsad</td>
+                                                                <td th:text="${tv.employeeComment}" >sadsad</td>
+                                                                <td><a th:href="@{/lihatpenilaian/comment(id=${tv.id})}" target="_blank" class="btn btn-info">Submit your comment</a></td>
                                                             </tr>
 
                                                             </tbody>
@@ -119,17 +120,12 @@
                                     </div>
                                     <!---->
 
-
-
                                 </div>
 
                             </div>
                             <!--ENDTAZKIAVALUE-->
 
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
