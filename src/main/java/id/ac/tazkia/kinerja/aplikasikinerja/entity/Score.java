@@ -34,6 +34,5 @@ public class Score {
 
     @OneToMany(mappedBy = "score", fetch = FetchType.EAGER)
     private List<Evidence> evidence;
-
 }
 
