@@ -77,4 +77,5 @@ create table periode (
   end_date DATE NOT NULL ,
   active BOOLEAN NOT NULL,
   PRIMARY KEY (id)
+
 );
