@@ -491,8 +491,7 @@ INSERT INTO score (id,id_staff_kpi,score,remark,total,employee_comment,evidence)
 ('001','041','5','dfgfdg','3','',''),
 ('002','041','5','dfgfdg','3','',''),
 ('003','041','5','dfgfdg','3','',''),
-('004','041','5','dfgfdg','3','',''),
-('005','041','5','dfgfdg','3','','');
+('004','041','5','dfgfdg','3','','');
 
 
 INSERT INTO periode (id,periode_name,description,start_date,end_date,active) VALUES

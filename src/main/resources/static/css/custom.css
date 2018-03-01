@@ -14,6 +14,7 @@ body {
 	box-sizing: border-box;
 }
 
+
 .row > .column {
 	padding: 0 8px;
 }
@@ -24,6 +25,7 @@ body {
 	clear: both;
 }
 
+/* Create four equal columns that floats next to eachother */
 .column {
 	float: left;
 	width: 25%;
@@ -49,18 +51,17 @@ body {
 	background-color: #fefefe;
 	margin: auto;
 	padding: 0;
-	width: 90%;
-	max-width: 1200px;
+	width: 650px;
 }
 
 /* The Close Button */
 .close {
-	color: black;
+	color: white;
 	position: absolute;
-	top: 25px;
-	right: 25px;
-	font-size: 100px;
-	font-weight: bolder;
+	top: 0px;
+	left: 25px;
+	font-size: 200px;
+	font-weight: bold;
 }
 
 .close:hover,
@@ -70,12 +71,9 @@ body {
 	cursor: pointer;
 }
 
+/* Hide the slides by default */
 .mySlides {
 	display: none;
-}
-
-.cursor {
-	cursor: pointer
 }
 
 /* Next & previous buttons */
@@ -87,9 +85,9 @@ body {
 	width: auto;
 	padding: 16px;
 	margin-top: -50px;
-	color: black;
+	color: white;
 	font-weight: bold;
-	font-size: 50px;
+	font-size: 20px;
 	transition: 0.6s ease;
 	border-radius: 0 3px 3px 0;
 	user-select: none;
@@ -117,10 +115,7 @@ body {
 	top: 0;
 }
 
-img {
-	margin-bottom: -4px;
-}
-
+/* Caption text */
 .caption-container {
 	text-align: center;
 	background-color: black;
@@ -128,7 +123,7 @@ img {
 	color: white;
 }
 
-.demo {
+img.demo {
 	opacity: 0.6;
 }
 
@@ -138,10 +133,9 @@ img {
 }
 
 img.hover-shadow {
-	transition: 0.3s;
+	transition: 0.3s
 }
 
 .hover-shadow:hover {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
 }
-
