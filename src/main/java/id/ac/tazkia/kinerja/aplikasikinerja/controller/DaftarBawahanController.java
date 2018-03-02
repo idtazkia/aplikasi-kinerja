@@ -99,8 +99,8 @@ public class DaftarBawahanController {
     @GetMapping("/daftarbawahan/komen")
     public void komens(@RequestParam(required = true)String id, Model m){
 
-        m.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryId(id,"001"));
-        m.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryId(id,"002"));
+        m.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderById(id,"001"));
+        m.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderById(id,"002"));
 
 
     }

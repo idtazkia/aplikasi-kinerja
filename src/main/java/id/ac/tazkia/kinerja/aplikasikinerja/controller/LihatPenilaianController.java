@@ -70,8 +70,8 @@ public class LihatPenilaianController {
             return;
         }
 
-        model.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryId(u.getId(),"001"));
-        model.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryId(u.getId(),"002"));
+        model.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderById(u.getId(),"001"));
+        model.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderById(u.getId(),"002"));
 
     }
 
@@ -125,6 +125,7 @@ public class LihatPenilaianController {
         evidence.setScore(score);
         evidence.setFileName(idFile+"."+extension);
         evidenceDao.save(evidence);
+
 
         scoreDao.save(score);
         return "redirect:/lihatpenilaian/list";
