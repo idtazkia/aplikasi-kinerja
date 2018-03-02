@@ -36,6 +36,7 @@
                             <div role="tabpanel" class="tab-pane fade in active" id="individual">
                                 <div class="container">
                                     <!---->
+                                    <span th:each="sd,row  : ${individual}">
                                     <div class="row form-group has-danger">
                                         <div class="col-sm-5">
                                             <table class="table table-striped">
@@ -46,45 +47,23 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td><h3>1</h3></td>
-                                                    <td>Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                    <td><h3 th:text="${(row.index + 1)}">1</h3></td>
+                                                    <td th:text="${sd.staffKpi.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                         mahasiswa S2 STEI Tazkia</td>
+                                                </tr>
                                                 <tr>
                                                     <td><b>Employee Comments :</b></td>
-                                                    <td><p><h5>"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
+                                                    <td><p><h5 th:text="${sd.employeeComment}">"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Evidence :</b></td>
+                                                    <td th:each="img,row : ${sd.evidence}">
+                                                        <embed th:src="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}" width="400" height="480" type='application/pdf'>
+                                                        <!--<img th:src="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}" th:width="400px" height="400px" alt="">-->
+                                                    </td>
                                                 </tr>
                                                 </tbody>
                                             </table>
-
-
-                                            <button type="button" class="btn btn-info hover-shadow cursor" onclick="openModal();currentSlide(1)">Lihat Bukti Kinerja</button>
-                                            <!-- The Modal/Lightbox -->
-                                            <div id="myModal" class="modal">
-                                                <span class="close cursor" onclick="closeModal()">&times;</span>
-                                                <div class="modal-content">
-
-                                                    <div class="mySlides">
-                                                        <embed src="../img/bg2.png" style="width:100%">
-                                                    </div>
-
-                                                    <div class="mySlides">
-                                                        <embed src="../img/java_tutorial.pdf" style="width:100%">
-                                                    </div>
-
-                                                    <div class="mySlides">
-                                                        <img src="img3_wide.jpg" style="width:100%">
-                                                    </div>
-
-                                                    <div class="mySlides">
-                                                        <img src="img4_wide.jpg" style="width:100%">
-                                                    </div>
-
-                                                    <!-- Next/previous controls -->
-                                                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                                                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                                                </div>
-                                            </div>
-
 
 
                                         </div>
@@ -93,15 +72,15 @@
                                             <table class="table">
                                                 <tbody>
                                                 <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10,00</td>
-                                                    <td>Target : 5</td>
+                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${sd.staffKpi.kpi.weight}">10,00</span></td>
+                                                    <td>Target : <span th:text="${sd.staffKpi.kpi.target}">4asd</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Base line : 4</td>
-                                                    <td>Hasil &nbsp;&nbsp;: </td>
+                                                    <td>Base line : <span th:text="${sd.staffKpi.kpi.baseLine}">10</span></td>
+                                                    <td>Hasil &nbsp;&nbsp;: <span th:text="${sd.score}"></span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${sd.total}"></span></td>
                                                     <td></td>
                                                 </tr>
                                                 </tbody>
@@ -110,121 +89,11 @@
                                     </div>
                                     <div class="funkyradio">
                                         <div class="funkyradio-success">
-                                            <label><b>5 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>4 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>3 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>2 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>1 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
+                                            <label><b><span th:text="${sd.score}">5</span> . <span th:text="${sd.remark}">NIRM dari Kemenag sudah didapatkan sebelum</span></b> </label>
                                         </div>
                                     </div>
                                     <br>
-                                    <!---->
-
-                                    <!---->
-                                    <div class="row form-group has-danger">
-                                        <div class="col-sm-5">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <tr>
-                                                    <th>Key Result Area</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td><h5>2</h5></td>
-                                                    <td>Pengajuam NIRM ke Depag</td>
-                                                <tr>
-                                                    <td><b>Employee Comments :</b></td>
-                                                    <td><p><h5>"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <br/><br/>
-                                        <div class="col-sm-5">
-                                            <table class="table">
-                                                <tbody>
-                                                <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10,00</td>
-                                                    <td>Target : 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Base line : 4</td>
-                                                    <td>Hasil &nbsp;&nbsp;: 20 </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 75</td>
-                                                    <td></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div class="funkyradio">
-                                        <div class="funkyradio-success">
-                                            <label><b>5 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>4 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>3 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>2 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>1 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <!---->
-
-                                    <div class="row form-group has-danger">
-                                        <div class="col-sm-5">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <tr>
-                                                    <th>Key Result Area</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td><h5>3</h5></td>
-                                                    <td>Pengajuam NIRM ke Depag</td>
-                                                <tr>
-                                                    <td><b>Employee Comments :</b></td>
-                                                    <td><p><h5>"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <br/><br/>
-                                        <div class="col-sm-5">
-                                            <table class="table">
-                                                <tbody>
-                                                <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10,00</td>
-                                                    <td>Target : 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Base line : 4</td>
-                                                    <td>Hasil &nbsp;&nbsp;: 20 </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 75</td>
-                                                    <td></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div class="funkyradio">
-                                        <div class="funkyradio-success">
-                                            <label><b>5 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>4 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>3 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>2 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>1 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <br>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <!---->
+                                    </span>
 
                                 </div>
 
@@ -233,10 +102,11 @@
                             </div>
 
 
-                            <!--TAZKI VALUE PANEL-->
+                            <!--TAZKIA VALUE PANEL-->
                             <div role="tabpanel" class="tab-pane fade" id="tazkiavalue">
 
                                 <div class="container">
+                                    <span th:each="tv,row  : ${tazkiaValue}">
                                     <h3>Tauhid</h3>
                                     <hr/>
                                     <div class="row form-group has-danger">
@@ -249,12 +119,20 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td><h3>1</h3></td>
-                                                    <td>Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                    <td><h3 th:text="${(row.index + 1)}"></h3></td>
+                                                    <td th:text="${tv.staffKpi.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                         mahasiswa S2 STEI Tazkia</td>
                                                 <tr>
                                                     <td><b>Employee Comments :</b></td>
-                                                    <td><p><h5>"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
+                                                    <td><p><h5 th:text="${tv.employeeComment}">"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Evidence :</b></td>
+                                                        <span th:each="img : ${tv.evidence}">
+                                                    <td>
+                                                        <img th:src="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}" th:width="400px" height="400px" alt="">
+                                                    </td>
+                                                        </span>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -264,15 +142,15 @@
                                             <table class="table">
                                                 <tbody>
                                                 <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10,00</td>
-                                                    <td>Target : 5</td>
+                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${tv.staffKpi.kpi.weight}">10,00</span></td>
+                                                    <td>Target : <span th:text="${tv.staffKpi.kpi.target}"></span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Base line : 4</td>
-                                                    <td>Hasil &nbsp;&nbsp;: </td>
+                                                    <td>Base line : <span th:text="${tv.staffKpi.kpi.baseLine}">10</span></td>
+                                                    <td>Hasil &nbsp;&nbsp;: <span th:text="${tv.score}"></span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${tv.total}"></span></td>
                                                     <td></td>
                                                 </tr>
                                                 </tbody>
@@ -282,68 +160,13 @@
 
                                     <div class="funkyradio ">
                                         <div class="funkyradio-success">
-                                            <label><b>5 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>4 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>3 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>2 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>1 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
+                                            <label><b><span th:text="${tv.score}">5</span> . <span th:text="${tv.remark}">NIRM dari Kemenag sudah didapatkan sebelum</span></b> </label>
                                         </div>
                                     </div>
                                     <br><br><br>
-                                    <!---->
+                                        <!---->
 
-                                    <!---->
-                                    <div class="row form-group has-danger">
-                                        <div class="col-sm-5">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <tr>
-                                                    <th>Key Result Area</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td><h3>2</h3></td>
-                                                    <td>Pengajuam NIRM ke Depag</td>
-                                                <tr>
-                                                    <td><b>Employee Comments :</b></td>
-                                                    <td><p><h5>"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <br/><br/>
-                                        <div class="col-sm-5">
-                                            <table class="table">
-                                                <tbody>
-                                                <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10,00</td>
-                                                    <td>Target : 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Base line : 4</td>
-                                                    <td>Hasil &nbsp;&nbsp;: </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
-                                                    <td></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div class="funkyradio">
-                                        <div class="funkyradio-success">
-                                            <label><b>5 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>4 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>3 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>2 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                            <label><b>1 . NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</b> </label>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <!---->
+                                    </span>
 
                                 </div>
 
