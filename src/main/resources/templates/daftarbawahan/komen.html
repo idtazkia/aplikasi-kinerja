@@ -58,7 +58,7 @@
                                                 </tbody>
                                             </table>
 
-                                              <div class="dropdown">
+                                            <div class="dropdown">
                                                 <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
                                                 <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
@@ -129,14 +129,6 @@
                                                 <tr>
                                                     <td><b>Employee Comments :</b></td>
                                                     <td><p><h5 th:text="${tv.employeeComment}">"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><b>Evidence :</b></td>
-                                                        <span th:each="img : ${tv.evidence}">
-                                                    <td>
-                                                        <img th:src="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}" th:width="400px" height="400px" alt="">
-                                                    </td>
-                                                        </span>
                                                 </tr>
                                                 </tbody>
                                             </table>
