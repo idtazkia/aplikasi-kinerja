@@ -1,5 +1,6 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 
+import id.ac.tazkia.kinerja.aplikasikinerja.constants.CategoryConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.*;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
 import org.slf4j.Logger;
@@ -18,6 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Controller
 public class DaftarBawahanController {
@@ -51,6 +55,17 @@ public class DaftarBawahanController {
 
     @Value("${upload.folder}")
     private String uploadFolder;
+
+    private Category individualCategory;
+    private Category tazkiaValueCategory;
+
+    public DaftarBawahanController(){
+        individualCategory = new Category();
+        individualCategory.setId(CategoryConstants.INDIVIDUAL_INDICATOR_ID);
+
+        tazkiaValueCategory = new Category();
+        tazkiaValueCategory.setId(CategoryConstants.TAZKIA_INDICATOR_ID);
+    }
 
     @RequestMapping("/daftarbawahan/list")
     public void  daftarStaff(Model model,String user, Authentication currentUser)throws Exception{
@@ -84,9 +99,11 @@ public class DaftarBawahanController {
 
     @GetMapping("/daftarbawahan/form")
     public void  daftarKpi(String id, Model m, Pageable page){
+        Staff s = staffDao.findOne(id);
+        m.addAttribute("staff",s);
 
-        m.addAttribute("individual", staffKpiDao.findAllByStaff_IdAndKpi_Category_Id(id,"001"));
-        m.addAttribute("tazkiaValue", staffKpiDao.findAllByStaff_IdAndKpi_Category_Id(id,"002"));
+        m.addAttribute("individual", staffKpiDao.findAllByStaffAndKpiCategory(s,individualCategory));
+        m.addAttribute("tazkiaValue", staffKpiDao.findAllByStaffAndKpiCategory(s,tazkiaValueCategory));
 
     }
 
@@ -98,8 +115,24 @@ public class DaftarBawahanController {
 
 
     @PostMapping(value = "/daftarbawahan/form")
-    public String prosesForm(@Valid Score s, BindingResult errors){
-        scoreDao.save(s);
+    public String prosesForm(@RequestParam String staff, HttpServletRequest request){
+        Staff s = staffDao.findOne(staff);
+        System.out.println("Staff : "+s.getEmployeeName());
+
+        List<StaffKpi> daftarKpiIndividual = staffKpiDao.findAllByStaffAndKpiCategory(s, individualCategory);
+        for(StaffKpi sk : daftarKpiIndividual) {
+            String pilihan = request.getParameter(sk.getKpi().getId()+"-score");
+            System.out.println("Pilihan : "+pilihan);
+            Indicators indicators = indicatorsDao.findOne(pilihan);
+            if(indicators != null) {
+                Score score = new Score();
+                score.setStaffKpi(sk);
+                score.setScore(indicators.getScore());
+                score.setRemark(indicators.getContent());
+                scoreDao.save(score);
+            }
+
+        }
         return "redirect:list";
     }
 
@@ -119,8 +152,8 @@ public class DaftarBawahanController {
     @GetMapping("/daftarbawahan/komen")
     public void komens(@RequestParam(required = true)String id, Model m){
 
-        m.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryId(id,"001"));
-        m.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryId(id,"002"));
+        m.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderById(id,"001"));
+        m.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderById(id,"002"));
 
 
     }

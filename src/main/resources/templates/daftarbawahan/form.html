@@ -34,7 +34,8 @@
                         </ul>
 
                         <!-- Tab panes -->
-                        <form th:action="@{/daftarbawahan/form}" method="post">
+                        <form th:action="@{/daftarbawahan/form}" th:object="${score}" method="post">
+                            <input type="hidden" name="staff" th:value="${staff.id}">
 
                         <span class="tab-content">
 
@@ -123,36 +124,16 @@
 <br>
 
                                  <tr th:each="ind,row : ${k.kpi.indicatorsList}">
-                                     <!--<td>
-                                        <div class="btn-group-vertical" role="group" aria-label="Basic example">
-                                             <span th:text="${ind.score}" class="input-group-text">Left addon</span><button th:text="${ind.content}" type="button" class="btn btn-secondary"></button>
-                                        </div>
-                                     </td>
-                                     </tr>-->
-
                                      <br>
                                         <table class="table table-hover">
                                      <tr >
                                        <div  class="input-group-text">
-                                             <td ><b> <input type="radio"  th:text="${ind.score}"  th:name="${k.kpi.id+'-score'}" autocomplete="off"> </b> </td>
+                                             <td ><b> <input type="radio" th:value="${ind.id}" th:text="${ind.score}" th:name="${k.kpi.id+'-score'}" autocomplete="off"> </b> </td>
                                        </div>
                                              <td th:text="${ind.content}"></td>
                                      </tr>
                                         </table>
                                  </tr>
-
-                                    <!--<div class="input-group">
-                                        <br>
-                                        <table class="table table-hover">
-                                            <tr>
-                                              <td><button th:text="${ind.score}" class="btn btn-success" type="button"></button></td>
-                                              <td th:text="${ind.content}"></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                 </tr>-->
-
-
                                  </span>
                               </div>
                             </div>
@@ -256,11 +237,6 @@
                                 <br>
 
                                     <tr th:each="ind,row : ${k.kpi.indicatorsList}">
-                                      <!--<div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <input th:text="${ind.score}" type="radio" aria-label="Radio button for following text input"><span th:text="${ind.content}"></span>
-                                        </div>
-                                      </div>-->
 
                                     <br>
                                         <table class="table table-hover">
@@ -272,20 +248,6 @@
                                      </tr>
                                         </table>
                                  </tr>
-
-                                   <!-- <div class="input-group">
-
-                                        <br>
-                                        <table class="table table-hover">
-                                            <tr>
-                                              <td><button th:text="${ind.score}" class="btn btn-success" type="button"></button></td>
-                                              <td th:text="${ind.content}"></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                 </tr>-->
-                                    <!---->
-
                                     </span>
                                 </div>
                             </div>
