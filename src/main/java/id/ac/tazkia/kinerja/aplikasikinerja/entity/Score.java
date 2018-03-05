@@ -2,10 +2,6 @@ package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,7 +27,6 @@ public class Score {
     @NotNull
     private String remark;
 
-    @NotNull
     private String total;
 
     private String employeeComment;
