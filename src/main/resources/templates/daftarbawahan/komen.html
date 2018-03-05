@@ -55,15 +55,19 @@
                                                     <td><b>Employee Comments :</b></td>
                                                     <td><p><h5 th:text="${sd.employeeComment}">"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
                                                 </tr>
-                                                <tr>
-                                                    <td><b>Evidence :</b></td>
-                                                    <td th:each="img,row : ${sd.evidence}">
-                                                        <embed th:src="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}" width="400" height="480" type='application/pdf'>
-                                                        <!--<img th:src="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}" th:width="400px" height="400px" alt="">-->
-                                                    </td>
-                                                </tr>
                                                 </tbody>
                                             </table>
+
+                                              <div class="dropdown">
+                                                <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
+                                                <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                  <li th:each="img,row : ${sd.evidence}">
+                                                      <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
+                                                         th:text="${'Evidence'+(row.index + 1)}">HTML</a>
+                                                  </li>
+                                                </ul>
+                                              </div>
 
 
                                         </div>
@@ -136,6 +140,18 @@
                                                 </tr>
                                                 </tbody>
                                             </table>
+
+                                            <div class="dropdown">
+                                                <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
+                                                <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                  <li th:each="img,row : ${tv.evidence}">
+                                                      <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
+                                                         th:text="${'Evidence'+(row.index + 1)}">HTML</a>
+                                                  </li>
+                                                </ul>
+                                              </div>
+
                                         </div>
                                         <br/><br/>
                                         <div class="col-sm-5">
