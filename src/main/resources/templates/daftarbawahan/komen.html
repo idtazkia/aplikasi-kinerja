@@ -58,11 +58,11 @@
                                                 </tbody>
                                             </table>
 
-                                            <div class="dropdown">
+                                            <div class="dropdown" th:if="${sd.employeeComment != null   }">
                                                 <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
                                                 <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                  <li th:each="img,row : ${sd.evidence}">
+                                                  <li th:each="img,row : ${sd.evidence}" th:if="${img.id != null}">
                                                       <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
                                                          th:text="${'Evidence'+(row.index + 1)}">HTML</a>
                                                   </li>
@@ -133,7 +133,7 @@
                                                 </tbody>
                                             </table>
 
-                                            <div class="dropdown">
+                                            <div class="dropdown" th:if="${tv.employeeComment != null}">
                                                 <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
                                                 <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
