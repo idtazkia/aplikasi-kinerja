@@ -122,6 +122,7 @@ public class DaftarBawahanController {
         List<StaffKpi> daftarKpiIndividual = staffKpiDao.findAllByStaffAndKpiCategory(s, individualCategory);
         for(StaffKpi sk : daftarKpiIndividual) {
             String pilihan = request.getParameter(sk.getKpi().getId()+"-score");
+
             System.out.println("Pilihan : "+pilihan);
             Indicators indicators = indicatorsDao.findOne(pilihan);
             if(indicators != null) {
@@ -129,8 +130,18 @@ public class DaftarBawahanController {
                 score.setStaffKpi(sk);
                 score.setScore(indicators.getScore());
                 score.setRemark(indicators.getContent());
+                float val= Float.parseFloat(score.getStaffKpi().getKpi().getWeight());
+                float scoree = Float.parseFloat(score.getScore());
+                System.out.println("perkalian 1         " + val);
+                System.out.println(" perkalian 2          " + scoree);
+                System.out.println("hasilnya         " + val * scoree);
+                float perkalian = val * scoree;
+                String hasile = String.valueOf(perkalian);
+                score.setTotal(hasile);
                 scoreDao.save(score);
             }
+
+
 
         }
         return "redirect:list";
