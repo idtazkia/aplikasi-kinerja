@@ -17,17 +17,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -94,7 +86,7 @@ public class DaftarBawahanController {
 
         model.addAttribute("list", staffDao.findAllBySuperiorIdOrderByEmployeeName(p.getId()));
 
-        return null;
+        return "/daftarbawahan/list";
 
     }
 
@@ -134,7 +126,7 @@ public class DaftarBawahanController {
         m.addAttribute("individual", staffKpiDao.findAllByStaffAndKpiCategory(s,individualCategory));
         m.addAttribute("tazkiaValue", staffKpiDao.findAllByStaffAndKpiCategory(s,tazkiaValueCategory));
 
-        return null;
+        return "/daftarbawahan/form";
 
     }
 
@@ -150,7 +142,31 @@ public class DaftarBawahanController {
         Staff s = staffDao.findOne(staff);
         System.out.println("Staff : "+s.getEmployeeName());
 
+        List<StaffKpi> daftarKpi = staffKpiDao.findAllByStaffAndKpiCategory(s, tazkiaValueCategory);
         List<StaffKpi> daftarKpiIndividual = staffKpiDao.findAllByStaffAndKpiCategory(s, individualCategory);
+
+        for(StaffKpi skp : daftarKpi) {
+            String pilihan = request.getParameter(skp.getKpi().getId()+"-score");
+            System.out.println("Pilihan : "+pilihan);
+            Indicators indicators = indicatorsDao.findOne(pilihan);
+            if(indicators != null) {
+                Score score = new Score();
+                score.setStaffKpi(skp);
+                score.setScore(indicators.getScore());
+                score.setRemark(indicators.getContent());
+                float val= Float.parseFloat(score.getStaffKpi().getKpi().getWeight());
+                float scoree = Float.parseFloat(score.getScore());
+                LOGGER.info("perkalian 1         " + val);
+                LOGGER.info(" perkalian 2          " + scoree);
+                LOGGER.info("hasilnya         " + val * scoree);
+                float perkalian = val * scoree;
+                String hasile = String.valueOf(perkalian);
+                score.setTotal(hasile);
+                scoreDao.save(score);
+            }
+
+        }
+
         for(StaffKpi sk : daftarKpiIndividual) {
             String pilihan = request.getParameter(sk.getKpi().getId()+"-score");
 
@@ -217,7 +233,7 @@ public class DaftarBawahanController {
         } else {
             m.addAttribute("detailStaff", staffDao.findAll(page));
         }
-        return null;
+        return "/daftarbawahan/detail";
 
     }
 
@@ -256,7 +272,7 @@ public class DaftarBawahanController {
         m.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderByStaffKpiAsc(id,"002"));
 
 
-        return null;
+        return "/daftarbawahan/komen";
     }
 
     @GetMapping("/uploaded/{evidence}/bukti/")
