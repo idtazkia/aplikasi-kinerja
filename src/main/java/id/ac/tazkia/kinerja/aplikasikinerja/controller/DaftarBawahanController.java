@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -60,7 +61,9 @@ public class DaftarBawahanController {
     }
 
     @RequestMapping("/daftarbawahan/list")
-    public String  daftarStaff(Model model,String user, Authentication currentUser)throws Exception{
+    public String  daftarStaff(Model model,String user, Authentication currentUser,
+                               @PageableDefault(size = 10)
+                               Pageable page, String search)throws Exception{
         System.out.println("username" + currentUser.getClass().getName());
 
         if(currentUser == null){
@@ -84,7 +87,14 @@ public class DaftarBawahanController {
             return "redirect:/404";
         }
 
-        model.addAttribute("list", staffDao.findAllBySuperiorIdOrderByEmployeeName(p.getId()));
+        if(StringUtils.hasText(search)) {
+            model.addAttribute("search", search);
+            model.addAttribute("list", staffDao.findBySuperiorIdAndEmployeeNameContainingIgnoreCaseOrEmployeeNumberContainingIgnoreCaseOrderByEmployeeName(p.getId(),search,search,page));
+        } else {
+            model.addAttribute("list", staffDao.findBySuperiorIdOrderByEmployeeName(p.getId(), page));
+        }
+
+
 
         return "/daftarbawahan/list";
 

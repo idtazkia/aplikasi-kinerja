@@ -22,6 +22,19 @@
                             <p class="category">Daftar Bawahan</p>
                         </div>
                         <div class="content table-responsive table-full-width">
+                            <table class="table" border="0">
+                                <form method="get">
+                                <tr>
+                                    <td>Search by :
+                                        <input type="text" id="search" autocomplete="off"
+                                               placeholder="name or employee number" name="search" th:value="${search}">
+                                        <input type="submit" value="Search" class="btn btn-success"></td>
+                                </tr>
+                                <tr style="border-bottom-color: whitesmoke">
+                                    <td>Show <span sd:page-size-selector="javascript"></span> entries</td>
+                                </tr>
+                                </form>
+                            </table>
                             <table class="table table-bordered">
                                 <thead >
                                 <th>No.</th>
@@ -45,6 +58,24 @@
                             </table>
 
 
+                        </div>
+                        <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <div sd:pagination-summary="" style="font-size: small">info</div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <nav class="pull-right">
+                                    <ul class="pagination" sd:pagination="full">
+                                        <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+                                        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
