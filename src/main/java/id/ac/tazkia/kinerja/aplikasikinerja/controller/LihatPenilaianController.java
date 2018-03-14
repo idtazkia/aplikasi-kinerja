@@ -1,13 +1,11 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 
+import id.ac.tazkia.kinerja.aplikasikinerja.constants.CategoryConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.EvidenceDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.ScoreDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.UserDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Evidence;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Score;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Staff;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.User;
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +41,17 @@ public class LihatPenilaianController {
     @Value("${upload.folder}")
     private String uploadFolder;
 
+    private Category individualCategory;
+    private Category tazkiaValueCategory;
+
+    public LihatPenilaianController(){
+        individualCategory = new Category();
+        individualCategory.setId(CategoryConstants.INDIVIDUAL_INDICATOR_ID);
+
+        tazkiaValueCategory = new Category();
+        tazkiaValueCategory.setId(CategoryConstants.TAZKIA_INDICATOR_ID);
+    }
+
 
     @GetMapping("/lihatpenilaian/list")
     public void list(Model model, Authentication currentUser){
@@ -69,8 +78,8 @@ public class LihatPenilaianController {
             return;
         }
 
-        model.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderByStaffKpiAsc(u.getId(),"001"));
-        model.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderByStaffKpiAsc(u.getId(),"002"));
+        model.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(u.getId(),individualCategory));
+        model.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(u.getId(),tazkiaValueCategory));
 
     }
 

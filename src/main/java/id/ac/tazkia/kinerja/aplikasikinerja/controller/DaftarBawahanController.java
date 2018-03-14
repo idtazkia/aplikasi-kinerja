@@ -278,8 +278,8 @@ public class DaftarBawahanController {
             return "redirect:/daftarbawahan/list";
         }
 
-        m.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderByStaffKpiAsc(id,"001"));
-        m.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderByStaffKpiAsc(id,"002"));
+        m.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(id,individualCategory));
+        m.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(id,tazkiaValueCategory));
 
 
         return "/daftarbawahan/komen";

@@ -1,5 +1,6 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.dao;
 
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.Category;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.Score;
 
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.Score;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface ScoreDao extends PagingAndSortingRepository<Score, String> {
 
     Page<Score> findById (String id, Pageable page);
-    List<Score> findByStaffKpiStaffIdAndStaffKpiKpiCategoryIdOrderByStaffKpiAsc(String id, String a);
+    List<Score> findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(String id, Category category);
 
 }
 
