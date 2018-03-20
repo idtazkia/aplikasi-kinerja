@@ -16,6 +16,7 @@ public class User {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String username;
+    private String email;
     private Boolean active;
 
         @NotNull

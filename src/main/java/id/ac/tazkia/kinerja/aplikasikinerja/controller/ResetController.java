@@ -6,6 +6,7 @@ import id.ac.tazkia.kinerja.aplikasikinerja.dao.UserPasswordDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.ResetPassword;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.User;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.UserPassword;
+import id.ac.tazkia.kinerja.aplikasikinerja.service.NotifikasiService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ public class ResetController {
     @Autowired
     private UserPasswordDao userPasswordDao;
     @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired
+    private NotifikasiService notifikasiService;
 
     @RequestMapping(value = "/reset", method = RequestMethod.GET)
     public void tampilkanForm(){}
@@ -88,6 +91,7 @@ public class ResetController {
         rp.setExpired(LocalDate.now().plusDays(3));
 
         resetDao.save(rp);
+        notifikasiService.resetPassword(rp);
         return "redirect:reset-sukses";
     }
 
@@ -109,6 +113,7 @@ public class ResetController {
 
 
         userPasswordDao.save(up);
+
         return "redirect:login";
 
 
