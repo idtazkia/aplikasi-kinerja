@@ -44,7 +44,7 @@ public class LihatPenilaianController {
     private Category individualCategory;
     private Category tazkiaValueCategory;
 
-    public LihatPenilaianController(){
+    public LihatPenilaianController() {
         individualCategory = new Category();
         individualCategory.setId(CategoryConstants.INDIVIDUAL_INDICATOR_ID);
 
@@ -54,18 +54,18 @@ public class LihatPenilaianController {
 
 
     @GetMapping("/lihatpenilaian/list")
-    public void list(Model model, Authentication currentUser){
+    public void list(Model model, Authentication currentUser) {
         LOGGER.debug("username" + currentUser.getClass().getName());
 
-        if(currentUser == null){
+        if (currentUser == null) {
             LOGGER.warn("Current user is null");
             return;
         }
 
-        String username = ((UserDetails)currentUser.getPrincipal()).getUsername();
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
         User u = userDao.findByUsername(username);
 
-        if(u == null){
+        if (u == null) {
             LOGGER.warn("Username {} not found in database " + username);
             return;
         }
@@ -73,23 +73,23 @@ public class LihatPenilaianController {
         Staff p = staffDao.findByUser(u);
 
 
-        if(p == null){
+        if (p == null) {
             LOGGER.info("Employee not found for username {} " + username);
             return;
         }
 
-        model.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(u.getId(),individualCategory));
-        model.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(u.getId(),tazkiaValueCategory));
+        model.addAttribute("individual", scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(u.getId(), individualCategory));
+        model.addAttribute("tazkiaValue", scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(u.getId(), tazkiaValueCategory));
 
     }
 
     @GetMapping("/lihatpenilaian/comment")
-    public void detailComment(@RequestParam(required = false)String id, Model m,Pageable page) {
+    public void detailComment(@RequestParam(required = false) String id, Model m, Pageable page) {
         Score score = scoreDao.findOne(id);
-            if (score != null){
-                m.addAttribute("score",scoreDao.findById(id,page));
-                m.addAttribute("score", score);
-            }
+        if (score != null) {
+            m.addAttribute("score", scoreDao.findOne(id));
+            m.addAttribute("score", score);
+        }
 
         Evidence evidence = new Evidence();
         m.addAttribute("evidence", evidence);
@@ -98,7 +98,7 @@ public class LihatPenilaianController {
     }
 
     @PostMapping("/lihatpenilaian/comment")
-    public String proses(@ModelAttribute @Valid Score score, MultipartFile fileBukti)throws Exception {
+    public String proses(@ModelAttribute @Valid Score score, MultipartFile fileBukti) throws Exception {
         String idEmployee = score.getStaffKpi().getStaff().getId();
 
         String namaFile = fileBukti.getName();
@@ -118,20 +118,20 @@ public class LihatPenilaianController {
         int p = Math.max(namaAsli.lastIndexOf('/'), namaAsli.lastIndexOf('\\'));
 
         if (i > p) {
-            extension = namaAsli.substring(i+1);
+            extension = namaAsli.substring(i + 1);
         }
 
         String idFile = UUID.randomUUID().toString();
-        String lokasiUpload = uploadFolder+ File.separator + idEmployee;
-        LOGGER.debug("Lokasi upload : {}",lokasiUpload);
+        String lokasiUpload = uploadFolder + File.separator + idEmployee;
+        LOGGER.debug("Lokasi upload : {}", lokasiUpload);
         new File(lokasiUpload).mkdirs();
         File tujuan = new File(lokasiUpload + File.separator + idFile + "." + extension);
         fileBukti.transferTo(tujuan);
-        LOGGER.debug("File sudah dicopy ke : {}",tujuan.getAbsolutePath());
+        LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
 
         Evidence evidence = new Evidence();
         evidence.setScore(score);
-        evidence.setFileName(idFile+"."+extension);
+        evidence.setFileName(idFile + "." + extension);
         evidenceDao.save(evidence);
 
 

@@ -12,8 +12,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
 
 public interface ScoreDao extends PagingAndSortingRepository<Score, String> {
-
-    Page<Score> findById (String id, Pageable page);
     List<Score> findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(String id, Category category);
 
 }
