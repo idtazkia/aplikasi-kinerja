@@ -5,7 +5,6 @@ CREATE TABLE staff (
   job_level VARCHAR (255),
   job_title VARCHAR (40),
   department VARCHAR (40),
-  id_superior VARCHAR (255),
   area VARCHAR (40),
   id_user VARCHAR (255),
   PRIMARY KEY (id)
@@ -65,6 +64,15 @@ CREATE TABLE evidence (
   file_name VARCHAR (225) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_score) REFERENCES score(id)
+
+);
+
+CREATE TABLE staff_superior (
+  id VARCHAR (36)NOT NULL ,
+  id_staff VARCHAR (36)NOT NULL ,
+  id_superior VARCHAR (225) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_staff) REFERENCES staff(id)
 
 );
 
