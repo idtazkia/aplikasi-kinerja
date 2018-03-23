@@ -4,19 +4,16 @@ import id.ac.tazkia.kinerja.aplikasikinerja.entity.Staff;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 
-public interface StaffDao  extends PagingAndSortingRepository<Staff, String> {
-    Staff findByUser (User u);
+public interface StaffDao extends PagingAndSortingRepository<Staff, String> {
+    Staff findByUser(User u);
 
-    Page<Staff> findBySuperiorIdOrderByEmployeeName(String staff, Pageable page);
-    Page<Staff> findBySuperiorIdAndEmployeeNameContainingIgnoreCaseOrEmployeeNumberContainingIgnoreCaseOrderByEmployeeName(String staff,String name,String nik, Pageable page);
-
-    Page<Staff> findById (String id, Pageable page);
-
-    Long countAllBySuperiorId(String s);
-
+    @Query("select s from Staff s where :superior member of s.superiors")
+    List<Staff> test(@Param("superior") Staff superior);
 }

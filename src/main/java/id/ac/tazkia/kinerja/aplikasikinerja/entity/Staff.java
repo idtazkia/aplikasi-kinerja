@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity @Data
 public class Staff {
@@ -38,10 +40,13 @@ public class Staff {
     @NotNull
     private String department;
 
-    @NotNull
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "id_superior")
-    private Staff superior;
+    @ManyToMany
+    @JoinTable(
+            name = "staff_superior",
+            joinColumns = @JoinColumn(name = "id_staff"),
+            inverseJoinColumns = @JoinColumn(name = "id_superior")
+    )
+    private Set<Staff> superiors = new HashSet<>();
 
 
     @Column(nullable = false)
