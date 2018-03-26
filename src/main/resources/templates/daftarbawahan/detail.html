@@ -25,7 +25,7 @@
 
                         <div class="content table-responsive table-full-width">
                             <table class="table table-bordered">
-                                <thead >
+                                <thead>
                                 <th>No.</th>
                                 <th>Nama</th>
                                 <th>Nik</th>
@@ -37,16 +37,17 @@
                                 <th>Aksi</th>
                                 </thead>
                                 <tbody>
-                                <tr th:each="sd,row : ${detailStaff}">
+                                <tr th:each="sd,row : ${detail}">
                                     <td th:text="${(row.index + 1)}"></td>
                                     <td th:text="${sd.employeeName}"></td>
                                     <td th:text="${sd.employeeNumber}"></td>
                                     <td th:text="${sd.jobLevel}"></td>
                                     <td th:text="${sd.jobTitle}"></td>
                                     <td th:text="${sd.department}"></td>
-                                    <td th:text="${sd.superior.employeeName}"></td>
+                                    <td th:text="${superior.employeeName}"></td>
                                     <td th:text="${sd.area}"></td>
-                                    <td><a th:href="@{/daftarbawahan/komen(id=${sd.id})}" class="btn btn-warning">Lihat Komentar</a></td>
+                                    <td><a th:href="@{/daftarbawahan/komen(id=${sd.id})}" class="btn btn-warning">Lihat
+                                        Komentar</a></td>
                                 </tr>
                                 </tbody>
                             </table>

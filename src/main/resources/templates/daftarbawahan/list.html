@@ -24,34 +24,40 @@
                         <div class="content table-responsive table-full-width">
                             <table class="table" border="0">
                                 <form method="get">
-                                <tr>
-                                    <td>Search by :
-                                        <input type="text" id="search" autocomplete="off"
-                                               placeholder="name or employee number" name="search" th:value="${search}">
-                                        <input type="submit" value="Search" class="btn btn-success"></td>
-                                </tr>
-                                <tr style="border-bottom-color: whitesmoke">
-                                    <td>Show <span sd:page-size-selector="javascript"></span> entries</td>
-                                </tr>
+                                    <tr>
+                                        <td>Search by :
+                                            <input type="text" id="search" autocomplete="off"
+                                                   placeholder="name or employee number" name="search"
+                                                   th:value="${search}">
+                                            <input type="submit" value="Search" class="btn btn-success"></td>
+                                    </tr>
+                                    <tr style="border-bottom-color: whitesmoke">
+                                        <td>Show <span sd:page-size-selector="javascript"></span> entries</td>
+                                    </tr>
                                 </form>
                             </table>
                             <table class="table table-bordered">
-                                <thead >
+                                <thead>
                                 <th>No.</th>
                                 <th>Nama</th>
                                 <th>Departemen</th>
                                 <th>Area</th>
-                                <th th:colspan="3"><center>Aksi</center></th>
+                                <th th:colspan="3">
+                                    <center>Aksi</center>
+                                </th>
                                 </thead>
                                 <tbody>
-                                <tr th:each="sd, row : ${list}">
+                                <tr th:each="sd, row : ${subordinate}">
                                     <td th:text="${(row.index + 1)}"></td>
-                                    <td th:text="${sd.employeeName}" >Thuba Jazil, M.Sc., (Fin)</td>
+                                    <td th:text="${sd.employeeName}">Thuba Jazil, M.Sc., (Fin)</td>
                                     <td th:text="${sd.department}">Prodi Bisnis & Manajemen Islam</td>
                                     <td th:text="${sd.area}">Puket I</td>
-                                    <td><a th:href="@{/daftarbawahan/detail(id=${sd.id})}" target="output" class="btn btn-primary">Lihat Detail</a></td>
-                                    <td><a th:href="@{/daftarbawahan/form(id=${sd.id})}"  class="btn btn-warning">Input Nilai</a></td>
-                                    <td><a th:href="@{/daftarbawahan/komen(id=${sd.id})}" target="output" class="btn btn-info">Lihat Komentar</a></td>
+                                    <td><a th:href="@{/daftarbawahan/detail(id=${sd.id})}" target="output"
+                                           class="btn btn-primary">Lihat Detail</a></td>
+                                    <td><a th:href="@{/daftarbawahan/form(id=${sd.id})}" class="btn btn-warning">Input
+                                        Nilai</a></td>
+                                    <td><a th:href="@{/daftarbawahan/komen(id=${sd.id})}" target="output"
+                                           class="btn btn-info">Lihat Komentar</a></td>
                                 </tr>
 
                                 </tbody>
@@ -60,18 +66,19 @@
 
                         </div>
                         <div class="col-md-5">
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <div sd:pagination-summary="" style="font-size: small">info</div>
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <div sd:pagination-summary="" style="font-size: small">info</div>
+                                </div>
                             </div>
-                        </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-8">
                                 <nav class="pull-right">
                                     <ul class="pagination" sd:pagination="full">
                                         <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
-                                        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                                        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                                        </li>
                                         <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
                                     </ul>
                                 </nav>
