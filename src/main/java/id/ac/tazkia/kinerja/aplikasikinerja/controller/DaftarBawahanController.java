@@ -300,4 +300,12 @@ public class DaftarBawahanController {
         }
     }
 
+    @GetMapping("/daftarbawahan/evidence/list")
+    public void evidence(){
+
+
+    }
+
+
+
 }
