@@ -301,7 +301,33 @@ public class DaftarBawahanController {
     }
 
     @GetMapping("/daftarbawahan/evidence/list")
-    public void evidence(){
+    public void evidence(Model model, Authentication currentUser){
+        LOGGER.debug("username" + currentUser.getClass().getName());
+
+        if (currentUser == null) {
+            LOGGER.warn("Current user is null");
+            return;
+        }
+
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
+        User u = userDao.findByUsername(username);
+
+        if (u == null) {
+            LOGGER.warn("Username {} not found in database " + username);
+            return;
+        }
+
+        Staff p = staffDao.findByUser(u);
+
+        if (p == null) {
+            LOGGER.info("Employee not found for username {} " + username);
+            return;
+
+        }
+
+
+        model.addAttribute("individual", staffKpiDao.findAllByStaffAndKpiCategory(p, individualCategory));
+        model.addAttribute("tazkiaValue", staffKpiDao.findAllByStaffAndKpiCategory(p, tazkiaValueCategory));
 
 
     }

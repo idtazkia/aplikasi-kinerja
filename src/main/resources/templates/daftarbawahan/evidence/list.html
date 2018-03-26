@@ -45,12 +45,12 @@
                                                             <thead >
                                                             <th>No.</th>
                                                             <th>Key Result</th>
-                                                            <th><center>Aksi</center></th>
+                                                            <th colspan="2"><center>Aksi</center></th>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Aku pulang</td>
+                                                            <tr th:each="sd,row  : ${individual}">
+                                                                <td th:text="${(row.index + 1)}">1</td>
+                                                                <td th:text="${sd.kpi.keyResult}">Aku pulang</td>
                                                                 <td><center><a target="output" class="btn btn-success">Upload Evidence</a></center></td>
                                                                 <td><center><a target="output" class="btn btn-info">View(s) Evidence</a></center></td>
                                                             </tr>
@@ -83,9 +83,9 @@
                                                             <th><center>Aksi</center></th>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Aku pulang</td>
+                                                            <tr th:each="sd,row  : ${tazkiaValue}">
+                                                                <td th:text="${(row.index + 1)}">1</td>
+                                                                <td th:text="${sd.kpi.keyResult}">Aku pulang</td>
                                                                 <td><center><a target="output" class="btn btn-success">Upload Evidence</a></center></td>
                                                                 <td><center><a target="output" class="btn btn-info">View(s) Evidence</a></center></td>
                                                             </tr>
