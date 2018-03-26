@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
@@ -52,7 +53,7 @@ public class DaftarBawahanController {
     private Category individualCategory;
     private Category tazkiaValueCategory;
 
-    public DaftarBawahanController(){
+    public DaftarBawahanController() {
         individualCategory = new Category();
         individualCategory.setId(CategoryConstants.INDIVIDUAL_INDICATOR_ID);
 
@@ -60,21 +61,22 @@ public class DaftarBawahanController {
         tazkiaValueCategory.setId(CategoryConstants.TAZKIA_INDICATOR_ID);
     }
 
-    @RequestMapping("/daftarbawahan/list")
-    public String  daftarStaff(Model model,String user, Authentication currentUser,
-                               @PageableDefault(size = 10)
-                               Pageable page, String search)throws Exception{
+
+    @GetMapping("/daftarbawahan/list")
+    public String daftarStaff(Model model, String user, Authentication currentUser,
+                              @PageableDefault(size = 10)
+                                      Pageable page, String search) throws Exception {
         System.out.println("username" + currentUser.getClass().getName());
 
-        if(currentUser == null){
+        if (currentUser == null) {
             LOGGER.warn("Current user is null");
             return "redirect:/404";
         }
 
-        String username = ((UserDetails)currentUser.getPrincipal()).getUsername();
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
         User u = userDao.findByUsername(username);
 
-        if(u == null){
+        if (u == null) {
             LOGGER.warn("Username {} not found in database " + username);
             return "redirect:/404";
         }
@@ -82,26 +84,27 @@ public class DaftarBawahanController {
         Staff p = staffDao.findByUser(u);
 
 
-        if(p == null){
+        if (p == null) {
             LOGGER.warn("Staff not found for username {} " + username);
             return "redirect:/404";
         }
 
-        if(StringUtils.hasText(search)) {
+        Staff atasan = staffDao.findOne(p.getId());
+        Page<Staff> daftarBawahan = staffDao.findSubordinate(atasan, page);
+
+        if (StringUtils.hasText(search)) {
             model.addAttribute("search", search);
-            model.addAttribute("list", staffDao.findBySuperiorIdAndEmployeeNameContainingIgnoreCaseOrEmployeeNumberContainingIgnoreCaseOrderByEmployeeName(p.getId(),search,search,page));
+            model.addAttribute("subordinate", staffDao.findBySuperiorsAndEmployeeNameContainingIgnoreCaseOrderByEmployeeName(atasan, search, page));
         } else {
-            model.addAttribute("list", staffDao.findBySuperiorIdOrderByEmployeeName(p.getId(), page));
+            model.addAttribute("subordinate", daftarBawahan);
         }
-
-
 
         return "/daftarbawahan/list";
 
     }
 
     @GetMapping("/daftarbawahan/form")
-    public String  daftarKpi(String id, Model m, Pageable page,Authentication currentUser){
+    public String daftarKpi(String id, Model m, Pageable page, Authentication currentUser) {
         Staff s = staffDao.findOne(id);
 
         if (s == null) {
@@ -109,62 +112,55 @@ public class DaftarBawahanController {
             return "redirect:/404";
         }
 
-        m.addAttribute("staff",s);
+        m.addAttribute("staff", s);
 
         System.out.println("username" + currentUser.getClass().getName());
 
-        if(currentUser == null){
+        if (currentUser == null) {
             LOGGER.warn("Current user is null");
             return "redirect:/404";
         }
 
-        String username = ((UserDetails)currentUser.getPrincipal()).getUsername();
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
         User u = userDao.findByUsername(username);
 
-        if(u == null){
+        if (u == null) {
             LOGGER.warn("Username {} not found in database " + username);
             return "redirect:/404";
         }
 
-        Staff p = staffDao.findByUser(u);
 
-        if (p.getId() != s.getSuperior().getId()){
-            LOGGER.warn(s.getId() +" is not your subordinate");
-            return "redirect:/daftarbawahan/list";
-        }
-
-        m.addAttribute("individual", staffKpiDao.findAllByStaffAndKpiCategory(s,individualCategory));
-        m.addAttribute("tazkiaValue", staffKpiDao.findAllByStaffAndKpiCategory(s,tazkiaValueCategory));
+        m.addAttribute("individual", staffKpiDao.findAllByStaffAndKpiCategory(s, individualCategory));
+        m.addAttribute("tazkiaValue", staffKpiDao.findAllByStaffAndKpiCategory(s, tazkiaValueCategory));
 
         return "/daftarbawahan/form";
 
     }
 
     @ModelAttribute("daftarIndicators")
-    public Iterable<Indicators> daftarIndicators(){
+    public Iterable<Indicators> daftarIndicators() {
         return indicatorsDao.findAll();
     }
 
 
-
     @PostMapping(value = "/daftarbawahan/form")
-    public String prosesForm(@RequestParam String staff, HttpServletRequest request){
+    public String prosesForm(@RequestParam String staff, HttpServletRequest request) {
         Staff s = staffDao.findOne(staff);
-        System.out.println("Staff : "+s.getEmployeeName());
+        System.out.println("Staff : " + s.getEmployeeName());
 
         List<StaffKpi> daftarKpi = staffKpiDao.findAllByStaffAndKpiCategory(s, tazkiaValueCategory);
         List<StaffKpi> daftarKpiIndividual = staffKpiDao.findAllByStaffAndKpiCategory(s, individualCategory);
 
-        for(StaffKpi skp : daftarKpi) {
-            String pilihan = request.getParameter(skp.getKpi().getId()+"-score");
-            System.out.println("Pilihan : "+pilihan);
+        for (StaffKpi skp : daftarKpi) {
+            String pilihan = request.getParameter(skp.getKpi().getId() + "-score");
+            System.out.println("Pilihan : " + pilihan);
             Indicators indicators = indicatorsDao.findOne(pilihan);
-            if(indicators != null) {
+            if (indicators != null) {
                 Score score = new Score();
                 score.setStaffKpi(skp);
                 score.setScore(indicators.getScore());
                 score.setRemark(indicators.getContent());
-                float val= Float.parseFloat(score.getStaffKpi().getKpi().getWeight());
+                float val = Float.parseFloat(score.getStaffKpi().getKpi().getWeight());
                 float scoree = Float.parseFloat(score.getScore());
                 LOGGER.info("perkalian 1         " + val);
                 LOGGER.info(" perkalian 2          " + scoree);
@@ -177,17 +173,17 @@ public class DaftarBawahanController {
 
         }
 
-        for(StaffKpi sk : daftarKpiIndividual) {
-            String pilihan = request.getParameter(sk.getKpi().getId()+"-score");
+        for (StaffKpi sk : daftarKpiIndividual) {
+            String pilihan = request.getParameter(sk.getKpi().getId() + "-score");
 
-            System.out.println("Pilihan : "+pilihan);
+            System.out.println("Pilihan : " + pilihan);
             Indicators indicators = indicatorsDao.findOne(pilihan);
-            if(indicators != null) {
+            if (indicators != null) {
                 Score score = new Score();
                 score.setStaffKpi(sk);
                 score.setScore(indicators.getScore());
                 score.setRemark(indicators.getContent());
-                float val= Float.parseFloat(score.getStaffKpi().getKpi().getWeight());
+                float val = Float.parseFloat(score.getStaffKpi().getKpi().getWeight());
                 float scoree = Float.parseFloat(score.getScore());
                 LOGGER.info("perkalian 1         " + val);
                 LOGGER.info(" perkalian 2          " + scoree);
@@ -197,7 +193,6 @@ public class DaftarBawahanController {
                 score.setTotal(hasile);
                 scoreDao.save(score);
             }
-
 
 
         }
@@ -205,50 +200,49 @@ public class DaftarBawahanController {
     }
 
 
-
     @GetMapping("/daftarbawahan/detail")
-    public String detail(@RequestParam(required = false)String id, Model m, Pageable page,Authentication currentUser) {
+    public String detail(@RequestParam(required = false) String id, Model m, Pageable page, Authentication currentUser) {
         Staff s = staffDao.findOne(id);
-
         if (s == null) {
             LOGGER.warn("Staff not found");
             return "redirect:/404";
         }
 
+
         System.out.println("username" + currentUser.getClass().getName());
 
-        if(currentUser == null){
+        if (currentUser == null) {
             LOGGER.warn("Current user is null");
             return "redirect:/404";
         }
 
-        String username = ((UserDetails)currentUser.getPrincipal()).getUsername();
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
         User u = userDao.findByUsername(username);
 
-        if(u == null){
+        if (u == null) {
             LOGGER.warn("Username {} not found in database " + username);
             return "redirect:/404";
         }
 
         Staff p = staffDao.findByUser(u);
 
-        if (p.getId() != s.getSuperior().getId()){
-            LOGGER.warn(s.getId() +" is not your subordinate");
-            return "redirect:/daftarbawahan/list";
-        }
+        Staff atasan = staffDao.findOne(p.getId());
 
         if (StringUtils.hasText(id)) {
             m.addAttribute("nama", id);
-            m.addAttribute("detailStaff", staffDao.findById(id, page));
+            m.addAttribute("detail", staffDao.findOne(id));
+            m.addAttribute("superior", atasan);
         } else {
             m.addAttribute("detailStaff", staffDao.findAll(page));
         }
+
+
         return "/daftarbawahan/detail";
 
     }
 
     @GetMapping("/daftarbawahan/komen")
-    public String String(@RequestParam(required = true)String id, Model m, Authentication currentUser)throws  Exception{
+    public String String(@RequestParam(required = true) String id, Model m, Authentication currentUser) throws Exception {
         Staff s = staffDao.findOne(id);
 
         if (s == null) {
@@ -258,28 +252,24 @@ public class DaftarBawahanController {
 
         System.out.println("username" + currentUser.getClass().getName());
 
-        if(currentUser == null){
+        if (currentUser == null) {
             LOGGER.warn("Current user is null");
             return "redirect:/404";
         }
 
-        String username = ((UserDetails)currentUser.getPrincipal()).getUsername();
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
         User u = userDao.findByUsername(username);
 
-        if(u == null){
+        if (u == null) {
             LOGGER.warn("Username {} not found in database " + username);
             return "redirect:/404";
         }
 
         Staff p = staffDao.findByUser(u);
 
-        if (p.getId() != s.getSuperior().getId()){
-            LOGGER.warn(s.getId() +" is not your subordinate");
-            return "redirect:/daftarbawahan/list";
-        }
 
-        m.addAttribute("individual",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(id,individualCategory));
-        m.addAttribute("tazkiaValue",scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(id,tazkiaValueCategory));
+        m.addAttribute("individual", scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(id, individualCategory));
+        m.addAttribute("tazkiaValue", scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(id, tazkiaValueCategory));
 
 
         return "/daftarbawahan/komen";
@@ -289,22 +279,22 @@ public class DaftarBawahanController {
     public ResponseEntity<byte[]> tampilkanBuktiPembayaran(@PathVariable Evidence evidence) throws Exception {
         String lokasiFile = uploadFolder + File.separator + evidence.getScore().getStaffKpi().getStaff().getId()
                 + File.separator + evidence.getFileName();
-        LOGGER.debug("Lokasi file bukti : {}",lokasiFile);
+        LOGGER.debug("Lokasi file bukti : {}", lokasiFile);
 
         try {
             HttpHeaders headers = new HttpHeaders();
-            if(evidence.getFileName().toLowerCase().endsWith("jpeg") || evidence.getFileName().toLowerCase().endsWith("jpg")) {
+            if (evidence.getFileName().toLowerCase().endsWith("jpeg") || evidence.getFileName().toLowerCase().endsWith("jpg")) {
                 headers.setContentType(MediaType.IMAGE_JPEG);
-            } else if(evidence.getFileName().toLowerCase().endsWith("png")){
+            } else if (evidence.getFileName().toLowerCase().endsWith("png")) {
                 headers.setContentType(MediaType.IMAGE_PNG);
-            }else if(evidence.getFileName().toLowerCase().endsWith("pdf")) {
+            } else if (evidence.getFileName().toLowerCase().endsWith("pdf")) {
                 headers.setContentType(MediaType.APPLICATION_PDF);
-            }else {
+            } else {
                 headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             }
             byte[] data = Files.readAllBytes(Paths.get(lokasiFile));
             return new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
-        } catch (Exception err){
+        } catch (Exception err) {
             LOGGER.warn(err.getMessage(), err);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
