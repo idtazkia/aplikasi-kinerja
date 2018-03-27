@@ -58,16 +58,16 @@
                                                 </tbody>
                                             </table>
 
-                                            <!--<div class="dropdown" th:if="${sd.employeeComment != null   }">-->
-                                                <!--<button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence-->
-                                                <!--<span class="caret"></span></button>-->
-                                                <!--<ul class="dropdown-menu">-->
-                                                  <!--<li th:each="img,row : ${sd.evidence}" th:if="${img.id != null}">-->
-                                                      <!--<a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"-->
-                                                         <!--th:text="${'Evidence'+(row.index + 1)}">HTML</a>-->
-                                                  <!--</li>-->
-                                                <!--</ul>-->
-                                              <!--</div>-->
+                                            <div class="dropdown" th:if="${sd.employeeComment != null   }">
+                                                <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
+                                                <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                  <li th:each="img,row : ${sd.staffKpi.evidence}" th:if="${img.id != null}">
+                                                      <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
+                                                         th:text="${'Evidence'+(row.index + 1)}">HTML</a>
+                                                  </li>
+                                                </ul>
+                                              </div>
 
 
                                         </div>
@@ -133,16 +133,16 @@
                                                 </tbody>
                                             </table>
 
-                                            <!--<div class="dropdown" th:if="${tv.employeeComment != null}">-->
-                                                <!--<button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence-->
-                                                <!--<span class="caret"></span></button>-->
-                                                <!--<ul class="dropdown-menu">-->
-                                                  <!--<li th:each="img,row : ${tv.evidence}">-->
-                                                      <!--<a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"-->
-                                                         <!--th:text="${'Evidence'+(row.index + 1)}">HTML</a>-->
-                                                  <!--</li>-->
-                                                <!--</ul>-->
-                                              <!--</div>-->
+                                            <div class="dropdown" th:if="${tv.employeeComment != null   }">
+                                                <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
+                                                <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                  <li th:each="img,row : ${tv.staffKpi.evidence}" th:if="${img.id != null}">
+                                                      <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
+                                                         th:text="${'Evidence'+(row.index + 1)}">HTML</a>
+                                                  </li>
+                                                </ul>
+                                              </div>
 
                                         </div>
                                         <br/><br/>
