@@ -9,4 +9,9 @@ public class KpiController {
     public void list() {
 
     }
+
+    @GetMapping("/kpi/form")
+    public void form() {
+
+    }
 }
