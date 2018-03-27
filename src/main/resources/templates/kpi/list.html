@@ -26,7 +26,9 @@
                                             <input type="text" id="keyresult" autocomplete="off"
                                                    placeholder="key result" name="keyresult"
                                                    th:value="${keyresult}">
-                                            <input type="submit" value="Search" class="btn btn-success"></td>
+                                            <input type="submit" value="Search" class="btn btn-success">
+                                            <a th:href="@{/kpi/form}" class="btn btn-info col-sm-offset-7"> New Kpi</a>
+                                        </td>
                                     </tr>
                                     <tr style="border-bottom-color: whitesmoke">
                                         <td>Show <span sd:page-size-selector="javascript"></span> entries</td>
@@ -53,8 +55,8 @@
                                     <td th:text="${key.weight}">2</td>
                                     <td th:text="${key.baseLine}">4</td>
                                     <td th:text="${key.target}">3</td>
-                                    <td><a href="#" class="btn btn-warning"> Edit</a></td>
-                                    <td><a href="#" class="btn btn-danger"> Hapus</a></td>
+                                    <td><a th:href="@{/kpi/form(id=${key.id})}" target="_blank" class="btn btn-warning"> Edit</a></td>
+                                    <td><a class="btn btn-danger"> Hapus</a></td>
                                 </tr>
 
                                 </tbody>
