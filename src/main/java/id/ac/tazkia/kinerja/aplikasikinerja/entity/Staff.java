@@ -1,7 +1,6 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -27,7 +26,6 @@ public class Staff {
     private String employeeNumber;
 
     @Column(nullable = false)
-    @Email
     @NotEmpty
     @NotNull
     private String jobLevel;
