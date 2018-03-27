@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -85,9 +86,9 @@ public class LihatPenilaianController {
 
     @GetMapping("/lihatpenilaian/comment")
     public void detailComment(@RequestParam(required = false) String id, Model m, Pageable page) {
-        Score score = scoreDao.findOne(id);
+        Optional<Score> score = scoreDao.findById(id);
         if (score != null) {
-            m.addAttribute("score", scoreDao.findOne(id));
+            m.addAttribute("score", scoreDao.findById(id));
             m.addAttribute("score", score);
         }
 
@@ -130,7 +131,7 @@ public class LihatPenilaianController {
         LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
 
         Evidence evidence = new Evidence();
-        evidence.setScore(score);
+        evidence.setStaffKpi(score.getStaffKpi());
         evidence.setFileName(idFile + "." + extension);
         evidenceDao.save(evidence);
 

@@ -25,29 +25,29 @@ public class UserDataController {
 
 
     @GetMapping("/user/data")
-    public void data(Model model, Authentication currentUser){
-        logger.debug("Authentication class : {}",currentUser.getClass().getName());
+    public void data(Model model, Authentication currentUser) {
+        logger.debug("Authentication class : {}", currentUser.getClass().getName());
 
-        if(currentUser == null){
+        if (currentUser == null) {
             logger.warn("Current user is null");
             return;
         }
 
-        String username = ((UserDetails)currentUser.getPrincipal()).getUsername();
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
         User u = userDao.findByUsername(username);
         logger.debug("User ID : {}", u.getId());
-        if(u == null){
+        if (u == null) {
             logger.warn("Username {} not found in database ", username);
             return;
         }
 
         Staff p = staffDao.findByUser(u);
-        logger.debug("Nama Pendaftar : "+p.getEmployeeName());
-        if(p == null){
+        logger.debug("Nama Pendaftar : " + p.getEmployeeName());
+        if (p == null) {
             logger.warn("Pendaftar not found for username {} ", username);
             return;
         }
 
-        model.addAttribute("data", staffDao.findOne(p.getId()));
+        model.addAttribute("data", staffDao.findById(p.getId()));
     }
 }

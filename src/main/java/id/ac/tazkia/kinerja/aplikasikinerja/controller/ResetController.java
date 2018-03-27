@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Optional;
 
 
 @Controller
@@ -29,39 +30,42 @@ public class ResetController {
     private ResetDao resetDao;
     @Autowired
     private UserPasswordDao userPasswordDao;
-    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private NotifikasiService notifikasiService;
 
     @RequestMapping(value = "/reset", method = RequestMethod.GET)
-    public void tampilkanForm(){}
+    public void tampilkanForm() {
+    }
 
     @RequestMapping(value = "/reset-sukses", method = RequestMethod.GET)
-    public void sukses(){}
+    public void sukses() {
+    }
 
     @RequestMapping(value = "/404", method = RequestMethod.GET)
-    public void error(){}
-
+    public void error() {
+    }
 
 
     @GetMapping(value = "/confirm")
-    public String confirm(@RequestParam String code,Model m) {
+    public String confirm(@RequestParam String code, Model m) {
         ResetPassword resetPassword = resetDao.findByCode(code);
 
-        if (resetPassword == null){
+        if (resetPassword == null) {
             return "redirect:/404";
         }
 
-        if (code != null && !code.isEmpty()){
-            UserPassword userPassword= userPasswordDao.findOne(resetPassword.getUser().getId());
-            if (userPassword != null){
+        if (code != null && !code.isEmpty()) {
+            Optional<UserPassword> userPassword = userPasswordDao.findById(resetPassword.getUser().getId());
+            if (userPassword != null) {
                 m.addAttribute("confirm", userPassword);
                 System.out.println("as" + userPassword);
             }
 
         }
 
-        if(resetPassword.getExpired().isBefore(LocalDate.now())){
+        if (resetPassword.getExpired().isBefore(LocalDate.now())) {
             return "redirect:404";
         }
 
@@ -70,19 +74,18 @@ public class ResetController {
     }
 
 
-
     @PostMapping(value = "/reset")
-    public String reset(@Valid @RequestParam String user){
+    public String reset(@Valid @RequestParam String user) {
         User u = userDao.findByUsername(user);
 
-        if(u == null){
+        if (u == null) {
             LOGGER.info("Reset password untuk username belum terdaftar : {}", user);
             return "redirect:reset-sukses";
         }
 
         ResetPassword rp = resetDao.findByUser(u);
 
-        if(rp == null){
+        if (rp == null) {
             rp = new ResetPassword();
             rp.setUser(u);
         }
@@ -97,14 +100,14 @@ public class ResetController {
 
     @PostMapping("/confirm")
     public String updatePassword(@RequestParam String code,
-                                 @RequestParam String password){
+                                 @RequestParam String password) {
 
 
         ResetPassword resetPassword = resetDao.findByCode(code);
 
 
         UserPassword up = userPasswordDao.findByUser(resetPassword.getUser());
-        if(up == null){
+        if (up == null) {
             LOGGER.info("User tidak ditemukan :" + up);
             up = new UserPassword();
             up.setUser(resetPassword.getUser());
