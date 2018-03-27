@@ -31,9 +31,9 @@ CREATE TABLE staff_kpi(
 id VARCHAR (36)NOT NULL,
 id_staff VARCHAR (36)NOT NULL ,
 id_kpi VARCHAR (36)NOT NULL,
+evidence VARCHAR (255),
 PRIMARY KEY (id),
-FOREIGN KEY (id_staff) REFERENCES staff(id),
-FOREIGN KEY (id_kpi) REFERENCES kpi(id)
+FOREIGN KEY (id_staff) REFERENCES staff(id)
 );
 
 
@@ -60,10 +60,10 @@ CREATE TABLE score (
 
 CREATE TABLE evidence (
   id VARCHAR (36)NOT NULL ,
-  id_score VARCHAR (36)NOT NULL ,
+  id_staff_kpi VARCHAR (36)NOT NULL ,
   file_name VARCHAR (225) NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (id_score) REFERENCES score(id)
+  FOREIGN KEY (id_staff_kpi) REFERENCES staff_kpi(id)
 
 );
 
