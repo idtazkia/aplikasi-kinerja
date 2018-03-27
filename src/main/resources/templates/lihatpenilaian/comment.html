@@ -40,7 +40,7 @@
                                                 <tbody>
                                                 <tr>
                                                     <td><h3>1</h3></td>
-                                                    <td th:text="${score.staffKpi.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                    <td th:text="${score.get().staffKpi.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                         mahasiswa S2 STEI Tazkia</td>
                                                 <tr>
                                                     <td><b>Employee Comments :</b></td>
@@ -49,14 +49,14 @@
                                                         <textarea id="komen" type="text"
                                                                   th:field="*{employeeComment}"
                                                                   name="employeeComment" required
-                                                                  th:value="${score.employeeComment}"
+                                                                  th:value="${score.get().employeeComment}"
                                                                   placeholder="Silahkan masukan komentar anda." ></textarea>
-                                                            <input type="hidden" name="id" th:value="${score.id}">
-                                                            <input type="hidden" name="score" th:value="${score.score}">
-                                                            <input type="hidden" name="remark" th:value="${score.remark}">
-                                                            <input type="hidden" name="total" th:value="${score.total}">
-                                                            <input type="hidden" name="staffKpi" th:value="${score.staffKpi.id}">
-                                                            <input type="hidden" name="evidence" th:value="${score.id}">
+                                                            <input type="hidden" name="id" th:value="${score.get().id}">
+                                                            <input type="hidden" name="score" th:value="${score.get().score}">
+                                                            <input type="hidden" name="remark" th:value="${score.get().remark}">
+                                                            <input type="hidden" name="total" th:value="${score.get().total}">
+                                                            <input type="hidden" name="staffKpi" th:value="${score.get().staffKpi.id}">
+                                                            <input type="hidden" name="evidence" th:value="${score.get().id}">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -76,15 +76,15 @@
                                             <table class="table">
                                                 <tbody>
                                                 <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${score.staffKpi.kpi.weight}">10,00</span></td>
-                                                    <td>Target : <span th:text="${score.staffKpi.kpi.target}">5</span></td>
+                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${score.get().staffKpi.kpi.weight}">10,00</span></td>
+                                                    <td>Target : <span th:text="${score.get().staffKpi.kpi.target}">5</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Base line : <span th:text="${score.staffKpi.kpi.baseLine}">4</span></td>
-                                                    <td>Hasil &nbsp;&nbsp;: <span th:text="${score.score}">7</span></td>
+                                                    <td>Base line : <span th:text="${score.get().staffKpi.kpi.baseLine}">4</span></td>
+                                                    <td>Hasil &nbsp;&nbsp;: <span th:text="${score.get().score}">7</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${score.total}">79</span></td>
+                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${score.get().total}">79</span></td>
                                                     <td></td>
                                                 </tr>
                                                 </tbody>
@@ -93,7 +93,7 @@
                                     </div>
                                     <div class="funkyradio">
                                         <div class="funkyradio-success">
-                                            <label><b><span th:text="${score.score}">5</span> . <span th:text="${score.remark}">NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</span></b> </label>
+                                            <label><b><span th:text="${score.get().score}">5</span> . <span th:text="${score.get().remark}">NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</span></b> </label>
                                         </div>
                                     </div>
                                     <br><br>
