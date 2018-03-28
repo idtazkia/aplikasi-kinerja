@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -27,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class DaftarBawahanController {
@@ -48,7 +50,7 @@ public class DaftarBawahanController {
     private ScoreDao scoreDao;
 
     @Autowired
-    private KpiDao kpiDao;
+    private EvidenceDao evidenceDao;
 
 
     @Value("${upload.folder}")
@@ -336,5 +338,64 @@ public class DaftarBawahanController {
 
     }
 
+    @GetMapping("/daftarbawahan/evidence/form")
+    public String inputEvidence(String id, Model m) {
+        Optional<StaffKpi> staffKpi = staffKpiDao.findById(id);
+        m.addAttribute("kpi", staffKpi);
+        if (staffKpi != null) {
+        }
+
+        Evidence evidence = new Evidence();
+        evidence.setStaffKpi(staffKpi.get());
+        m.addAttribute("evidence", evidence);
+
+        return "/daftarbawahan/evidence/form";
+
+    }
+
+    @PostMapping("/daftarbawahan/evidence/form")
+    public String uploadBukti(@RequestParam StaffKpi id, MultipartFile file) throws Exception {
+        Optional<StaffKpi> s = staffKpiDao.findById(id.getId());
+        String idEmployee = s.get().getStaff().getId();
+
+        String namaFile = file.getName();
+        String jenisFile = file.getContentType();
+        String namaAsli = file.getOriginalFilename();
+        Long ukuran = file.getSize();
+
+        LOGGER.debug("Nama File : {}", namaFile);
+        LOGGER.debug("Jenis File : {}", jenisFile);
+        LOGGER.debug("Nama Asli File : {}", namaAsli);
+        LOGGER.debug("Ukuran File : {}", ukuran);
+
+//        memisahkan extensi
+        String extension = "";
+
+        int i = namaAsli.lastIndexOf('.');
+        int p = Math.max(namaAsli.lastIndexOf('/'), namaAsli.lastIndexOf('\\'));
+
+        if (i > p) {
+            extension = namaAsli.substring(i + 1);
+        }
+
+        String idFile = UUID.randomUUID().toString();
+        String lokasiUpload = uploadFolder + File.separator + idEmployee;
+        LOGGER.debug("Lokasi upload : {}", lokasiUpload);
+        new File(lokasiUpload).mkdirs();
+        File tujuan = new File(lokasiUpload + File.separator + idFile + "." + extension);
+        file.transferTo(tujuan);
+        LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
+
+        Evidence evidence = new Evidence();
+        evidence.setStaffKpi(id);
+        evidence.setFileName(idFile + "." + extension);
+        evidenceDao.save(evidence);
+
+
+        return "redirect:list";
+
+    }
+
 
 }
+
