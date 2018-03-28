@@ -58,11 +58,11 @@
                                                 </tbody>
                                             </table>
 
-                                            <div class="dropdown" th:if="${sd.employeeComment != null   }">
+                                            <div class="dropdown">
                                                 <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
                                                 <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                  <li th:each="img,row : ${sd.staffKpi.evidence}" th:if="${img.id != null}">
+                                                  <li th:each="img,row : ${sd.staffKpi.evidence}">
                                                       <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
                                                          th:text="${'Evidence'+(row.index + 1)}">HTML</a>
                                                   </li>
@@ -133,11 +133,11 @@
                                                 </tbody>
                                             </table>
 
-                                            <div class="dropdown" th:if="${tv.employeeComment != null   }">
+                                            <div class="dropdown">
                                                 <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
                                                 <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                  <li th:each="img,row : ${tv.staffKpi.evidence}" th:if="${img.id != null}">
+                                                  <li th:each="img,row : ${tv.staffKpi.evidence}">
                                                       <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
                                                          th:text="${'Evidence'+(row.index + 1)}">HTML</a>
                                                   </li>
