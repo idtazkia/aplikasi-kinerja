@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class KpiController {
@@ -97,6 +98,13 @@ public class KpiController {
         indicatorsDao.save(i4);
         indicatorsDao.save(i5);
         return "redirect:list";
+    }
+
+    @GetMapping("/kpi/hapus")
+    public void displayHapusForm(@RequestParam String kpi,Model m) {
+
+        Optional<Kpi> staffKpi = kpiDao.findById(kpi);
+        m.addAttribute("kpi", staffKpi);
     }
 
 }
