@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -21,13 +22,14 @@ public class StaffDaoTests {
     public void testAmbilBawahan() {
 
         String id = "001";
-        Staff atasan = staffDao.findOne(id);
+        Optional<Staff> atasan = staffDao.findById(id);
         Assert.assertNotNull(atasan);
+
 
         List<Staff> daftarBawahan = staffDao.test(atasan);
         Assert.assertNotNull(daftarBawahan);
 
-        System.out.println("Atasan : " + atasan.getEmployeeName());
+        System.out.println("Atasan : " + atasan.get().getEmployeeName());
         for (Staff bawahan : daftarBawahan) {
             System.out.println("Nama : " + bawahan.getEmployeeName());
         }
