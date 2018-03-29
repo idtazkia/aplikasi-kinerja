@@ -56,7 +56,7 @@
                                     <td th:text="${key.baseLine}">4</td>
                                     <td th:text="${key.target}">3</td>
                                     <td><a th:href="@{/kpi/form(id=${key.id})}" target="_blank" class="btn btn-warning"> Edit</a></td>
-                                    <td><a class="btn btn-danger"> Hapus</a></td>
+                                    <td><a th:href="@{/kpi/hapus(kpi=${key.id})}" class="btn btn-danger"> Hapus</a></td>
                                 </tr>
 
                                 </tbody>
