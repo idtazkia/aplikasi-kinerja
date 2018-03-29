@@ -31,7 +31,5 @@ public class Score {
 
     private String employeeComment;
 
-    private String evidence;
-
 }
 
