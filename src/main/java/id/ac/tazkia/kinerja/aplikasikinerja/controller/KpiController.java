@@ -117,4 +117,7 @@ public class KpiController {
         return "redirect:list";
     }
 
+    @GetMapping("kpi/update")
+    public void update(){}
+
 }
