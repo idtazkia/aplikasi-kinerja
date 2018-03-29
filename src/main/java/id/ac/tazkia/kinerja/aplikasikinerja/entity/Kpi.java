@@ -1,5 +1,7 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -10,6 +12,9 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 
 @Entity @Data
 public class Kpi {
@@ -42,5 +47,8 @@ public class Kpi {
 
     @OneToMany(mappedBy = "kpi")
     private List<Indicators> indicatorsList = new ArrayList<>();
+
+    @NotNull @Enumerated(EnumType.STRING)
+    private StatusKpi status= StatusKpi.AKTIF;
 
 }

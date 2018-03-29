@@ -23,6 +23,7 @@ CREATE TABLE kpi (
   weight VARCHAR (36)NOT NULL ,
   base_line VARCHAR(36) ,
   target VARCHAR(36) ,
+  status VARCHAR(255),
   PRIMARY KEY (id),
   FOREIGN KEY (id_category) REFERENCES category(id)
 );
