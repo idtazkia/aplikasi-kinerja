@@ -56,7 +56,7 @@
                                             <tbody>
                                             <tr>
                                                 <td th:text="${(row.index + 1)}"><h3>1</h3></td>
-                                                <td th:text="${k.get().kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                <td th:text="${k.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                     mahasiswa S2 STEI Tazkia</td>
                                             </tr>
                                             </tbody>
@@ -68,8 +68,9 @@
                                                 <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
                                                 <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                  <li>
-                                                      <a target="output">HTML</a>
+                                                  <li th:each="img,row : ${k.evidence}">
+                                                      <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
+                                                         th:text="${'Evidence'+(row.index + 1)}">HTML</a>
                                                   </li>
                                                 </ul>
                                               </div>
@@ -82,11 +83,11 @@
                                         <table class="table">
                                             <tbody>
                                             <tr>
-                                                <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.get().kpi.weight}" ></span></td>
-                                                <td>Target : <span th:text="${k.get().kpi.target}"></span></td>
+                                                <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.kpi.weight}" ></span></td>
+                                                <td>Target : <span th:text="${k.kpi.target}"></span></td>
                                             </tr>
                                             <tr>
-                                                <td>Base line : <span th:text="${k.get().kpi.baseLine}" ></span></td>
+                                                <td>Base line : <span th:text="${k.kpi.baseLine}" ></span></td>
                                                 <td>Hasil &nbsp;&nbsp;: </td>
                                             </tr>
                                             <tr>
@@ -100,14 +101,14 @@
 
 <br>
 
-                                 <tr th:each="ind,row : ${k.get().kpi.indicatorsList}">
+                                 <tr th:each="ind,row : ${k.kpi.indicatorsList}">
                                      <br>
                                         <table class="table table-hover">
                                      <tr >
                                        <div  class="input-group-text">
-                                             <td ><b> <input type="radio" required th:value="${ind.get().id}" th:text="${ind.get().score}" th:name="${k.get().kpi.id+'-score'}" autocomplete="off"> </b> </td>
+                                             <td ><b> <input type="radio" required th:value="${ind.id}" th:text="${ind.score}" th:name="${k.kpi.id+'-score'}" autocomplete="off"> </b> </td>
                                        </div>
-                                             <td th:text="${ind.get().content}"></td>
+                                             <td th:text="${ind.content}"></td>
                                      </tr>
                                         </table>
                                  </tr>
@@ -140,7 +141,7 @@
                                                 <tbody>
                                                 <tr>
                                                     <td th:text="${(row.index + 1)}"><h3>1</h3></td>
-                                                    <td th:text="${k.get().kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                    <td th:text="${k.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                         mahasiswa S2 STEI Tazkia</td>
                                                 </tr>
                                                 </tbody>
@@ -150,8 +151,9 @@
                                                 <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
                                                 <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                  <li>
-                                                      <a target="output">HTML</a>
+                                                  <li th:each="img,row : ${k.evidence}">
+                                                      <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
+                                                         th:text="${'Evidence'+(row.index + 1)}">HTML</a>
                                                   </li>
                                                 </ul>
                                               </div>
@@ -163,11 +165,11 @@
                                             <table class="table">
                                                 <tbody>
                                                 <tr>
-                                                    <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.get().kpi.weight}" ></span></td>
-                                                    <td>Target : <span th:text="${k.get().kpi.target}"></span></td>
+                                                    <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.kpi.weight}" ></span></td>
+                                                    <td>Target : <span th:text="${k.kpi.target}"></span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Base line : <span th:text="${k.get().kpi.baseLine}" ></span></td>
+                                                    <td>Base line : <span th:text="${k.kpi.baseLine}" ></span></td>
                                                     <td>Hasil &nbsp;&nbsp;: </td>
                                                 </tr>
                                                 <tr>
@@ -183,15 +185,15 @@
 
                                 <br>
 
-                                    <tr th:each="ind,row : ${k.get().kpi.indicatorsList}">
+                                    <tr th:each="ind,row : ${k.kpi.indicatorsList}">
 
                                     <br>
                                         <table class="table table-hover">
                                      <tr >
                                        <div  class="input-group-text">
-                                             <td ><b> <input type="radio" required  th:value="${ind.get().id}"  th:text="${ind.get().score}"  th:name="${k.get().kpi.id+'-score'}" autocomplete="off"> </b> </td>
+                                             <td ><b> <input type="radio" required  th:value="${ind.id}"  th:text="${ind.score}"  th:name="${k.kpi.id+'-score'}" autocomplete="off"> </b> </td>
                                        </div>
-                                             <td th:text="${ind.get().content}"></td>
+                                             <td th:text="${ind.content}"></td>
                                      </tr>
                                         </table>
                                  </tr>

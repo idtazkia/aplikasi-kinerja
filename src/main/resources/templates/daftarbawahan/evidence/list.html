@@ -62,8 +62,17 @@
                                                                         Evidence</a></center>
                                                                 </td>
                                                                 <td>
-                                                                    <center><a target="output" class="btn btn-info">View(s)
-                                                                        Evidence</a></center>
+                                                                    <center>
+                                                                        <div class="dropdown">
+                                                                        <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
+                                                                            <span class="caret"></span></button>
+                                                                        <ul class="dropdown-menu">
+                                                                            <li th:each="img,row : ${sd.evidence}">
+                                                                                <a target="_blank" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
+                                                                                   th:text="${'Evidence'+(row.index + 1)}">HTML</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div></center>
                                                                 </td>
                                                             </tr>
 
