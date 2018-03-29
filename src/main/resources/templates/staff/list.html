@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Daftar Karyawan</title>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">List of Staff</h4>
+                            <p class="category">Daftar Staff</p>
+                        </div>
+                        <div class="content table-responsive table-full-width">
+                            <table class="table" border="0">
+                                <form>
+                                    <tr>
+                                        <td>Search by :
+                                            <input type="text" id="search" autocomplete="off"
+                                                   placeholder="name or employee number" name="search"
+                                                   >
+                                            <input type="submit" value="Search" class="btn btn-success"> |
+                                            <a th:href="@{/staff/form}" class="btn btn-primary">Tambah Karyawan</a>
+                                        </td>
+
+                                    </tr>
+                                    <tr style="border-bottom-color: whitesmoke">
+                                        <td>Show <span></span> entries</td>
+                                    </tr>
+                                </form>
+                            </table>
+                            <table class="table table-bordered">
+                                <thead>
+                                <th>No.</th>
+                                <th>Nama</th>
+                                <th>NIK</th>
+                                <th>Pangkat</th>
+                                <th>Nama Jabatan</th>
+                                <th>Departemen</th>
+                                <th>Atasan</th>
+                                <th>Area</th>
+
+                                </thead>
+                                <tbody>
+                                <tr th:each="st, row : ${daftarStaff}">
+                                    <td th:text="${(row.index + 1)}"></td>
+                                    <td th:text="${st.employeeName}">Thuba Jazil, M.Sc., (Fin)</td>
+                                    <td th:text="${st.employeeNumber}"></td>
+                                    <td th:text="${st.jobLevel}"></td>
+                                    <td th:text="${st.jobTitle}"></td>
+                                    <td th:text="${st.department}"></td>
+                                    <td th:text="${st.superiors}"></td>
+                                    <td th:text="${st.area}"></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <nav class="pull-right">
+                                    <ul class="pagination">
+                                        <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+                                        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                                        </li>
+                                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
