@@ -15,6 +15,7 @@ CREATE TABLE staff (
   department VARCHAR (40),
   area VARCHAR (40),
   id_user VARCHAR (255),
+
   PRIMARY KEY (id)
 );
 
