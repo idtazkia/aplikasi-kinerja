@@ -1,3 +1,12 @@
+create table staff_role (
+  id VARCHAR (255)NOT NULL ,
+  role_name VARCHAR (36)NOT NULL ,
+  description VARCHAR (255),
+  PRIMARY KEY (id)
+
+);
+
+
 CREATE TABLE staff (
   id VARCHAR(36)not null,
   employee_name VARCHAR(255) NOT NULL ,
@@ -10,10 +19,20 @@ CREATE TABLE staff (
   PRIMARY KEY (id)
 );
 
+create table staff_role_staff (
+  id VARCHAR (255)NOT NULL ,
+  id_staff VARCHAR (255)NOT NULL ,
+  id_role VARCHAR (255)NOT NULL ,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_staff) REFERENCES staff(id),
+  FOREIGN KEY (id_role) REFERENCES staff_role(id)
+);
+
 CREATE TABLE category (
   id VARCHAR(36)not null,
   name VARCHAR(36) NOT NULL ,
   PRIMARY KEY (id)
+
 );
 
 CREATE TABLE kpi (
@@ -23,8 +42,19 @@ CREATE TABLE kpi (
   weight VARCHAR (36)NOT NULL ,
   base_line VARCHAR(36) ,
   target VARCHAR(36) ,
+  id_staff_role_kpi VARCHAR (255),
   PRIMARY KEY (id),
   FOREIGN KEY (id_category) REFERENCES category(id)
+
+);
+
+create table staff_role_kpi (
+  id VARCHAR (255)NOT NULL ,
+  id_kpi VARCHAR (255)NOT NULL ,
+  id_role VARCHAR (255)NOT NULL ,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_kpi) REFERENCES kpi(id),
+  FOREIGN KEY (id_role) REFERENCES staff_role(id)
 );
 
 CREATE TABLE staff_kpi(
@@ -76,7 +106,6 @@ CREATE TABLE staff_superior (
 
 );
 
-
 create table periode (
   id VARCHAR (36)NOT NULL ,
   periode_name VARCHAR (36)NOT NULL,
@@ -87,3 +116,4 @@ create table periode (
   PRIMARY KEY (id)
 
 );
+
