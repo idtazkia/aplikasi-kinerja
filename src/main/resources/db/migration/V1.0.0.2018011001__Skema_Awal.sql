@@ -1,3 +1,11 @@
+create table staff_role (
+  id VARCHAR (255)NOT NULL ,
+  role_name VARCHAR (36)NOT NULL ,
+  description VARCHAR (255),
+  PRIMARY KEY (id)
+
+);
+
 CREATE TABLE staff (
   id VARCHAR(36)not null,
   employee_name VARCHAR(255) NOT NULL ,
@@ -8,6 +16,15 @@ CREATE TABLE staff (
   area VARCHAR (40),
   id_user VARCHAR (255),
   PRIMARY KEY (id)
+);
+
+create table staff_role_staff (
+  id VARCHAR (255)NOT NULL ,
+  id_staff VARCHAR (255)NOT NULL ,
+  id_role VARCHAR (255)NOT NULL ,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_staff) REFERENCES staff(id),
+  FOREIGN KEY (id_role) REFERENCES staff_role(id)
 );
 
 CREATE TABLE category (
@@ -28,6 +45,15 @@ CREATE TABLE kpi (
   FOREIGN KEY (id_category) REFERENCES category(id)
 );
 
+create table staff_role_kpi (
+  id VARCHAR (255)NOT NULL ,
+  id_kpi VARCHAR (255)NOT NULL ,
+  id_role VARCHAR (255)NOT NULL ,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_kpi) REFERENCES kpi(id),
+  FOREIGN KEY (id_role) REFERENCES staff_role(id)
+);
+
 CREATE TABLE staff_kpi(
 id VARCHAR (36)NOT NULL,
 id_staff VARCHAR (36)NOT NULL ,
@@ -36,7 +62,6 @@ evidence VARCHAR (255),
 PRIMARY KEY (id),
 FOREIGN KEY (id_staff) REFERENCES staff(id)
 );
-
 
 CREATE TABLE indicators (
   id VARCHAR(36)not null,
