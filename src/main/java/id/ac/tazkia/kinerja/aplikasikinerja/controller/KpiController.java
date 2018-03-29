@@ -107,4 +107,14 @@ public class KpiController {
         m.addAttribute("kpi", staffKpi);
     }
 
+    @PostMapping("/kpi/hapus")
+    public String processHapusForm(@RequestParam Kpi kpi) {
+        if (kpi == null) {
+            return "redirect:list";
+        }
+        kpi.setStatus(StatusKpi.NONAKTIF);
+        kpiDao.save(kpi);
+        return "redirect:list";
+    }
+
 }

@@ -18,13 +18,13 @@
                             <p class="category"></p>
                         </div>
                         <hr>
-                        <form th:action="@{/kpi/hapus}" method="post">
-                            <div class="content">
+                            <div class="content" th:each="k : ${kpi}">
+                                <form th:action="@{/kpi/hapus(kpi=${k.get().id})}" method="post">
                                 <div class="container">
                                     <span><b>Key Result</b></span>
-                                    <h4>Menggunakan Internet</h4>
-                                    <p>Click on the indicators panel to open and close it.</p>
-                                    <div class="panel-group">
+                                    <h4>Key Result</h4>
+                                    <p th:text="${k.get().keyResult}">Click on the indicators panel to open and close it.</p>
+                                    <hr><div class="panel-group">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
@@ -32,12 +32,9 @@
                                                 </h4>
                                             </div>
                                             <div id="collapse1" class="panel-collapse collapse">
-                                                <ul class="list-group">
-                                                    <li class="list-group-item">One</li>
-                                                    <li class="list-group-item">Two</li>
-                                                    <li class="list-group-item">Three</li>
-                                                    <li class="list-group-item">Three</li>
-                                                    <li class="list-group-item">Three</li>
+                                                <ul class="list-group" th:each="ind : ${k.get().indicatorsList}">
+                                                    <li class="list-group-item" th:text="${ind.score + '         .' + ind.content}">One</li>
+
                                                 </ul>
                                             </div>
                                         </div>
@@ -46,11 +43,11 @@
                                 <center>
                                     <div class="funkyradio-success">
                                         <button type="submit" class="btn btn-danger">Delete</button>
-                                        <a th:href="@{/kpi/list}" class="btn btn-info">Cancel</a>
+                                        <a th:href="@{/lihatpenilaian/list}" class="btn btn-info">Cancel</a>
                                     </div>
                                 </center>
+                                </form>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>
