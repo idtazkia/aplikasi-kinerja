@@ -85,9 +85,10 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Role</label>
-                                                <select class="js-example-basic-multiple form-control" name="role[]" multiple="multiple">
-                                                     <option value="DS">Dosen</option>
-                                                     <option value="LT">Lektor</option>
+                                                <select class="js-example-basic-multiple form-control" name="role[]" multiple="multiple" >
+                                                    <span th:each="rl, row : ${panggilRole}">
+                                                     <option th:text="${rl.roleName}">Lektor</option>
+                                                    </span>
                                                 </select>
                                         </div>
                                     </div>

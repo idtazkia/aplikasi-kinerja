@@ -27,6 +27,9 @@ public class StaffController {
     @Autowired
     StaffDao staffDao;
 
+    @Autowired
+    StaffRoleDao staffRoleDao;
+
     @GetMapping("/staff/list")
     public void daftarStaff(Model m, String staff, Pageable page, String search) throws Exception{
         m.addAttribute("daftarStaff",staffDao.findAll(page));
@@ -35,7 +38,8 @@ public class StaffController {
 
 
     @GetMapping("/staff/form")
-    public void formPageStaf(){
+    public void formPageStaf(Model m2, String staffRole) throws Exception{
+        m2.addAttribute("panggilRole",staffRoleDao.findAll());
 
     }
 
