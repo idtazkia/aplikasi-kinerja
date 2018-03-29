@@ -28,8 +28,8 @@ public class StaffController {
     StaffDao staffDao;
 
     @GetMapping("/staff/list")
-    public void daftarStaff(@RequestParam(required = false)String staff, Model m, Pageable page){
-        m.addAttribute("daftarStaff",staffDao.findAll());
+    public void daftarStaff(Model m, String staff, Pageable page, String search) throws Exception{
+        m.addAttribute("daftarStaff",staffDao.findAll(page));
 
     }
 

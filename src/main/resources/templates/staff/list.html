@@ -23,19 +23,19 @@
                         </div>
                         <div class="content table-responsive table-full-width">
                             <table class="table" border="0">
-                                <form>
+                                <form method="get">
                                     <tr>
                                         <td>Search by :
                                             <input type="text" id="search" autocomplete="off"
                                                    placeholder="name or employee number" name="search"
-                                                   >
+                                                   th:value="${search}">
                                             <input type="submit" value="Search" class="btn btn-success"> |
                                             <a th:href="@{/staff/form}" class="btn btn-primary">Tambah Karyawan</a>
                                         </td>
 
                                     </tr>
                                     <tr style="border-bottom-color: whitesmoke">
-                                        <td>Show <span></span> entries</td>
+                                        <td>Show <span sd:page-size-selector="javascript"></span> entries</td>
                                     </tr>
                                 </form>
                             </table>
@@ -59,7 +59,7 @@
                                     <td th:text="${st.jobLevel}"></td>
                                     <td th:text="${st.jobTitle}"></td>
                                     <td th:text="${st.department}"></td>
-                                    <!--<td th:text="${st.superiors}"></td>-->
+                                    <td ></td>
                                     <td th:text="${st.area}"></td>
                                 </tr>
 
@@ -68,10 +68,17 @@
 
 
                         </div>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <div sd:pagination-summary="" style="font-size: small">info</div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-8">
                                 <nav class="pull-right">
-                                    <ul class="pagination">
+                                    <ul class="pagination" sd:pagination="full">
                                         <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
                                         <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                                         </li>
@@ -80,6 +87,7 @@
                                 </nav>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
