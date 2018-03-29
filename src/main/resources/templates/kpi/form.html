@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html
+<html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout}">
 <head>
@@ -17,41 +17,44 @@
                             <h4 class="title">Input Kpi</h4>
                             <p class="category"></p>
                         </div>
+                        <form th:action="@{/kpi/form}" method="post">
                         <div class="content">
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Key Result</label>
-                                        <textarea name="" id="" class="form-control border-input"
+                                        <textarea name="keyResult" id="keyResult" class="form-control border-input"
                                                   placeholder="Key Result" cols="30" rows="5"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Category</label>
-                                        <select class="form-control border-input">
-                                            <option>--Choose one option--</option>
-                                            <option value="002">Tazkia Value</option>
-                                            <option value="001">Individual Achievement</option>
+
+                                        <select name="category" class="form-control border-input" required autofocus>
+                                            <option value="">-Pilih Program Studi-</option>
+                                            <option th:each="ins : ${daftarCategory}"
+                                                    th:value="${ins.id}"
+                                                    th:text="${ins.name}">Ekonomi Syariah</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Weight</label>
-                                        <input type="text" class="form-control border-input" placeholder="Weight">
+                                        <input type="text" name="weight" class="form-control border-input" placeholder="Weight">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Base Line</label>
-                                        <input type="text" class="form-control border-input" placeholder="Base Line">
+                                        <input type="text" name="baseLine" class="form-control border-input" placeholder="Base Line">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Target</label>
-                                        <input type="text" class="form-control border-input" placeholder="Target">
+                                        <input type="text" name="target" class="form-control border-input" placeholder="Target">
                                     </div>
                                 </div>
                             </div>
@@ -60,14 +63,14 @@
                                 <div class="col-xs-1">
                                     <div class="form-group">
                                         <label>Score</label>
-                                        <input type="text" class="form-control border-input" readonly value="5"
+                                        <input type="text" name="score5" class="form-control border-input" readonly value="5"
                                                style="width: 70%">
                                     </div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <label>Indicator</label>
-                                        <input type="text" class="form-control border-input" placeholder="Indicator">
+                                        <input type="text" name="indicator5" class="form-control border-input" placeholder="Indicator">
                                     </div>
                                 </div>
                             </div>
@@ -75,14 +78,14 @@
                                 <div class="col-xs-1">
                                     <div class="form-group">
                                         <label>Score</label>
-                                        <input type="text" class="form-control border-input" readonly value="4"
+                                        <input type="text" name="score4" class="form-control border-input" readonly value="4"
                                                style="width: 70%">
                                     </div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <label>Indicator</label>
-                                        <input type="text" class="form-control border-input" placeholder="Indicator">
+                                        <input type="text" name="indicator4" class="form-control border-input" placeholder="Indicator">
                                     </div>
                                 </div>
                             </div>
@@ -90,14 +93,14 @@
                                 <div class="col-xs-1">
                                     <div class="form-group">
                                         <label>Score</label>
-                                        <input type="text" class="form-control border-input" readonly value="3"
+                                        <input type="text" name="score3" class="form-control border-input" readonly value="3"
                                                style="width: 70%">
                                     </div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <label>Indicator</label>
-                                        <input type="text" class="form-control border-input" placeholder="Indicator">
+                                        <input type="text" name="indicator3" class="form-control border-input" placeholder="Indicator">
                                     </div>
                                 </div>
                             </div>
@@ -105,14 +108,14 @@
                                 <div class="col-xs-1">
                                     <div class="form-group">
                                         <label>Score</label>
-                                        <input type="text" class="form-control border-input" readonly value="2"
+                                        <input type="text" name="score2" class="form-control border-input" readonly value="2"
                                                style="width: 70%">
                                     </div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <label>Indicator</label>
-                                        <input type="text" class="form-control border-input" placeholder="Indicator">
+                                        <input type="text" name="indicator2" class="form-control border-input" placeholder="Indicator">
                                     </div>
                                 </div>
                             </div>
@@ -120,14 +123,14 @@
                                 <div class="col-xs-1">
                                     <div class="form-group">
                                         <label>Score</label>
-                                        <input type="text" class="form-control border-input" readonly value="1"
+                                        <input type="text" name="score1" class="form-control border-input" readonly value="1"
                                                style="width: 70%">
                                     </div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <label>Indicator</label>
-                                        <input type="text" class="form-control border-input" placeholder="Indicator">
+                                        <input type="text" name="indicator1" class="form-control border-input" placeholder="Indicator">
                                     </div>
                                 </div>
                             </div>
@@ -141,6 +144,7 @@
                                 </center>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
