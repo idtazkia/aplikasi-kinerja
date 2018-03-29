@@ -20,12 +20,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class DaftarBawahanController {
@@ -45,6 +48,9 @@ public class DaftarBawahanController {
 
     @Autowired
     private ScoreDao scoreDao;
+
+    @Autowired
+    private EvidenceDao evidenceDao;
 
 
     @Value("${upload.folder}")
@@ -89,7 +95,7 @@ public class DaftarBawahanController {
             return "redirect:/404";
         }
 
-        Staff atasan = staffDao.findOne(p.getId());
+        Optional<Staff> atasan = staffDao.findById(p.getId());
         Page<Staff> daftarBawahan = staffDao.findSubordinate(atasan, page);
 
         if (StringUtils.hasText(search)) {
@@ -105,7 +111,7 @@ public class DaftarBawahanController {
 
     @GetMapping("/daftarbawahan/form")
     public String daftarKpi(String id, Model m, Pageable page, Authentication currentUser) {
-        Staff s = staffDao.findOne(id);
+        Optional<Staff> s = staffDao.findById(id);
 
         if (s == null) {
             LOGGER.warn("Staff not found");
@@ -145,8 +151,8 @@ public class DaftarBawahanController {
 
     @PostMapping(value = "/daftarbawahan/form")
     public String prosesForm(@RequestParam String staff, HttpServletRequest request) {
-        Staff s = staffDao.findOne(staff);
-        System.out.println("Staff : " + s.getEmployeeName());
+        Optional<Staff> s = staffDao.findById(staff);
+        System.out.println("Staff : " + s.get().getEmployeeName());
 
         List<StaffKpi> daftarKpi = staffKpiDao.findAllByStaffAndKpiCategory(s, tazkiaValueCategory);
         List<StaffKpi> daftarKpiIndividual = staffKpiDao.findAllByStaffAndKpiCategory(s, individualCategory);
@@ -154,12 +160,12 @@ public class DaftarBawahanController {
         for (StaffKpi skp : daftarKpi) {
             String pilihan = request.getParameter(skp.getKpi().getId() + "-score");
             System.out.println("Pilihan : " + pilihan);
-            Indicators indicators = indicatorsDao.findOne(pilihan);
+            Optional<Indicators> indicators = indicatorsDao.findById(pilihan);
             if (indicators != null) {
                 Score score = new Score();
                 score.setStaffKpi(skp);
-                score.setScore(indicators.getScore());
-                score.setRemark(indicators.getContent());
+                score.setScore(indicators.get().getScore());
+                score.setRemark(indicators.get().getContent());
                 float val = Float.parseFloat(score.getStaffKpi().getKpi().getWeight());
                 float scoree = Float.parseFloat(score.getScore());
                 LOGGER.info("perkalian 1         " + val);
@@ -177,12 +183,12 @@ public class DaftarBawahanController {
             String pilihan = request.getParameter(sk.getKpi().getId() + "-score");
 
             System.out.println("Pilihan : " + pilihan);
-            Indicators indicators = indicatorsDao.findOne(pilihan);
+            Optional<Indicators> indicators = indicatorsDao.findById(pilihan);
             if (indicators != null) {
                 Score score = new Score();
                 score.setStaffKpi(sk);
-                score.setScore(indicators.getScore());
-                score.setRemark(indicators.getContent());
+                score.setScore(indicators.get().getScore());
+                score.setRemark(indicators.get().getContent());
                 float val = Float.parseFloat(score.getStaffKpi().getKpi().getWeight());
                 float scoree = Float.parseFloat(score.getScore());
                 LOGGER.info("perkalian 1         " + val);
@@ -202,7 +208,7 @@ public class DaftarBawahanController {
 
     @GetMapping("/daftarbawahan/detail")
     public String detail(@RequestParam(required = false) String id, Model m, Pageable page, Authentication currentUser) {
-        Staff s = staffDao.findOne(id);
+        Optional<Staff> s = staffDao.findById(id);
         if (s == null) {
             LOGGER.warn("Staff not found");
             return "redirect:/404";
@@ -226,11 +232,11 @@ public class DaftarBawahanController {
 
         Staff p = staffDao.findByUser(u);
 
-        Staff atasan = staffDao.findOne(p.getId());
+        Optional<Staff> atasan = staffDao.findById(p.getId());
 
         if (StringUtils.hasText(id)) {
             m.addAttribute("nama", id);
-            m.addAttribute("detail", staffDao.findOne(id));
+            m.addAttribute("detail", staffDao.findById(id));
             m.addAttribute("superior", atasan);
         } else {
             m.addAttribute("detailStaff", staffDao.findAll(page));
@@ -243,7 +249,7 @@ public class DaftarBawahanController {
 
     @GetMapping("/daftarbawahan/komen")
     public String String(@RequestParam(required = true) String id, Model m, Authentication currentUser) throws Exception {
-        Staff s = staffDao.findOne(id);
+        Optional<Staff> s = staffDao.findById(id);
 
         if (s == null) {
             LOGGER.warn("Staff not found");
@@ -277,7 +283,7 @@ public class DaftarBawahanController {
 
     @GetMapping("/uploaded/{evidence}/bukti/")
     public ResponseEntity<byte[]> tampilkanBuktiPembayaran(@PathVariable Evidence evidence) throws Exception {
-        String lokasiFile = uploadFolder + File.separator + evidence.getScore().getStaffKpi().getStaff().getId()
+        String lokasiFile = uploadFolder + File.separator + evidence.getStaffKpi().getStaff().getId()
                 + File.separator + evidence.getFileName();
         LOGGER.debug("Lokasi file bukti : {}", lokasiFile);
 
@@ -301,7 +307,7 @@ public class DaftarBawahanController {
     }
 
     @GetMapping("/daftarbawahan/evidence/list")
-    public void evidence(Model model, Authentication currentUser){
+    public void evidence(Model model, Authentication currentUser) {
         LOGGER.debug("username" + currentUser.getClass().getName());
 
         if (currentUser == null) {
@@ -326,12 +332,70 @@ public class DaftarBawahanController {
         }
 
 
-        model.addAttribute("individual", staffKpiDao.findAllByStaffAndKpiCategory(p, individualCategory));
-        model.addAttribute("tazkiaValue", staffKpiDao.findAllByStaffAndKpiCategory(p, tazkiaValueCategory));
+        model.addAttribute("individual", staffKpiDao.findAllByStaffAndKpiCategory(Optional.ofNullable(p), individualCategory));
+        model.addAttribute("tazkiaValue", staffKpiDao.findAllByStaffAndKpiCategory(Optional.ofNullable(p), tazkiaValueCategory));
 
 
     }
 
+    @GetMapping("/daftarbawahan/evidence/form")
+    public String inputEvidence(String id, Model m) {
+        Optional<StaffKpi> staffKpi = staffKpiDao.findById(id);
+        m.addAttribute("kpi", staffKpi);
+        if (staffKpi != null) {
+        }
+
+        Evidence evidence = new Evidence();
+        evidence.setStaffKpi(staffKpi.get());
+        m.addAttribute("evidence", evidence);
+
+        return "/daftarbawahan/evidence/form";
+
+    }
+
+    @PostMapping("/daftarbawahan/evidence/form")
+    public String uploadBukti(@RequestParam StaffKpi id, MultipartFile file) throws Exception {
+        Optional<StaffKpi> s = staffKpiDao.findById(id.getId());
+        String idEmployee = s.get().getStaff().getId();
+
+        String namaFile = file.getName();
+        String jenisFile = file.getContentType();
+        String namaAsli = file.getOriginalFilename();
+        Long ukuran = file.getSize();
+
+        LOGGER.debug("Nama File : {}", namaFile);
+        LOGGER.debug("Jenis File : {}", jenisFile);
+        LOGGER.debug("Nama Asli File : {}", namaAsli);
+        LOGGER.debug("Ukuran File : {}", ukuran);
+
+//        memisahkan extensi
+        String extension = "";
+
+        int i = namaAsli.lastIndexOf('.');
+        int p = Math.max(namaAsli.lastIndexOf('/'), namaAsli.lastIndexOf('\\'));
+
+        if (i > p) {
+            extension = namaAsli.substring(i + 1);
+        }
+
+        String idFile = UUID.randomUUID().toString();
+        String lokasiUpload = uploadFolder + File.separator + idEmployee;
+        LOGGER.debug("Lokasi upload : {}", lokasiUpload);
+        new File(lokasiUpload).mkdirs();
+        File tujuan = new File(lokasiUpload + File.separator + idFile + "." + extension);
+        file.transferTo(tujuan);
+        LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
+
+        Evidence evidence = new Evidence();
+        evidence.setStaffKpi(id);
+        evidence.setFileName(idFile + "." + extension);
+        evidenceDao.save(evidence);
+
+
+        return "redirect:list";
+
+    }
 
 
 }
+

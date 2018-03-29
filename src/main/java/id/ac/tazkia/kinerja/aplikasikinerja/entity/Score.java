@@ -31,8 +31,7 @@ public class Score {
 
     private String employeeComment;
 
-    @OneToMany(mappedBy = "score", fetch = FetchType.EAGER)
-    private List<Evidence> evidence;
+    private String evidence;
 
 }
 

@@ -35,7 +35,7 @@
 
                         <!-- Tab panes -->
                         <form th:action="@{/daftarbawahan/form}" th:object="${score}" method="post">
-                            <input type="hidden" name="staff" th:value="${staff.id}">
+                            <input type="hidden" name="staff" th:value="${staff.get().id}">
 
                         <span class="tab-content">
 
@@ -56,7 +56,7 @@
                                             <tbody>
                                             <tr>
                                                 <td th:text="${(row.index + 1)}"><h3>1</h3></td>
-                                                <td th:text="${k.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                <td th:text="${k.get().kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                     mahasiswa S2 STEI Tazkia</td>
                                             </tr>
                                             </tbody>
@@ -82,11 +82,11 @@
                                         <table class="table">
                                             <tbody>
                                             <tr>
-                                                <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.kpi.weight}" ></span></td>
-                                                <td>Target : <span th:text="${k.kpi.target}"></span></td>
+                                                <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.get().kpi.weight}" ></span></td>
+                                                <td>Target : <span th:text="${k.get().kpi.target}"></span></td>
                                             </tr>
                                             <tr>
-                                                <td>Base line : <span th:text="${k.kpi.baseLine}" ></span></td>
+                                                <td>Base line : <span th:text="${k.get().kpi.baseLine}" ></span></td>
                                                 <td>Hasil &nbsp;&nbsp;: </td>
                                             </tr>
                                             <tr>
@@ -100,14 +100,14 @@
 
 <br>
 
-                                 <tr th:each="ind,row : ${k.kpi.indicatorsList}">
+                                 <tr th:each="ind,row : ${k.get().kpi.indicatorsList}">
                                      <br>
                                         <table class="table table-hover">
                                      <tr >
                                        <div  class="input-group-text">
-                                             <td ><b> <input type="radio" required th:value="${ind.id}" th:text="${ind.score}" th:name="${k.kpi.id+'-score'}" autocomplete="off"> </b> </td>
+                                             <td ><b> <input type="radio" required th:value="${ind.get().id}" th:text="${ind.get().score}" th:name="${k.get().kpi.id+'-score'}" autocomplete="off"> </b> </td>
                                        </div>
-                                             <td th:text="${ind.content}"></td>
+                                             <td th:text="${ind.get().content}"></td>
                                      </tr>
                                         </table>
                                  </tr>
@@ -140,7 +140,7 @@
                                                 <tbody>
                                                 <tr>
                                                     <td th:text="${(row.index + 1)}"><h3>1</h3></td>
-                                                    <td th:text="${k.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                    <td th:text="${k.get().kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                         mahasiswa S2 STEI Tazkia</td>
                                                 </tr>
                                                 </tbody>
@@ -163,11 +163,11 @@
                                             <table class="table">
                                                 <tbody>
                                                 <tr>
-                                                    <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.kpi.weight}" ></span></td>
-                                                    <td>Target : <span th:text="${k.kpi.target}"></span></td>
+                                                    <td >Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${k.get().kpi.weight}" ></span></td>
+                                                    <td>Target : <span th:text="${k.get().kpi.target}"></span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Base line : <span th:text="${k.kpi.baseLine}" ></span></td>
+                                                    <td>Base line : <span th:text="${k.get().kpi.baseLine}" ></span></td>
                                                     <td>Hasil &nbsp;&nbsp;: </td>
                                                 </tr>
                                                 <tr>
@@ -183,15 +183,15 @@
 
                                 <br>
 
-                                    <tr th:each="ind,row : ${k.kpi.indicatorsList}">
+                                    <tr th:each="ind,row : ${k.get().kpi.indicatorsList}">
 
                                     <br>
                                         <table class="table table-hover">
                                      <tr >
                                        <div  class="input-group-text">
-                                             <td ><b> <input type="radio" required  th:value="${ind.id}"  th:text="${ind.score}"  th:name="${k.kpi.id+'-score'}" autocomplete="off"> </b> </td>
+                                             <td ><b> <input type="radio" required  th:value="${ind.get().id}"  th:text="${ind.get().score}"  th:name="${k.get().kpi.id+'-score'}" autocomplete="off"> </b> </td>
                                        </div>
-                                             <td th:text="${ind.content}"></td>
+                                             <td th:text="${ind.get().content}"></td>
                                      </tr>
                                         </table>
                                  </tr>

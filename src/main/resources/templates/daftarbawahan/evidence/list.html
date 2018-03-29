@@ -24,10 +24,12 @@
                         <hr/>
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#individual" role="tab" data-toggle="tab">Invidiual Achievment Score</a>
+                                <a class="nav-link active" href="#individual" role="tab" data-toggle="tab">Invidiual
+                                    Achievment Score</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#tazkiavalue" role="tab" data-toggle="tab">Tazkia Value Score</a>
+                                <a class="nav-link" href="#tazkiavalue" role="tab" data-toggle="tab">Tazkia Value
+                                    Score</a>
                             </li>
                         </ul>
 
@@ -42,17 +44,27 @@
                                                 <div class="card">
                                                     <div class="content table-responsive table-full-width">
                                                         <table class="table table-bordered">
-                                                            <thead >
+                                                            <thead>
                                                             <th>No.</th>
                                                             <th>Key Result</th>
-                                                            <th colspan="2"><center>Aksi</center></th>
+                                                            <th colspan="2">
+                                                                <center>Aksi</center>
+                                                            </th>
                                                             </thead>
                                                             <tbody>
                                                             <tr th:each="sd,row  : ${individual}">
                                                                 <td th:text="${(row.index + 1)}">1</td>
                                                                 <td th:text="${sd.kpi.keyResult}">Aku pulang</td>
-                                                                <td><center><a target="output" class="btn btn-success">Upload Evidence</a></center></td>
-                                                                <td><center><a target="output" class="btn btn-info">View(s) Evidence</a></center></td>
+                                                                <td>
+                                                                    <center><a
+                                                                            th:href="@{/daftarbawahan/evidence/form(id=${sd.id})}"
+                                                                            target="output" class="btn btn-success">Upload
+                                                                        Evidence</a></center>
+                                                                </td>
+                                                                <td>
+                                                                    <center><a target="output" class="btn btn-info">View(s)
+                                                                        Evidence</a></center>
+                                                                </td>
                                                             </tr>
 
                                                             </tbody>
@@ -77,17 +89,27 @@
                                                 <div class="card">
                                                     <div class="content table-responsive table-full-width">
                                                         <table class="table table-bordered">
-                                                            <thead >
+                                                            <thead>
                                                             <th>No.</th>
                                                             <th>Key Result</th>
-                                                            <th><center>Aksi</center></th>
+                                                            <th>
+                                                                <center>Aksi</center>
+                                                            </th>
                                                             </thead>
                                                             <tbody>
                                                             <tr th:each="sd,row  : ${tazkiaValue}">
                                                                 <td th:text="${(row.index + 1)}">1</td>
                                                                 <td th:text="${sd.kpi.keyResult}">Aku pulang</td>
-                                                                <td><center><a target="output" class="btn btn-success">Upload Evidence</a></center></td>
-                                                                <td><center><a target="output" class="btn btn-info">View(s) Evidence</a></center></td>
+                                                                <td>
+                                                                    <center><a
+                                                                            th:href="@{/daftarbawahan/evidence/form(id=${sd.id})}"
+                                                                            target="output" class="btn btn-success">Upload
+                                                                        Evidence</a></center>
+                                                                </td>
+                                                                <td>
+                                                                    <center><a target="output" class="btn btn-info">View(s)
+                                                                        Evidence</a></center>
+                                                                </td>
                                                             </tr>
 
                                                             </tbody>

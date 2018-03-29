@@ -2,10 +2,10 @@ package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity @Data
 public class StaffKpi {
@@ -24,4 +24,7 @@ public class StaffKpi {
     @ManyToOne
     @JoinColumn(name = "id_kpi")
     private Kpi kpi;
+
+    @OneToMany(mappedBy = "staffKpi", fetch = FetchType.EAGER)
+    private List<Evidence> evidence;
 }

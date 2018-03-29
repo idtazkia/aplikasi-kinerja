@@ -15,8 +15,8 @@ public class Evidence {
     private String id;
 
     @ManyToOne
-    @JoinColumn(name = "id_score")
-    private Score score;
+    @JoinColumn(name = "id_staff_kpi")
+    private StaffKpi staffKpi;
 
     @NotNull
     private String fileName;

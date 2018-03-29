@@ -9,16 +9,17 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface StaffDao extends PagingAndSortingRepository<Staff, String> {
     Staff findByUser(User u);
 
     @Query("select s from Staff s where :superior member of s.superiors order by s.employeeName")
-    Page<Staff> findSubordinate(@Param("superior") Staff superior, Pageable page);
+    Page<Staff> findSubordinate(@Param("superior") Optional<Staff> superior, Pageable page);
 
     @Query("select s from Staff s where :superior member of s.superiors")
-    List<Staff> test(@Param("superior") Staff superior);
+    List<Staff> test(@Param("superior") Optional<Staff> superior);
 
-    Page<Staff> findBySuperiorsAndEmployeeNameContainingIgnoreCaseOrderByEmployeeName(Staff s, String a, Pageable page);
+    Page<Staff> findBySuperiorsAndEmployeeNameContainingIgnoreCaseOrderByEmployeeName(Optional<Staff> s, String a, Pageable page);
 }
