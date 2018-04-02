@@ -7,5 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
 
 public interface IndicatorsDao extends PagingAndSortingRepository<Indicators, String> {
-    List<Indicators>findAllByKpi(Kpi kpi);
+    Indicators findByKpiAndScore(Kpi kpi,String s);
 }

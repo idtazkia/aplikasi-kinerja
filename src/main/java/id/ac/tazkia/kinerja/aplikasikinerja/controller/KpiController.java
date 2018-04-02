@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -38,6 +40,11 @@ public class KpiController {
     @ModelAttribute("daftarCategory")
     public Iterable<Category> daftarCategory() {
         return categoryDao.findAll();
+    }
+
+    @ModelAttribute("daftarKpi")
+    public Iterable<Kpi> daftarKpi() {
+        return kpiDao.findAll();
     }
 
     @ModelAttribute("daftarIndicators")
@@ -118,6 +125,59 @@ public class KpiController {
     }
 
     @GetMapping("kpi/update")
-    public void update(){}
+    public void update(@RequestParam Kpi id,Model model){
+        Indicators i5 = indicatorsDao.findByKpiAndScore(id,"5");
+        Indicators i4 = indicatorsDao.findByKpiAndScore(id,"4");
+        Indicators i3 = indicatorsDao.findByKpiAndScore(id,"3");
+        Indicators i2 = indicatorsDao.findByKpiAndScore(id,"2");
+        Indicators i1 = indicatorsDao.findByKpiAndScore(id,"1");
+
+        InputKpiDto in = new InputKpiDto();
+        in.setBaseLine(id.getBaseLine());
+        in.setCategory(id.getCategory());
+        in.setWeight(id.getWeight());
+        in.setKeyResult(id.getKeyResult());
+        in.setTarget(id.getTarget());
+        in.setIndicator5(i5.getContent());
+        in.setIndicator4(i4.getContent());
+        in.setIndicator3(i3.getContent());
+        in.setIndicator2(i2.getContent());
+        in.setIndicator1(i1.getContent());
+        in.setId(id.getId());
+        model.addAttribute("kpi",in);
+
+    }
+
+    @PostMapping("/kpi/update")
+    public String prosesUpdate(@ModelAttribute @Valid InputKpiDto dto, BindingResult errors, SessionStatus status){
+        Optional<Kpi> kpi = kpiDao.findById(dto.getId());
+        kpi.get().setBaseLine(dto.getBaseLine());
+        kpi.get().setCategory(dto.getCategory());
+        kpi.get().setKeyResult(dto.getKeyResult());
+        kpi.get().setWeight(dto.getWeight());
+        kpi.get().setTarget(dto.getTarget());
+
+        Indicators i1 = indicatorsDao.findByKpiAndScore(kpi.get(),"1");
+        i1.setContent(dto.getIndicator1());
+        Indicators i2 = indicatorsDao.findByKpiAndScore(kpi.get(),"2");
+        i2.setContent(dto.getIndicator2());
+        Indicators i3 = indicatorsDao.findByKpiAndScore(kpi.get(),"3");
+        i3.setContent(dto.getIndicator3());
+        Indicators i4 = indicatorsDao.findByKpiAndScore(kpi.get(),"4");
+        i4.setContent(dto.getIndicator4());
+        Indicators i5 = indicatorsDao.findByKpiAndScore(kpi.get(),"5");
+        i5.setContent(dto.getIndicator5());
+
+        kpiDao.save(kpi.get());
+        indicatorsDao.save(i1);
+        indicatorsDao.save(i2);
+        indicatorsDao.save(i3);
+        indicatorsDao.save(i4);
+        indicatorsDao.save(i5);
+        return "redirect:list";
+
+    }
+
+
 
 }
