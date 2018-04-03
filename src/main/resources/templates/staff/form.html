@@ -31,13 +31,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nama</label>
-                                            <input type="text" class="form-control border-input" placeholder="Nama">
+                                            <input type="text" class="form-control border-input" placeholder="Nama" id="employee_name" name="employeeName" th:field="*{employeeName}" >
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>NIK</label>
-                                            <input type="text" class="form-control border-input" placeholder="NIK" >
+                                            <input type="text" class="form-control border-input" placeholder="NIK" id="employee_number" name="employeeNumber" th:field="*{employeeNumber}" >
                                         </div>
                                     </div>
                                 </div>
@@ -46,13 +46,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Pangkat</label>
-                                            <input type="text" class="form-control border-input" placeholder="Pangkat">
+                                            <input type="text" class="form-control border-input" placeholder="Pangkat" id="job_level" name="jobLevel" th:field="*{jobLevel}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jabatan</label>
-                                            <input type="text" class="form-control border-input" placeholder="Jabatan" >
+                                            <input type="text" class="form-control border-input" placeholder="Jabatan" id="job_title" name="jobTitle" th:field="*{jobTitle}" >
                                         </div>
                                     </div>
                                 </div>
@@ -61,35 +61,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Departemen</label>
-                                            <input type="text" class="form-control border-input" placeholder="Departmen">
+                                            <input type="text" class="form-control border-input" placeholder="Departemen" id="department" name="department" th:field="*{department}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Atasan</label>
-                                            <input type="text" class="form-control border-input" placeholder="Atasan" >
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
                                             <label>Area</label>
-                                            <input type="text" class="form-control border-input" placeholder="Area">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Role</label>
-                                                <select class="js-example-basic-multiple form-control" name="role[]" multiple="multiple" >
-                                                    <span th:each="rl, row : ${panggilRole}">
-                                                     <option th:text="${rl.roleName}">Lektor</option>
-                                                    </span>
-                                                </select>
+                                            <input type="text" class="form-control border-input" placeholder="Area" id="area" name="area" th:field="*{area}">
                                         </div>
                                     </div>
                                 </div>

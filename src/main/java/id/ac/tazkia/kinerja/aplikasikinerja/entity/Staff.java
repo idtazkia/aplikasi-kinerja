@@ -1,41 +1,35 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity @Data
 public class Staff {
+
     @Id
+    @GeneratedValue(generator = "uuid" )
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Column(nullable = false)
-    @NotNull
-    @NotEmpty
+    @Column(name = "employee_name")
     @Size(min = 3, max = 150)
     private String employeeName;
 
-    @Column(nullable = false)
-    @NotNull
-    @NotEmpty
+    @Column(name = "employee_number")
     private String employeeNumber;
 
-    @Column(nullable = false)
-    @NotEmpty
-    @NotNull
+    @Column(name = "job_level")
     private String jobLevel;
 
-    @Column(nullable = false)
-    @NotNull
-    @NotEmpty
+    @Column(name = "job_title")
     private String jobTitle;
 
-    @NotNull
+    @Column
     private String department;
 
     @ManyToMany
@@ -47,12 +41,9 @@ public class Staff {
     private Set<Staff> superiors = new HashSet<>();
 
 
-    @Column(nullable = false)
-    @NotNull
-    @NotEmpty
+    @Column
     private String area;
 
-    @NotNull
     @OneToOne @JoinColumn(name = "id_user")
     private User user;
 
