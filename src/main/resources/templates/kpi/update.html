@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html   xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Input Kpi</title>
@@ -17,44 +17,51 @@
                             <h4 class="title">Input Kpi</h4>
                             <p class="category"></p>
                         </div>
-                        <form th:action="@{/kpi/form}" method="post">
+                        <form th:action="@{/kpi/update}" method="post" th:object="${kpi}">
                             <div class="content">
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Key Result</label>
-                                            <textarea name="keyResult" id="keyResult" class="form-control border-input"
+                                            <textarea name="keyResult" th:field="*{keyResult}" id="keyResult"
+                                                      class="form-control border-input"
                                                       placeholder="Key Result" cols="30" rows="5"></textarea>
+                                            <input type="hidden" name="id" th:value="*{id}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Category</label>
 
-                                            <select name="category" class="form-control border-input" required autofocus>
+                                            <select name="category" th:field="*{category}"
+                                                    class="form-control border-input" required autofocus>
                                                 <option value="">-Pilih Program Studi-</option>
                                                 <option th:each="ins : ${daftarCategory}"
                                                         th:value="${ins.id}"
-                                                        th:text="${ins.name}">Ekonomi Syariah</option>
+                                                        th:text="${ins.name}">Ekonomi Syariah
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Weight</label>
-                                            <input type="text" name="weight" class="form-control border-input" placeholder="Weight">
+                                            <input type="text" th:field="*{weight}" name="weight"
+                                                   class="form-control border-input" placeholder="Weight">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Base Line</label>
-                                            <input type="text" name="baseLine" class="form-control border-input" placeholder="Base Line">
+                                            <input type="text" name="baseLine" th:field="*{baseLine}"
+                                                   class="form-control border-input" placeholder="Base Line">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Target</label>
-                                            <input type="text" name="target" class="form-control border-input" placeholder="Target">
+                                            <input type="text" name="target" th:field="*{target}"
+                                                   class="form-control border-input" placeholder="Target">
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +77,67 @@
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label>Indicator</label>
-                                            <input type="text" name="indicator5" class="form-control border-input" placeholder="Indicator">
+                                            <input type="text" name="indicator5" th:field="*{indicator5}" class="form-control border-input" placeholder="Indicator">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-1">
+                                        <div class="form-group">
+                                            <label>Score</label>
+                                            <input type="text" name="score4" class="form-control border-input" readonly value="4"
+                                                   style="width: 70%">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label>Indicator</label>
+                                            <input type="text" name="indicator4" th:field="*{indicator4}" class="form-control border-input" placeholder="Indicator">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-1">
+                                        <div class="form-group">
+                                            <label>Score</label>
+                                            <input type="text" name="score3" class="form-control border-input" readonly value="3"
+                                                   style="width: 70%">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label>Indicator</label>
+                                            <input type="text" name="indicator3" th:field="*{indicator3}" class="form-control border-input" placeholder="Indicator">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-1">
+                                        <div class="form-group">
+                                            <label>Score</label>
+                                            <input type="text" name="score2" class="form-control border-input" readonly value="2"
+                                                   style="width: 70%">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label>Indicator</label>
+                                            <input type="text" name="indicator2" th:field="*{indicator2}" class="form-control border-input" placeholder="Indicator">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-1">
+                                        <div class="form-group">
+                                            <label>Score</label>
+                                            <input type="text" name="score1" class="form-control border-input" readonly value="1"
+                                                   style="width: 70%">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label>Indicator</label>
+                                            <input type="text" name="indicator1" th:field="*{indicator1}" class="form-control border-input" placeholder="Indicator">
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +145,7 @@
                                 <div class="row">
                                     <center>
                                         <div class="funkyradio-success">
-                                            <button type="submit" class="btn btn-success">Submit new Kpi</button>
+                                            <button type="submit" class="btn btn-success">Update Kpi</button>
                                             <a class="btn btn-danger">Back to Kpi list</a>
                                         </div>
                                     </center>

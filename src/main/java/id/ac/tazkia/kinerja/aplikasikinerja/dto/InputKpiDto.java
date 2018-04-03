@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 @Data
 public class InputKpiDto {
 
+    @NotNull
+    private String id;
+
     @NotNull 
     private String keyResult;
 
