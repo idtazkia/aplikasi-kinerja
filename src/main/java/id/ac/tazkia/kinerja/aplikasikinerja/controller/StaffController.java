@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class StaffController {
@@ -49,9 +50,17 @@ public class StaffController {
     }
 
 
+
     @GetMapping("/staff/list")
-    public void daftarStaff(Model m, String staff,@PageableDefault(size = 10) Pageable page, String search ) throws Exception{
-        m.addAttribute("daftarStaff",staffDao.findAll(page));
+        public void daftarStaff(Model m,@PageableDefault(size = 10) Pageable page, String search ) throws Exception{
+
+        if (StringUtils.hasText(search)) {
+            m.addAttribute("search", search);
+            m.addAttribute("daftarStaff", staffDao.findByEmployeeNameContainingIgnoreCaseOrderByEmployeeName(search,page));
+        } else {
+            m.addAttribute("daftarStaff",staffDao.findAll(page));
+
+        }
 
     }
 
