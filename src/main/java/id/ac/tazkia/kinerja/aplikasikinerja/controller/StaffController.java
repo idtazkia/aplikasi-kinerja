@@ -1,12 +1,9 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.KpiDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleStaffDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Kpi;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Staff;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.StaffRoleStaff;
+import id.ac.tazkia.kinerja.aplikasikinerja.constants.CategoryConstants;
+import id.ac.tazkia.kinerja.aplikasikinerja.dao.*;
+import id.ac.tazkia.kinerja.aplikasikinerja.dto.StaffKpiDto;
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -38,16 +36,58 @@ public class StaffController {
     @Autowired
     KpiDao kpiDao;
 
+    @Autowired
+    StaffKpiDao staffKpiDao;
 
+    private Category individualCategory;
+    private Category tazkiaValueCategory;
 
-    @ModelAttribute("daftarKpi")
-    public Iterable<Kpi> daftarKpi() {
-        return kpiDao.findAll();
+    public StaffController() {
+        individualCategory = new Category();
+        individualCategory.setId(CategoryConstants.INDIVIDUAL_INDICATOR_ID);
+
+        tazkiaValueCategory = new Category();
+        tazkiaValueCategory.setId(CategoryConstants.TAZKIA_INDICATOR_ID);
     }
 
     @GetMapping("staff/kpi")
-    public void staffKpi() {
+    public String staffKpi(@RequestParam(required = true) Staff staff,Model model) { ;
+
+        if (staff == null){
+            return "redirect:/404";
+        }
+
+        model.addAttribute("daftarKpi",kpiDao.findByCategoryAndStatus(individualCategory,StatusKpi.AKTIF));
+        model.addAttribute("tazKpi",kpiDao.findByCategoryAndStatus(tazkiaValueCategory,StatusKpi.AKTIF));
+
+        StaffKpi sk = new StaffKpi();
+        sk.setStaff(staff);
+        model.addAttribute("staffKpi",sk);
+
+
+        return null;
+
     }
+
+
+    @PostMapping("staff/kpi")
+    public String proses (@RequestParam Staff staff, @ModelAttribute @Valid StaffKpiDto s, BindingResult errors, SessionStatus status){
+
+        System.out.println("Staff : "+s.getStaff().getEmployeeName());
+        System.out.println("KPIs : ");
+        for(Kpi k : s.getKpi()){
+            System.out.println("KPI : "+k.getKeyResult());
+            StaffKpi staffKpi = new StaffKpi();
+            staffKpi.setKpi(k);
+            staffKpi.setStaff(staff);
+            staffKpiDao.save(staffKpi);
+        }
+
+        status.setComplete();
+        return "redirect:list";
+    }
+
+
 
 
 
