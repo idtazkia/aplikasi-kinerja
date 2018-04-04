@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface StaffKpiDao extends PagingAndSortingRepository<StaffKpi,String> {
     List<StaffKpi> findAllByStaffAndKpiCategory(Optional<Staff> s, Category c);
 
-    StaffKpi findAllByStaff_EmployeeName(Staff a);
+    List<StaffKpi> findByStaff(Staff s);
 }

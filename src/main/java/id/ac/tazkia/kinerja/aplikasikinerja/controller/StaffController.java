@@ -147,31 +147,8 @@ public class StaffController {
         }
 
 
-        System.out.println("username" + currentUser.getClass().getName());
-
-        if (currentUser == null) {
-            LOGGER.warn("Current user is null");
-            return "redirect:/404";
-        }
-
-        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
-        User u = userDao.findByUsername(username);
-
-        if (u == null) {
-            LOGGER.warn("Username {} not found in database " + username);
-            return "redirect:/404";
-        }
-
-        Staff p = staffDao.findByUser(u);
-
-        Optional<Staff> atasan = staffDao.findById(p.getId());
-
-        if (StringUtils.hasText(staff.getId())) {
-            m.addAttribute("nama", staff.getId());
             m.addAttribute("detail", staffDao.findById(staff.getId()));
-        } else {
-            m.addAttribute("detailStaff", staffDao.findAll(page));
-        }
+            m.addAttribute("kpi",staffKpiDao.findByStaff(staff));
 
 
         return null;
