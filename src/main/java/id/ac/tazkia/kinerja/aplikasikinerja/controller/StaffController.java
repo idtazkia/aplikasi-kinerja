@@ -4,10 +4,10 @@ import id.ac.tazkia.kinerja.aplikasikinerja.constants.CategoryConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.*;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.StaffKpiDto;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +24,9 @@ import java.util.Optional;
 @Controller
 public class StaffController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(StaffController.class);
+
+
     @Autowired
     StaffDao staffDao;
 
@@ -35,6 +38,9 @@ public class StaffController {
 
     @Autowired
     KpiDao kpiDao;
+
+    @Autowired
+    UserDao userDao;
 
     @Autowired
     StaffKpiDao staffKpiDao;
@@ -51,18 +57,19 @@ public class StaffController {
     }
 
     @GetMapping("staff/kpi")
-    public String staffKpi(@RequestParam(required = true) Staff staff,Model model) { ;
+    public String staffKpi(@RequestParam(required = true) Staff staff, Model model) {
+        ;
 
-        if (staff == null){
+        if (staff == null) {
             return "redirect:/404";
         }
 
-        model.addAttribute("daftarKpi",kpiDao.findByCategoryAndStatus(individualCategory,StatusKpi.AKTIF));
-        model.addAttribute("tazKpi",kpiDao.findByCategoryAndStatus(tazkiaValueCategory,StatusKpi.AKTIF));
+        model.addAttribute("daftarKpi", kpiDao.findByCategoryAndStatus(individualCategory, StatusKpi.AKTIF));
+        model.addAttribute("tazKpi", kpiDao.findByCategoryAndStatus(tazkiaValueCategory, StatusKpi.AKTIF));
 
         StaffKpi sk = new StaffKpi();
         sk.setStaff(staff);
-        model.addAttribute("staffKpi",sk);
+        model.addAttribute("staffKpi", sk);
 
 
         return null;
@@ -71,12 +78,12 @@ public class StaffController {
 
 
     @PostMapping("staff/kpi")
-    public String proses (@RequestParam Staff staff, @ModelAttribute @Valid StaffKpiDto s, BindingResult errors, SessionStatus status){
+    public String proses(@RequestParam Staff staff, @ModelAttribute @Valid StaffKpiDto s, BindingResult errors, SessionStatus status) {
 
-        System.out.println("Staff : "+s.getStaff().getEmployeeName());
+        System.out.println("Staff : " + s.getStaff().getEmployeeName());
         System.out.println("KPIs : ");
-        for(Kpi k : s.getKpi()){
-            System.out.println("KPI : "+k.getKeyResult());
+        for (Kpi k : s.getKpi()) {
+            System.out.println("KPI : " + k.getKeyResult());
             StaffKpi staffKpi = new StaffKpi();
             staffKpi.setKpi(k);
             staffKpi.setStaff(staff);
@@ -88,17 +95,14 @@ public class StaffController {
     }
 
 
-
-
-
     @GetMapping("/staff/list")
-        public void daftarStaff(Model m,@PageableDefault(size = 10) Pageable page, String search ) throws Exception{
+    public void daftarStaff(Model m, @PageableDefault(size = 10) Pageable page, String search) throws Exception {
 
         if (StringUtils.hasText(search)) {
             m.addAttribute("search", search);
-            m.addAttribute("daftarStaff", staffDao.findByEmployeeNameContainingIgnoreCaseOrderByEmployeeName(search,page));
+            m.addAttribute("daftarStaff", staffDao.findByEmployeeNameContainingIgnoreCaseOrderByEmployeeName(search, page));
         } else {
-            m.addAttribute("daftarStaff",staffDao.findAll(page));
+            m.addAttribute("daftarStaff", staffDao.findAll(page));
 
         }
 
@@ -106,14 +110,14 @@ public class StaffController {
 
 
     @RequestMapping(value = "/staff/form", method = RequestMethod.GET)
-    public void tampilkanForm(Model model){
+    public void tampilkanForm(Model model) {
         model.addAttribute("staff", new Staff());
     }
 
 
     @RequestMapping(value = "/staff/form", method = RequestMethod.POST)
-    public String prosesForm(@Valid Staff s, BindingResult errors){
-        if(errors.hasErrors()){
+    public String prosesForm(@Valid Staff s, BindingResult errors) {
+        if (errors.hasErrors()) {
             return "/staff/form";
         }
         staffDao.save(s);
@@ -121,20 +125,57 @@ public class StaffController {
     }
 
 
-
     @GetMapping("/staff/role")
-    public void formPageRole(Model m2, String staffRole) throws Exception{
-        m2.addAttribute("panggilRole",staffRoleDao.findAll());
+    public void formPageRole(Model m2, String staffRole) throws Exception {
+        m2.addAttribute("panggilRole", staffRoleDao.findAll());
 
     }
 
     @RequestMapping(value = "/staff/role", method = RequestMethod.POST)
-    public String prosesFormRole(@ModelAttribute @Valid StaffRoleStaff srs, BindingResult errors){
-        if(errors.hasErrors()){
+    public String prosesFormRole(@ModelAttribute @Valid StaffRoleStaff srs, BindingResult errors) {
+        if (errors.hasErrors()) {
             return "/staff/role";
         }
         staffRoleStaffDao.save(srs);
         return "redirect:list";
+    }
+
+    @GetMapping("/staff/detail")
+    public String detail(@RequestParam(required = false) Staff staff, Model m, Pageable page, Authentication currentUser) {
+        if (staff == null) {
+            return "redirect:/404";
+        }
+
+
+        System.out.println("username" + currentUser.getClass().getName());
+
+        if (currentUser == null) {
+            LOGGER.warn("Current user is null");
+            return "redirect:/404";
+        }
+
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
+        User u = userDao.findByUsername(username);
+
+        if (u == null) {
+            LOGGER.warn("Username {} not found in database " + username);
+            return "redirect:/404";
+        }
+
+        Staff p = staffDao.findByUser(u);
+
+        Optional<Staff> atasan = staffDao.findById(p.getId());
+
+        if (StringUtils.hasText(staff.getId())) {
+            m.addAttribute("nama", staff.getId());
+            m.addAttribute("detail", staffDao.findById(staff.getId()));
+        } else {
+            m.addAttribute("detailStaff", staffDao.findAll(page));
+        }
+
+
+        return null;
+
     }
 
 }
