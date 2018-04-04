@@ -75,6 +75,7 @@ public class KpiController {
     public String proses(@ModelAttribute @Valid InputKpiDto dto, BindingResult errors, SessionStatus status) {
         Kpi kpi = new Kpi();
         BeanUtils.copyProperties(dto, kpi);
+        kpi.setKeyResult(dto.getKeyResult());
 
         Indicators i1 = new Indicators();
         i1.setKpi(kpi);
