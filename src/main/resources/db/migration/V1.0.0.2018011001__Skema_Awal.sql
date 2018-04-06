@@ -20,12 +20,11 @@ CREATE TABLE staff (
 );
 
 create table staff_role_staff (
-  id VARCHAR (255)NOT NULL ,
   id_staff VARCHAR (255)NOT NULL ,
-  id_role VARCHAR (255)NOT NULL ,
-  PRIMARY KEY (id),
+  id_staff_role VARCHAR (255)NOT NULL ,
+  PRIMARY KEY (id_staff, id_staff_role),
   FOREIGN KEY (id_staff) REFERENCES staff(id),
-  FOREIGN KEY (id_role) REFERENCES staff_role(id)
+  FOREIGN KEY (id_staff_role) REFERENCES staff_role(id)
 );
 
 CREATE TABLE category (
@@ -47,12 +46,11 @@ CREATE TABLE kpi (
 );
 
 create table staff_role_kpi (
-  id VARCHAR (255)NOT NULL ,
   id_kpi VARCHAR (255)NOT NULL ,
-  id_role VARCHAR (255)NOT NULL ,
-  PRIMARY KEY (id),
+  id_staff_role VARCHAR (255)NOT NULL ,
+  PRIMARY KEY (id_kpi, id_staff_role),
   FOREIGN KEY (id_kpi) REFERENCES kpi(id),
-  FOREIGN KEY (id_role) REFERENCES staff_role(id)
+  FOREIGN KEY (id_staff_role) REFERENCES staff_role(id)
 );
 
 CREATE TABLE staff_kpi(
