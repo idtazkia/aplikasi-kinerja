@@ -12,7 +12,27 @@
 
 <body>
 
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
 
+        var roleSekarang = /*[[${roleSekarang}]]*/ ["001", "002"];
+        $( document ).ready(function() {
+            $('#pilihanRole').select2();
+            console.log( "Role sekarang : "+roleSekarang );
+
+            var roleSekarangId = [];
+            for(var i=0; i<roleSekarang.length; i++) {
+                roleSekarangId.push(roleSekarang[i].id);
+            }
+
+            console.log( "ID Role sekarang : "+roleSekarangId );
+
+            $('#pilihanRole').val(roleSekarangId);
+            $('#pilihanRole').trigger("change");
+        });
+
+    </script>
+</th:block>
 <section layout:fragment="content">
     <br>
     <div class="content">
@@ -25,18 +45,19 @@
                         <div class="header">
                             <h4 class="title">Input Role</h4>
                         </div>
-                        <div class="content">
-                            <form th:action="@{/staff/role}" method="post">
+                        <div class="content" th:each="staff : ${staff}">
+                            <form th:action="@{/staff/role(staff=${staff.id})}" th:object="${staffRoleForm}" method="post">
+                                <input type="hidden" th:field="*{staff}" />
                                 <center>
                                 <div class="row" >
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Silahkan pilih role</label>
-                                            <select name="role" class="js-example-basic-multiple form-control" 			                                 multiple="multiple" >
-                                                    <span th:each="rl, row : ${panggilRole}">
-                                                     <option th:text="${rl.roleName}"
-                                                     th:value="${rl.id}">Lektor</option>
-                                                    </span>
+                                            <select name="roles" id="pilihanRole" class="form-control" 			                                 multiple="multiple" >
+                                                     <option  th:each="rl, row : ${pilihanRole}"
+                                                              th:text="${rl.roleName}"
+                                                                th:value="${rl.id}">Lektor
+                                                     </option>
                                             </select>
                                         </div>
                                     </div>
