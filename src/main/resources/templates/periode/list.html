@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="title">Periode</h2>
+                            <p class="category"></p>
+                        </div>
+                        <hr/>
+
+                        <!-- Tab panes -->
+                                <div class="container">
+                                    <!---->
+                                            <div class="col-md-12">
+                                                <div class="card text-white bg-secondary">
+                                                    <div class="card-header">
+                                                        <span>Periode 1</span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Input kpi di periode 1</h5>
+                                                        <p class="card-text"><span>28-Juli-2022 </span> <b>s/d</b> <span>28-Juli-2025</span></p>
+                                                        <button type="submit" class="btn btn-success"><i class="ti-unlock"></i> Aktifkan</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="card text-white bg-secondary">
+                                                    <div class="card-header">
+                                                        Periode 2
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Input kpi di periode 2</h5>
+                                                        <p class="card-text">28-Juli-2022 - 28-Juli-2025</p>
+                                                        <a href="#" class="btn btn-success">Aktifkan</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
