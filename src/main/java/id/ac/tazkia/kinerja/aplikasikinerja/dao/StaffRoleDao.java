@@ -9,5 +9,4 @@ import java.util.List;
 
 
 public interface StaffRoleDao extends PagingAndSortingRepository <StaffRole, String> {
-    List<StaffRole> findAll ();
 }

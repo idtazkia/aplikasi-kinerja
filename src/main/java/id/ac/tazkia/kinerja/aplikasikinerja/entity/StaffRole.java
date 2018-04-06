@@ -1,16 +1,17 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
+@EqualsAndHashCode(of = "roleName")
 public class StaffRole {
 
     @Id
@@ -22,8 +23,14 @@ public class StaffRole {
     @NotEmpty
     private String roleName;
 
-    @Column(nullable = false)
+    @Column
     private String description;
+
+    @ManyToMany
+    @JoinTable(name = "staff_role_kpi",
+               joinColumns=@JoinColumn(name = "id_staff_role"),
+               inverseJoinColumns = @JoinColumn(name = "id_kpi"))
+    private Set<Kpi> kpi = new HashSet<>();
 
     
 }

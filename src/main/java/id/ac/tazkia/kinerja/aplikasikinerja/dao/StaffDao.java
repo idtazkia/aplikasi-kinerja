@@ -25,5 +25,4 @@ public interface StaffDao extends PagingAndSortingRepository<Staff, String> {
 
     Page<Staff> findByEmployeeNameContainingIgnoreCaseOrderByEmployeeName(String search,Pageable page);
 
-    Page<Staff> findAll(Pageable page);
 }

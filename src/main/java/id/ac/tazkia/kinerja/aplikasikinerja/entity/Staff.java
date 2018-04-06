@@ -1,14 +1,17 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity @Data
+@EqualsAndHashCode(of = "employeeNumber")
 public class Staff {
 
     @Id
@@ -20,6 +23,7 @@ public class Staff {
     @Size(min = 3, max = 150)
     private String employeeName;
 
+    @NotNull
     @Column(name = "employee_number")
     private String employeeNumber;
 
@@ -32,7 +36,7 @@ public class Staff {
     @Column
     private String department;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "staff_superior",
             joinColumns = @JoinColumn(name = "id_staff"),
@@ -40,6 +44,11 @@ public class Staff {
     )
     private Set<Staff> superiors = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "staff_role_staff",
+               joinColumns=@JoinColumn(name = "id_staff"),
+               inverseJoinColumns = @JoinColumn(name = "id_staff_role"))
+    private Set<StaffRole> roles = new HashSet<>();
 
     @Column
     private String area;
