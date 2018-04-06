@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Staff Kpi</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Input Kpi</h4>
+                            <p class="category"></p>
+                        </div>
+                        <hr>
+                        <div class="content" th:each="staff : ${detail}">
+                            <form th:action="@{/staff/detail}" method="post">
+                                <center><h3>Employee Identity</h3></center>
+                                <br>
+                                <div class="row col-sm-offset-1">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>Employee Name</b></label><br><br>
+                                            <span th:text="${staff.get().employeeName}">asdasdas</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>NIK</b></label><br><br>
+                                            <span th:text="${staff.get().employeeNumber}">234343553</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>Job Title</b></label><br><br>
+                                            <span th:text="${staff.get().jobTitle}">asdsadsad</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <br>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade in active" id="individual">
+                                        <div class="container">
+                                            <!---->
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="col-md-11">
+                                                        <div class="panel-group">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-heading">
+                                                                    <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" href="#collapse1">Kpi Staff list</a>
+                                                                    </h4>
+                                                                </div>
+                                                                <div id="collapse1" class="panel-collapse collapse">
+                                                                    <ul class="list-group" th:each="kpi : ${kpi}">
+                                                                        <li class="list-group-item" th:text="${kpi.kpi.keyResult}">One</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!---->
+                                        </div>
+                                    </div>
+
+                                    <!--TAZKI VALUE PANEL-->
+
+                                    <div class="row">
+                                        <center>
+                                            <div class="funkyradio-success">
+                                                <a th:href="@{/staff/list}" class="btn btn-danger">Back to Staff list</a>
+                                            </div>
+                                        </center>
+                                    </div>
+                                    <!--ENDTAZKIAVALUE-->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

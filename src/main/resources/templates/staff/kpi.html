@@ -18,27 +18,27 @@
                             <p class="category"></p>
                         </div>
                         <hr>
-                        <form th:action="@{/staff/kpi}" method="post">
-                            <div class="content">
-                                <center><h3>Identitas Karyawan</h3></center>
+                        <div class="content" th:each="staff : ${staffKpi}">
+                            <form th:action="@{/staff/kpi(staff=${staff.staff.id})}" method="post">
+                                <center><h3>Employee Identity</h3></center>
                                 <br>
                                 <div class="row col-sm-offset-2">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label><b>Nama</b></label><br><br>
-                                            <span>asdasdas</span>
+                                            <label><b>Employee Name</b></label><br><br>
+                                            <span th:text="${staff.staff.employeeName}">asdasdas</span>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label><b>NIP</b></label><br><br>
-                                            <span>234343553</span>
+                                            <label><b>NIK</b></label><br><br>
+                                            <span th:text="${staff.staff.employeeNumber}">234343553</span>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label><b>Jabatan</b></label><br><br>
-                                            <span>asdsadsad</span>
+                                            <label><b>Job Title</b></label><br><br>
+                                            <span th:text="${staff.staff.jobTitle}">asdsadsad</span>
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Employee Name</label>
-                                                            <input type="text" name="baseLine" disabled
+                                                            <input type="text" th:value="${staffKpi.staff.employeeName}" disabled
                                                                    class="form-control border-input">
                                                         </div>
                                                     </div>
@@ -72,9 +72,11 @@
                                                         <div class="form-group">
                                                             <label>Kpi</label><br>
 
-                                                            <select class="js-example-basic-multiple form-control border-input" style="width: 100%;" multiple="multiple" >
+                                                            <select name="kpi" class="js-example-basic-multiple form-control border-input" required style="width: 100%;" multiple="multiple" >
                                                                 <option th:each="rl: ${daftarKpi}"
+                                                                        th:value="${rl.id}"
                                                                         th:text="${rl.keyResult}">Lektor
+                                                                    <input type="text" name="" th:value="">
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -92,7 +94,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Employee Name</label>
-                                                        <input type="text" name="baseLine"
+                                                        <input type="text" name="baseLine" th:value="${staffKpi.staff.employeeName}"
                                                                class="form-control border-input" disabled>
                                                     </div>
                                                 </div>
@@ -101,8 +103,11 @@
                                                     <div class="form-group">
                                                         <label>Kpi</label><br>
 
-                                                        <select class="js-example-basic-multiple form-control border-input" style="width: 100%;" multiple="multiple" >
-                                                            <option th:each="rl: ${daftarKpi}"
+                                                        <select class="js-example-basic-multiple form-control border-input"
+                                                                required name="kpi" style="width: 100%;"
+                                                                multiple="multiple">
+                                                            <option th:each="rl: ${tazKpi}"
+                                                                    th:value="${rl.id}"
                                                                     th:text="${rl.keyResult}">Lektor
                                                             </option>
                                                         </select>
@@ -122,8 +127,8 @@
                                     </div>
                                     <!--ENDTAZKIAVALUE-->
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
