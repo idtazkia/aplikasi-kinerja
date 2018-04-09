@@ -37,9 +37,9 @@ CREATE TABLE kpi (
   id VARCHAR(36)not null,
   id_category VARCHAR(36) NOT NULL ,
   key_result VARCHAR(255) NOT NULL ,
-  weight VARCHAR (36)NOT NULL ,
-  base_line VARCHAR(36) ,
-  target VARCHAR(36) ,
+  weight NUMERIC (4,2) NOT NULL,
+  base_line NUMERIC (4,2) NOT NULL,
+  target NUMERIC (4,2) NOT NULL,
   status VARCHAR(255),
   PRIMARY KEY (id),
   FOREIGN KEY (id_category) REFERENCES category(id)
@@ -65,7 +65,7 @@ FOREIGN KEY (id_staff) REFERENCES staff(id)
 CREATE TABLE indicators (
   id VARCHAR(36)not null,
   id_kpi VARCHAR(36) NOT NULL ,
-  score VARCHAR(36) NOT NULL ,
+  score NUMERIC(1) NOT NULL ,
   content VARCHAR(255) NOT NULL ,
   PRIMARY KEY (id),
   FOREIGN KEY (id_kpi) REFERENCES kpi(id)
