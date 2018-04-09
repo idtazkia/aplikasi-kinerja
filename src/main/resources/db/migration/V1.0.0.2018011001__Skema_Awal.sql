@@ -82,12 +82,28 @@ CREATE TABLE score (
   FOREIGN KEY (id_staff_kpi) REFERENCES staff_kpi(id)
 );
 
+create table periode (
+  id VARCHAR (36)NOT NULL ,
+  periode_name VARCHAR (36)NOT NULL,
+  description VARCHAR (255) NOT NULL,
+  start_date DATE NOT NULL ,
+  end_date DATE NOT NULL ,
+  active VARCHAR (36) NOT NULL,
+  PRIMARY KEY (id)
+
+);
+
 CREATE TABLE evidence (
   id VARCHAR (36)NOT NULL ,
-  id_staff_kpi VARCHAR (36)NOT NULL ,
-  file_name VARCHAR (225) NOT NULL,
+  id_staff VARCHAR (36)NOT NULL ,
+  id_kpi VARCHAR (225) NOT NULL,
+  id_periode VARCHAR (255) NOT NULL ,
+  filename VARCHAR (255) NOT NULL,
+  description VARCHAR (255) NOT NULL ,
   PRIMARY KEY (id),
-  FOREIGN KEY (id_staff_kpi) REFERENCES staff_kpi(id)
+  FOREIGN KEY (id_staff) REFERENCES staff(id),
+  FOREIGN KEY (id_kpi) REFERENCES kpi(id),
+  FOREIGN KEY (id_periode) REFERENCES periode(id)
 
 );
 
@@ -97,17 +113,5 @@ CREATE TABLE staff_superior (
   id_superior VARCHAR (225) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_staff) REFERENCES staff(id)
-
-);
-
-
-create table periode (
-  id VARCHAR (36)NOT NULL ,
-  periode_name VARCHAR (36)NOT NULL,
-  description VARCHAR (255) NOT NULL,
-  start_date DATE NOT NULL ,
-  end_date DATE NOT NULL ,
-  active VARCHAR (36) NOT NULL,
-  PRIMARY KEY (id)
 
 );
