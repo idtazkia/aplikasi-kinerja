@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.math.BigInteger;
 import java.util.Optional;
 
 @Controller
@@ -127,11 +126,11 @@ public class KpiController {
 
     @GetMapping("kpi/update")
     public void update(@RequestParam Kpi id,Model model){
-        Indicators i5 = indicatorsDao.findByKpiAndScore(id,"5");
-        Indicators i4 = indicatorsDao.findByKpiAndScore(id,"4");
-        Indicators i3 = indicatorsDao.findByKpiAndScore(id,"3");
-        Indicators i2 = indicatorsDao.findByKpiAndScore(id,"2");
-        Indicators i1 = indicatorsDao.findByKpiAndScore(id,"1");
+        Indicators i5 = indicatorsDao.findByKpiAndScore(id, BigInteger.valueOf(5));
+        Indicators i4 = indicatorsDao.findByKpiAndScore(id, BigInteger.valueOf(4));
+        Indicators i3 = indicatorsDao.findByKpiAndScore(id, BigInteger.valueOf(3));
+        Indicators i2 = indicatorsDao.findByKpiAndScore(id, BigInteger.valueOf(2));
+        Indicators i1 = indicatorsDao.findByKpiAndScore(id,BigInteger.valueOf(1));
 
         InputKpiDto in = new InputKpiDto();
         in.setBaseLine(id.getBaseLine());
@@ -158,15 +157,15 @@ public class KpiController {
         kpi.get().setWeight(dto.getWeight());
         kpi.get().setTarget(dto.getTarget());
 
-        Indicators i1 = indicatorsDao.findByKpiAndScore(kpi.get(),"1");
+        Indicators i1 = indicatorsDao.findByKpiAndScore(kpi.get(), BigInteger.valueOf(1));
         i1.setContent(dto.getIndicator1());
-        Indicators i2 = indicatorsDao.findByKpiAndScore(kpi.get(),"2");
+        Indicators i2 = indicatorsDao.findByKpiAndScore(kpi.get(), BigInteger.valueOf(2));
         i2.setContent(dto.getIndicator2());
-        Indicators i3 = indicatorsDao.findByKpiAndScore(kpi.get(),"3");
+        Indicators i3 = indicatorsDao.findByKpiAndScore(kpi.get(), BigInteger.valueOf(3));
         i3.setContent(dto.getIndicator3());
-        Indicators i4 = indicatorsDao.findByKpiAndScore(kpi.get(),"4");
+        Indicators i4 = indicatorsDao.findByKpiAndScore(kpi.get(), BigInteger.valueOf(4));
         i4.setContent(dto.getIndicator4());
-        Indicators i5 = indicatorsDao.findByKpiAndScore(kpi.get(),"5");
+        Indicators i5 = indicatorsDao.findByKpiAndScore(kpi.get(), BigInteger.valueOf(5));
         i5.setContent(dto.getIndicator5());
 
         kpiDao.save(kpi.get());

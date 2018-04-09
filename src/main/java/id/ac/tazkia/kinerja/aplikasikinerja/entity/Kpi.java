@@ -1,18 +1,15 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 
 @Entity @Data
 public class Kpi {
@@ -29,19 +26,16 @@ public class Kpi {
 
     @Column(name = "key_result",nullable = false)
     @NotNull
-    @NotEmpty
     private String keyResult;
 
-    @Column(nullable = false)
-    @NotEmpty
-    @NotNull
-    private String weight;
+    @NotNull @Min(0)
+    private BigDecimal weight;
 
-    @Column(name = "base_line",nullable = false)
-    private String baseLine;
+    @NotNull @Min(0)
+    private BigDecimal baseLine;
 
-    @Column(nullable = false)
-    private String target;
+    @NotNull @Min(0)
+    private BigDecimal target;
 
     @OneToMany(mappedBy = "kpi")
     private List<Indicators> indicatorsList = new ArrayList<>();
