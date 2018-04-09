@@ -107,7 +107,7 @@ create table periode (
   description VARCHAR (255) NOT NULL,
   start_date DATE NOT NULL ,
   end_date DATE NOT NULL ,
-  active BOOLEAN NOT NULL,
+  active VARCHAR (36) NOT NULL,
   PRIMARY KEY (id)
 
 );
