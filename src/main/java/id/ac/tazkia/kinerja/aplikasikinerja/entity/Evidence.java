@@ -15,15 +15,15 @@ public class Evidence {
     private String id;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "id_staff")
     private Staff staff;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "id_kpi")
     private Kpi kpi;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "id_periode")
     private Periode periode;
 
     @Column(nullable = false)
