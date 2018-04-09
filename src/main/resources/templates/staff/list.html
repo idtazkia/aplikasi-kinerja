@@ -39,28 +39,35 @@
                                     </tr>
                                 </form>
                             </table>
+                            <div class="container-fluid">
                             <table class="table table-bordered">
                                 <thead>
                                 <th>No.</th>
                                 <th>Nama</th>
                                 <th>NIK</th>
+                                <th>Jabatan</th>
+                                <th>Departemen</th>
+                                <th>Area</th>
                                 <th th:colspan="3">
                                     <center>Aksi</center>
                                 </th>
-
                                 </thead>
+
                                 <tbody>
                                 <tr th:each="st, row : ${daftarStaff}">
                                     <td th:text="${(row.index + 1) + (daftarStaff.number * daftarStaff.size)}"></td>
                                     <td th:text="${st.employeeName}">Thuba Jazil, M.Sc., (Fin)</td>
                                     <td th:text="${st.employeeNumber}"></td>
+                                    <td th:text="${st.jobTitle}"></td>
+                                    <td th:text="${st.department}"></td>
+                                    <td th:text="${st.area}"></td>
                                     <td><a th:href="@{/staff/detail(staff=${st.id})}" target="output" class="btn btn-info">Lihat Detail</a></td>
-                                    <td><a th:href="@{/staff/role(id=${st.id})}" target="output" class="btn btn-warning">Tambah Role</a></td>
+                                    <td><a th:href="@{/staff/role(staff=${st.id})}" target="output" class="btn btn-warning">Tambah Role</a></td>
                                     <td><a th:href="@{/staff/kpi(staff=${st.id})}" target="output" class="btn btn-success">Input Kpi Staff</a></td>
                                 </tr>
-
                                 </tbody>
                             </table>
+                            </div>
 
 
                         </div>
