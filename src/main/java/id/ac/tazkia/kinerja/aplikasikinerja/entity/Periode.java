@@ -2,6 +2,7 @@ package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,10 +23,13 @@ public class Periode {
     @NotNull
     private String periodeName;
 
-    @NotNull @Column(columnDefinition = "DATE")
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(columnDefinition = "DATE")
     private LocalDate startDate;
 
     @NotNull @Column(columnDefinition = "DATE")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     @NotNull

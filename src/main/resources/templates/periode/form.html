@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <br>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+
+
+                <div class="col-lg-8 col-md-7">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Input periode</h4>
+                        </div>
+                        <div class="content">
+                            <form th:action="@{/periode/form}" th:object="${periode}"  method="post">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Periode Name</label>
+                                            <input type="text" class="form-control border-input" th:field="*{periodeName}" placeholder="Periode Name" id="periodeName" name="periodeName" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea name="description" maxlength="220" th:field="*{description}" class="form-control border-input" id="" cols="30" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Start Date</label>
+                                            <input type="date" class="form-control border-input" th:field="*{startDate}" id="startDate" name="startDate" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>End Date</label>
+                                            <input type="date" class="form-control border-input" id="endDate" th:field="*{endDate}" name="endDate"  >
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Input Periode</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+</section>
+</body>
+</html>

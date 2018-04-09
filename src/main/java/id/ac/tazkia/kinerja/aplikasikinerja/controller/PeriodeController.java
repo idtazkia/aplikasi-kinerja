@@ -7,22 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Optional;
 
 
 @Controller
 public class PeriodeController {
-    @Autowired
-    private PeriodeDao periodeDao;
+    @Autowired private PeriodeDao periodeDao;
 
     @GetMapping("/periode/list")
-    public ModelMap list(@PageableDefault(sort = "active", direction = Sort.Direction.ASC) Pageable page) {
+    public ModelMap list(@PageableDefault(direction = Sort.Direction.ASC) Pageable page){
         return new ModelMap()
-                .addAttribute("list", periodeDao.findAll(page));
+                .addAttribute("list",periodeDao.findAll(page));
     }
 
     @PostMapping("/periode/aktif")
@@ -32,7 +38,7 @@ public class PeriodeController {
         }
 
         Iterable<Periode> p = periodeDao.findAll();
-        for (Periode periode : p) {
+        for (Periode periode : p){
             periode.setActive(AktifConstants.Nonaktif);
             periodeDao.save(periode);
         }
@@ -53,6 +59,37 @@ public class PeriodeController {
         periodeDao.save(id);
 
         return "redirect:/periode/list";
+    }
+
+    @GetMapping("/periode/form")
+    public String tampilkanForm(@RequestParam(value = "id", required = false) String id,
+                                Model m) {
+        //defaultnya, isi dengan object baru
+        m.addAttribute("periode", new Periode());
+
+        if (id != null && !id.isEmpty()) {
+            Optional<Periode> p = periodeDao.findById(id);
+            if (p != null) {
+                m.addAttribute("periode", p);
+            }
+        }
+        return "/periode/form";
+    }
+
+    @PostMapping("/periode/form")
+    public String proses(@ModelAttribute @Valid Periode periode, BindingResult error,
+                         @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                         @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate){
+
+        LocalDate start = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate end = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        periode.setActive(AktifConstants.Nonaktif);
+        periode.setStartDate(start);
+        periode.setEndDate(end);
+        periodeDao.save(periode);
+
+        return "redirect:list";
     }
 
 
