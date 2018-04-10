@@ -2,6 +2,8 @@ package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,7 +12,8 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity @Data
+@Entity @Getter
+@Setter
 @EqualsAndHashCode(of = "employeeNumber")
 public class Staff {
 
