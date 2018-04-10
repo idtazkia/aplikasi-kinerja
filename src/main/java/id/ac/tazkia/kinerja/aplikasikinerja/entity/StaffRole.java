@@ -32,5 +32,7 @@ public class StaffRole {
                inverseJoinColumns = @JoinColumn(name = "id_kpi"))
     private Set<Kpi> kpi = new HashSet<>();
 
-    
+    @ManyToOne
+    @JoinColumn(name = "id_role_superior")
+    private Role superiorRole;
 }

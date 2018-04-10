@@ -2,6 +2,7 @@ create table staff_role (
   id VARCHAR (255)NOT NULL ,
   role_name VARCHAR (36)NOT NULL ,
   description VARCHAR (255),
+  id_role_superior VARCHAR(36),
   PRIMARY KEY (id)
 
 );
@@ -37,9 +38,9 @@ CREATE TABLE kpi (
   id VARCHAR(36)not null,
   id_category VARCHAR(36) NOT NULL ,
   key_result VARCHAR(255) NOT NULL ,
-  weight NUMERIC (4,2) NOT NULL,
-  base_line NUMERIC (4,2) NOT NULL,
-  target NUMERIC (4,2) NOT NULL,
+  weight NUMERIC (4,2) ,
+  base_line NUMERIC (4,2),
+  target NUMERIC (4,2),
   status VARCHAR(255),
   PRIMARY KEY (id),
   FOREIGN KEY (id_category) REFERENCES category(id)
