@@ -1,7 +1,8 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 @Entity
-@Data
+@Getter @Setter
 public class Indicators {
     @Id
     @GeneratedValue(generator = "uuid" )

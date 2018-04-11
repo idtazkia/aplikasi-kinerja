@@ -2,6 +2,8 @@ package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -11,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity @Data
+@Entity @Getter @Setter
 public class Kpi {
 
     @Id
