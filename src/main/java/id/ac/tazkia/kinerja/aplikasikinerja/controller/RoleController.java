@@ -67,4 +67,9 @@ public class RoleController {
         status.setComplete();
         return "redirect:list";
     }
+
+    @GetMapping("/role/form")
+    private void displayForm(){
+
+    }
 }
