@@ -4,8 +4,9 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.math.BigInteger;
 
 @Entity @Data
 
@@ -18,16 +19,24 @@ public class Score {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(name = "id_staff_kpi")
-    private StaffKpi staffKpi;
+    @JoinColumn(name = "id_staff")
+    private Staff staff;
 
+    @ManyToOne
     @NotNull
-    private String score;
+    @JoinColumn(name = "id_kpi")
+    private Kpi kpi;
+
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name = "id_periode")
+    private Periode periode;
+
+    @NotNull @Min(0)
+    private BigInteger score;
 
     @NotNull
     private String remark;
-
-    private String total;
 
     private String employeeComment;
 

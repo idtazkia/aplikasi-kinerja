@@ -72,17 +72,6 @@ CREATE TABLE indicators (
   FOREIGN KEY (id_kpi) REFERENCES kpi(id)
 );
 
-CREATE TABLE score (
-  id VARCHAR(36)not null,
-  id_staff_kpi VARCHAR(36) NOT NULL ,
-  score VARCHAR(36)  ,
-  remark VARCHAR(255)  ,
-  total VARCHAR (255) ,
-  employee_comment VARCHAR (255),
-  PRIMARY KEY (id),
-  FOREIGN KEY (id_staff_kpi) REFERENCES staff_kpi(id)
-);
-
 create table periode (
   id VARCHAR (36)NOT NULL ,
   periode_name VARCHAR (36)NOT NULL,
@@ -93,6 +82,21 @@ create table periode (
   PRIMARY KEY (id)
 
 );
+
+CREATE TABLE score (
+  id VARCHAR(36)not null,
+  id_staff VARCHAR(36) NOT NULL ,
+  id_kpi VARCHAR(36)  ,
+  id_periode VARCHAR(36)  ,
+  score NUMERIC (1) ,
+  remark VARCHAR (255) ,
+  employee_comment VARCHAR (255),
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_staff) REFERENCES staff_kpi(id),
+  FOREIGN KEY (id_kpi) REFERENCES staff_kpi(id),
+  FOREIGN KEY (id_periode) REFERENCES staff_kpi(id)
+);
+
 
 CREATE TABLE evidence (
   id VARCHAR (36)NOT NULL ,
