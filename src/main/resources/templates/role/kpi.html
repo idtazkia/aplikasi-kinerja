@@ -67,7 +67,7 @@
                                                 <label>Silahkan pilih Kpi</label>
                                                 <select name="kpi" id="pilihanKpi" class="form-control" 			                                 multiple="multiple" >
                                                     <option  th:each="rl: ${pilihanKpi}"
-                                                             th:text="${rl.keyResult}"
+                                                             th:text="${rl.keyResult + '&nbsp&nbsp&nbsp&nbsp' +'('+rl.category.name+')'}"
                                                              th:value="${rl.id}">Lektor
                                                     </option>
                                                 </select>
