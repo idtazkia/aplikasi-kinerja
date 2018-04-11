@@ -79,12 +79,12 @@ public class LihatPenilaianController {
             return;
         }
 
-        model.addAttribute("individual", scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(u.getId(), individualCategory));
-        model.addAttribute("tazkiaValue", scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(u.getId(), tazkiaValueCategory));
+        model.addAttribute("individual", scoreDao.findByStaffAndKpiCategory(p, individualCategory));
+        model.addAttribute("tazkiaValue", scoreDao.findByStaffAndKpiCategory(p, tazkiaValueCategory));
 
     }
 
-    @GetMapping("/lihatpenilaian/comment")
+    /*@GetMapping("/lihatpenilaian/comment")
     public void detailComment(@RequestParam(required = false) String id, Model m, Pageable page) {
         Optional<Score> score = scoreDao.findById(id);
         if (score != null) {
@@ -96,48 +96,49 @@ public class LihatPenilaianController {
         m.addAttribute("evidence", evidence);
 
 
-    }
+    }*/
 
-    @PostMapping("/lihatpenilaian/comment")
-    public String proses(@ModelAttribute @Valid Score score, MultipartFile fileBukti) throws Exception {
-        String idEmployee = score.getStaffKpi().getStaff().getId();
+//    @PostMapping("/lihatpenilaian/comment")
+//    public String proses(@ModelAttribute @Valid Score score, MultipartFile fileBukti) throws Exception {
+//        String idEmployee = score.getStaffKpi().getStaff().getId();
+//
+//        String namaFile = fileBukti.getName();
+//        String jenisFile = fileBukti.getContentType();
+//        String namaAsli = fileBukti.getOriginalFilename();
+//        Long ukuran = fileBukti.getSize();
+//
+//        LOGGER.debug("Nama File : {}", namaFile);
+//        LOGGER.debug("Jenis File : {}", jenisFile);
+//        LOGGER.debug("Nama Asli File : {}", namaAsli);
+//        LOGGER.debug("Ukuran File : {}", ukuran);
+//
+////        memisahkan extensi
+//        String extension = "";
+//
+//        int i = namaAsli.lastIndexOf('.');
+//        int p = Math.max(namaAsli.lastIndexOf('/'), namaAsli.lastIndexOf('\\'));
+//
+//        if (i > p) {
+//            extension = namaAsli.substring(i + 1);
+//        }
+//
+//        String idFile = UUID.randomUUID().toString();
+//        String lokasiUpload = uploadFolder + File.separator + idEmployee;
+//        LOGGER.debug("Lokasi upload : {}", lokasiUpload);
+//        new File(lokasiUpload).mkdirs();
+//        File tujuan = new File(lokasiUpload + File.separator + idFile + "." + extension);
+//        fileBukti.transferTo(tujuan);
+//        LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
+//
+//        Evidence evidence = new Evidence();
+//        evidence.setStaffKpi(score.getStaffKpi());
+//        evidence.setFileName(idFile + "." + extension);
+//        evidenceDao.save(evidence);
+//
+//
+//        scoreDao.save(score);
+//        return "redirect:/lihatpenilaian/list";
+//
+//    }
 
-        String namaFile = fileBukti.getName();
-        String jenisFile = fileBukti.getContentType();
-        String namaAsli = fileBukti.getOriginalFilename();
-        Long ukuran = fileBukti.getSize();
-
-        LOGGER.debug("Nama File : {}", namaFile);
-        LOGGER.debug("Jenis File : {}", jenisFile);
-        LOGGER.debug("Nama Asli File : {}", namaAsli);
-        LOGGER.debug("Ukuran File : {}", ukuran);
-
-//        memisahkan extensi
-        String extension = "";
-
-        int i = namaAsli.lastIndexOf('.');
-        int p = Math.max(namaAsli.lastIndexOf('/'), namaAsli.lastIndexOf('\\'));
-
-        if (i > p) {
-            extension = namaAsli.substring(i + 1);
-        }
-
-        String idFile = UUID.randomUUID().toString();
-        String lokasiUpload = uploadFolder + File.separator + idEmployee;
-        LOGGER.debug("Lokasi upload : {}", lokasiUpload);
-        new File(lokasiUpload).mkdirs();
-        File tujuan = new File(lokasiUpload + File.separator + idFile + "." + extension);
-        fileBukti.transferTo(tujuan);
-        LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
-
-        Evidence evidence = new Evidence();
-        evidence.setStaffKpi(score.getStaffKpi());
-        evidence.setFileName(idFile + "." + extension);
-        evidenceDao.save(evidence);
-
-
-        scoreDao.save(score);
-        return "redirect:/lihatpenilaian/list";
-
-    }
 }

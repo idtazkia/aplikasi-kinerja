@@ -47,18 +47,14 @@
                                                             <th>Key Result</th>
                                                             <th>Score</th>
                                                             <th>Remark</th>
-                                                            <th>Total</th>
-                                                            <th>Employee Comment(s)</th>
                                                             <th><center>Aksi</center></th>
                                                             </thead>
                                                             <tbody>
                                                             <tr th:each="sd,row  : ${individual}">
                                                                 <td th:text="${(row.index + 1)}"></td>
-                                                                <td th:text="${sd.staffKpi.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
+                                                                <td th:text="${sd.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
                                                                 <td th:text="${sd.score}">Prodi Bisnis & Manajemen Islam</td>
                                                                 <td th:text="${sd.remark}">Puket I</td>
-                                                                <td th:text="${sd.total}" >sadsad</td>
-                                                                <td th:text="${sd.employeeComment}" >sadsad</td>
                                                                 <td><a th:href="@{/lihatpenilaian/comment(id=${sd.id})}" target="output" class="btn btn-info">Submit your comment</a></td>
                                                             </tr>
 
@@ -89,19 +85,15 @@
                                                             <th>Key Result</th>
                                                             <th>Score</th>
                                                             <th>Remark</th>
-                                                            <th>Total</th>
-                                                            <th>Employee Comment(s)</th>
                                                             <th><center>Aksi</center></th>
                                                             </thead>
                                                             <tbody>
                                                             <span></span>
                                                             <tr th:each="tv,row  : ${tazkiaValue}">
                                                                 <td th:text="${(row.index + 1)}"></td>
-                                                                <td th:text="${tv.staffKpi.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
+                                                                <td th:text="${tv.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
                                                                 <td th:text="${tv.score}">Prodi Bisnis & Manajemen Islam</td>
                                                                 <td th:text="${tv.remark}">Puket I</td>
-                                                                <td th:text="${tv.total}" >sadsad</td>
-                                                                <td th:text="${tv.employeeComment}" >sadsad</td>
                                                                 <td><a th:href="@{/lihatpenilaian/comment(id=${tv.id})}" target="_blank" class="btn btn-info">Submit your comment</a></td>
                                                             </tr>
 
