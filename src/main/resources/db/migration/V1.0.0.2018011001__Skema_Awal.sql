@@ -90,11 +90,10 @@ CREATE TABLE score (
   id_periode VARCHAR(36)  ,
   score NUMERIC (1) ,
   remark VARCHAR (255) ,
-  employee_comment VARCHAR (255),
   PRIMARY KEY (id),
-  FOREIGN KEY (id_staff) REFERENCES staff_kpi(id),
-  FOREIGN KEY (id_kpi) REFERENCES staff_kpi(id),
-  FOREIGN KEY (id_periode) REFERENCES staff_kpi(id)
+  FOREIGN KEY (id_staff) REFERENCES staff(id),
+  FOREIGN KEY (id_kpi) REFERENCES kpi(id),
+  FOREIGN KEY (id_periode) REFERENCES periode(id)
 );
 
 

@@ -38,7 +38,6 @@ public class Score {
     @NotNull
     private String remark;
 
-    private String employeeComment;
 
 }
 
