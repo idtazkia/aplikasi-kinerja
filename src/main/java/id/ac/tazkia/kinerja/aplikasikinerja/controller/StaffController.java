@@ -118,11 +118,7 @@ public class StaffController {
             return "redirect:/404";
         }
 
-
         m.addAttribute("detail", staffDao.findById(staff.getId()));
-        m.addAttribute("kpi",staffKpiDao.findByStaff(staff));
-
-
         return null;
 
     }

@@ -42,38 +42,29 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row col-sm-offset-1">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>Department</b></label><br><br>
+                                            <span th:text="${staff.get().department}">asdasdas</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>area</b></label><br><br>
+                                            <span th:text="${staff.get().area}">234343553</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>Username</b></label><br><br>
+                                            <span th:text="${staff.get().user.username}">asdsadsad</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr>
                                 <br>
                                 <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade in active" id="individual">
-                                        <div class="container">
-                                            <!---->
-                                            <div class="content">
-                                                <div class="row">
-                                                    <div class="col-md-11">
-                                                        <div class="panel-group">
-                                                            <div class="panel panel-default">
-                                                                <div class="panel-heading">
-                                                                    <h4 class="panel-title">
-                                                                        <a data-toggle="collapse" href="#collapse1">Kpi Staff list</a>
-                                                                    </h4>
-                                                                </div>
-                                                                <div id="collapse1" class="panel-collapse collapse">
-                                                                    <ul class="list-group" th:each="kpi : ${kpi}">
-                                                                        <li class="list-group-item" th:text="${kpi.kpi.keyResult}">One</li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!---->
-                                        </div>
-                                    </div>
-
-                                    <!--TAZKI VALUE PANEL-->
-
                                     <div class="row">
                                         <center>
                                             <div class="funkyradio-success">
