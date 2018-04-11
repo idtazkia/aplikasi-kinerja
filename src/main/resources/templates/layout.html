@@ -85,6 +85,12 @@
                         <p>Input Kpi</p>
                     </a>
                 </li>
+                <li>
+                    <a th:href="@{/role/list}">
+                        <i class="ti-pencil"></i>
+                        <p>Input Role</p>
+                    </a>
+                </li>
                 <li sec:authorize="hasAuthority('VIEW_SUPERIOR')">
                     <a th:href="@{/staff/list}">
                         <i class="ti-user"></i>
