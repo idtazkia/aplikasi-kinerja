@@ -433,7 +433,7 @@ public class DaftarBawahanController {
         evidence.setStaff(staff);
         evidence.setPeriode(periode);
         evidence.setKpi(kpi);
-        evidence.setFilename(idFile);
+        evidence.setFilename(idFile + "." + extension);
         evidence.setDescription("Upload Bukti Karyawan");
         evidenceDao.save(evidence);
 
