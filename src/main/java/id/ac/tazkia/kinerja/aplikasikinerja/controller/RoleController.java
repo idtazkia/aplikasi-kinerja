@@ -5,6 +5,7 @@ import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.StaffKpiDto;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.Kpi;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.StaffRole;
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.StatusKpi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ public class RoleController {
 
         model.addAttribute("role", staffRole);/*mengambil data role*/
 
-        model.addAttribute("pilihanKpi", kpiDao.findAll());/*mengambil data kpi*/
+        model.addAttribute("pilihanKpi", kpiDao.findByStatus(StatusKpi.AKTIF));/*mengambil data kpi*/
 
         Set<Kpi> staffRoles = staffRole.getKpi();
         for (Kpi sr : staffRoles) {
