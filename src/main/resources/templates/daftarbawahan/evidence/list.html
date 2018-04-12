@@ -22,17 +22,6 @@
                             <p class="category"></p>
                         </div>
                         <hr/>
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#individual" role="tab" data-toggle="tab">Invidiual
-                                    Achievment Score</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#tazkiavalue" role="tab" data-toggle="tab">Tazkia Value
-                                    Score</a>
-                            </li>
-                        </ul>
-
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade in active" id="individual">
@@ -47,6 +36,7 @@
                                                             <thead>
                                                             <th>No.</th>
                                                             <th>Key Result</th>
+                                                            <th>Category</th>
                                                             <th colspan="2">
                                                                 <center>Aksi</center>
                                                             </th>
@@ -54,7 +44,9 @@
                                                             <tbody>
                                                             <tr th:each="sd,row  : ${individual}">
                                                                 <td th:text="${(row.index + 1)}">1</td>
-                                                                <td th:text="${sd.kpi.keyResult}">Aku pulang</td>
+                                                                <td th:text="${sd.keyResult}">Aku pulang</td>
+                                                                <td th:if="${sd.category.id == '001'}"><b>Individual Score</b></td>
+                                                                <td th:if="${sd.category.id == '002'}"><b>Tazkia Value Score</b></td>
                                                                 <td>
                                                                     <center><a
                                                                             th:href="@{/daftarbawahan/evidence/form(id=${sd.id})}"
@@ -62,17 +54,17 @@
                                                                         Evidence</a></center>
                                                                 </td>
                                                                 <td>
-                                                                    <center>
-                                                                        <div class="dropdown">
-                                                                        <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
-                                                                            <span class="caret"></span></button>
-                                                                        <ul class="dropdown-menu">
-                                                                            <li th:each="img,row : ${sd.evidence}">
-                                                                                <a target="_blank" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
-                                                                                   th:text="${'Evidence'+(row.index + 1)}">HTML</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div></center>
+                                                                    <!--<center>-->
+                                                                        <!--<div class="dropdown">-->
+                                                                        <!--<button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence-->
+                                                                            <!--<span class="caret"></span></button>-->
+                                                                        <!--<ul class="dropdown-menu">-->
+                                                                            <!--<li th:each="img,row : ${sd.evidence}">-->
+                                                                                <!--<a target="_blank" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"-->
+                                                                                   <!--th:text="${'Evidence'+(row.index + 1)}">HTML</a>-->
+                                                                            <!--</li>-->
+                                                                        <!--</ul>-->
+                                                                    <!--</div></center>-->
                                                                 </td>
                                                             </tr>
 
@@ -88,51 +80,6 @@
                                 </div>
                             </div>
 
-                            <!--TAZKI VALUE PANEL-->
-                            <div role="tabpanel" class="tab-pane fade" id="tazkiavalue">
-
-                                <div class="container">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="card">
-                                                    <div class="content table-responsive table-full-width">
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                            <th>No.</th>
-                                                            <th>Key Result</th>
-                                                            <th>
-                                                                <center>Aksi</center>
-                                                            </th>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr th:each="sd,row  : ${tazkiaValue}">
-                                                                <td th:text="${(row.index + 1)}">1</td>
-                                                                <td th:text="${sd.kpi.keyResult}">Aku pulang</td>
-                                                                <td>
-                                                                    <center><a
-                                                                            th:href="@{/daftarbawahan/evidence/form(id=${sd.id})}"
-                                                                            target="output" class="btn btn-success">Upload
-                                                                        Evidence</a></center>
-                                                                </td>
-                                                                <td>
-                                                                    <center><a target="output" class="btn btn-info">View(s)
-                                                                        Evidence</a></center>
-                                                                </td>
-                                                            </tr>
-
-                                                            </tbody>
-                                                        </table>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!---->
-                                </div>
-                            </div>
-                            <!--ENDTAZKIAVALUE-->
                         </div>
                     </div>
                 </div>

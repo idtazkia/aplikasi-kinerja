@@ -13,5 +13,6 @@ import java.util.List;
 public interface KpiDao extends PagingAndSortingRepository<Kpi, String> {
     Page<Kpi> findByStatusAndKeyResultContainingIgnoreCaseOrderByKeyResult(StatusKpi aktif, String keyresult, Pageable page);
     Page<Kpi> findByStatus(StatusKpi aktif, Pageable page);
+    List<Kpi> findByStatus(StatusKpi aktif);
     List<Kpi> findByCategoryAndStatus(Category c, StatusKpi s);
 }

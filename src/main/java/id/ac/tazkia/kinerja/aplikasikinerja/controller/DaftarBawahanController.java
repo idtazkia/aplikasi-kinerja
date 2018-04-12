@@ -28,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Controller
@@ -39,9 +40,6 @@ public class DaftarBawahanController {
 
     @Autowired
     private StaffDao staffDao;
-
-    @Autowired
-    private StaffKpiDao staffKpiDao;
 
     @Autowired
     private IndicatorsDao indicatorsDao;
@@ -111,7 +109,7 @@ public class DaftarBawahanController {
 
     @GetMapping("/daftarbawahan/form")
     public String daftarKpi(String id, Model m, Pageable page, Authentication currentUser) {
-        Optional<Staff> s = staffDao.findById(id);
+        /*Optional<Staff> s = staffDao.findById(id);
 
         if (s == null) {
             LOGGER.warn("Staff not found");
@@ -138,7 +136,7 @@ public class DaftarBawahanController {
 
         m.addAttribute("individual", staffKpiDao.findAllByStaffAndKpiCategory(s, individualCategory));
         m.addAttribute("tazkiaValue", staffKpiDao.findAllByStaffAndKpiCategory(s, tazkiaValueCategory));
-
+*/
         return "/daftarbawahan/form";
 
     }
@@ -151,7 +149,7 @@ public class DaftarBawahanController {
 
     @PostMapping(value = "/daftarbawahan/form")
     public String prosesForm(@RequestParam String staff, HttpServletRequest request) {
-        Optional<Staff> s = staffDao.findById(staff);
+        /*Optional<Staff> s = staffDao.findById(staff);
         System.out.println("Staff : " + s.get().getEmployeeName());
 
         List<StaffKpi> daftarKpi = staffKpiDao.findAllByStaffAndKpiCategory(s, tazkiaValueCategory);
@@ -201,7 +199,7 @@ public class DaftarBawahanController {
             }
 
 
-        }
+        }*/
         return "redirect:list";
     }
 
@@ -249,7 +247,7 @@ public class DaftarBawahanController {
 
     @GetMapping("/daftarbawahan/komen")
     public String String(@RequestParam(required = true) String id, Model m, Authentication currentUser) throws Exception {
-        Optional<Staff> s = staffDao.findById(id);
+       /* Optional<Staff> s = staffDao.findById(id);
 
         if (s == null) {
             LOGGER.warn("Staff not found");
@@ -276,12 +274,12 @@ public class DaftarBawahanController {
 
         m.addAttribute("individual", scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(id, individualCategory));
         m.addAttribute("tazkiaValue", scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(id, tazkiaValueCategory));
-
+*/
 
         return "/daftarbawahan/komen";
     }
 
-    @GetMapping("/uploaded/{evidence}/bukti/")
+    /*@GetMapping("/uploaded/{evidence}/bukti/")
     public ResponseEntity<byte[]> tampilkanBuktiPembayaran(@PathVariable Evidence evidence) throws Exception {
         String lokasiFile = uploadFolder + File.separator + evidence.getStaffKpi().getStaff().getId()
                 + File.separator + evidence.getFileName();
@@ -304,7 +302,7 @@ public class DaftarBawahanController {
             LOGGER.warn(err.getMessage(), err);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
+    }*/
 
     @GetMapping("/daftarbawahan/evidence/list")
     public void evidence(Model model, Authentication currentUser) {
@@ -332,13 +330,21 @@ public class DaftarBawahanController {
         }
 
 
-        model.addAttribute("individual", staffKpiDao.findAllByStaffAndKpiCategory(Optional.ofNullable(p), individualCategory));
-        model.addAttribute("tazkiaValue", staffKpiDao.findAllByStaffAndKpiCategory(Optional.ofNullable(p), tazkiaValueCategory));
+        Set<StaffRole> staffRole = p.getRoles();
+        for (StaffRole role : staffRole){
+            Set<Kpi> kpis = role.getKpi();
+            for (Kpi kpi : kpis){
+                System.out.println("kpinya :" + kpi.getKeyResult());
+            }
+            model.addAttribute("individual",kpis);
+
+        }
+
 
 
     }
 
-    @GetMapping("/daftarbawahan/evidence/form")
+    /*@GetMapping("/daftarbawahan/evidence/form")
     public String inputEvidence(String id, Model m) {
         Optional<StaffKpi> staffKpi = staffKpiDao.findById(id);
         m.addAttribute("kpi", staffKpi);
@@ -351,11 +357,11 @@ public class DaftarBawahanController {
 
         return "/daftarbawahan/evidence/form";
 
-    }
+    }*/
 
     @PostMapping("/daftarbawahan/evidence/form")
-    public String uploadBukti(@RequestParam StaffKpi id, MultipartFile file) throws Exception {
-        Optional<StaffKpi> s = staffKpiDao.findById(id.getId());
+    public String uploadBukti(/*@RequestParam StaffKpi id,*/ MultipartFile file) throws Exception {
+       /* Optional<StaffKpi> s = staffKpiDao.findById(id.getId());
         String idEmployee = s.get().getStaff().getId();
 
         String namaFile = file.getName();
@@ -389,7 +395,7 @@ public class DaftarBawahanController {
         Evidence evidence = new Evidence();
         evidence.setStaffKpi(id);
         evidence.setFileName(idFile + "." + extension);
-        evidenceDao.save(evidence);
+        evidenceDao.save(evidence);*/
 
 
         return "redirect:list";
