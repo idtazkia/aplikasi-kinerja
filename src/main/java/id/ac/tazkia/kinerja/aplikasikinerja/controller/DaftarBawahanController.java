@@ -288,19 +288,19 @@ public class DaftarBawahanController {
         return "/daftarbawahan/komen";
     }
 
-    /*@GetMapping("/uploaded/{evidence}/bukti/")
+    @GetMapping("/uploaded/{evidence}/bukti/")
     public ResponseEntity<byte[]> tampilkanBuktiPembayaran(@PathVariable Evidence evidence) throws Exception {
-        String lokasiFile = uploadFolder + File.separator + evidence.getStaffKpi().getStaff().getId()
-                + File.separator + evidence.getFileName();
+        String lokasiFile = uploadFolder + File.separator + evidence. getStaff().getId()
+                + File.separator + evidence.getFilename();
         LOGGER.debug("Lokasi file bukti : {}", lokasiFile);
 
         try {
             HttpHeaders headers = new HttpHeaders();
-            if (evidence.getFileName().toLowerCase().endsWith("jpeg") || evidence.getFileName().toLowerCase().endsWith("jpg")) {
+            if (evidence.getFilename().toLowerCase().endsWith("jpeg") || evidence.getFilename().toLowerCase().endsWith("jpg")) {
                 headers.setContentType(MediaType.IMAGE_JPEG);
-            } else if (evidence.getFileName().toLowerCase().endsWith("png")) {
+            } else if (evidence.getFilename().toLowerCase().endsWith("png")) {
                 headers.setContentType(MediaType.IMAGE_PNG);
-            } else if (evidence.getFileName().toLowerCase().endsWith("pdf")) {
+            } else if (evidence.getFilename().toLowerCase().endsWith("pdf")) {
                 headers.setContentType(MediaType.APPLICATION_PDF);
             } else {
                 headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -311,7 +311,7 @@ public class DaftarBawahanController {
             LOGGER.warn(err.getMessage(), err);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }*/
+    }
 
     @GetMapping("/daftarbawahan/evidence/list")
     public void evidence(Model model, Authentication currentUser) {
