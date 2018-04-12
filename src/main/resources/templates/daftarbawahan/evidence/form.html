@@ -26,14 +26,15 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade in active" id="individual">
+                                <form method="post" th:each="k : ${kpi}"
+                                      th:action="@{/daftarbawahan/evidence/form(id=${k.id})}"
+                                      th:object="${evidence}"
+                                      enctype="multipart/form-data">
                                 <div class="container">
                                     <!---->
                                     <div class="row form-group has-danger">
                                         <div class="col-sm-5">
-                                                <span th:each="kpi : ${kpi}">
-                                                  <form method="post" th:object="${evidence}"
-                                                        th:action="@{/daftarbawahan/evidence/form(id=${kpi.get().id})}"
-                                                        enctype="multipart/form-data">
+
                                                 <table class="table table-striped">
                                                     <thead>
                                                     <tr>
@@ -43,7 +44,7 @@
                                                     <tbody>
                                                     <tr>
                                                         <td><h3>1</h3></td>
-                                                        <td th:text="${kpi.get().kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                        <td th:text="${k.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                             mahasiswa S2 STEI Tazkia</td>
                                                     <tr>
                                                         <td><b>Upload Evidence</b></td>
@@ -61,12 +62,11 @@
                                             <table class="table">
                                                 <tbody>
                                                 <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span
-                                                            th:text="${kpi.get().kpi.weight}">10,00</span></td>
-                                                    <td>Target : <span th:text="${kpi.get().kpi.target}">5</span></td>
+                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <b><span th:text="${k.weight}"> 10,00</span></b></td>
+                                                    <td>Target : <b><span th:text="${k.target}">5</span></b></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Base line : <span th:text="${kpi.get().kpi.baseLine}">4</span>
+                                                    <td>Base line : <b><span th:text="${k.baseLine}">4</span></b>
                                                     </td>
                                                 </tr>
 
@@ -75,14 +75,17 @@
                                         </div>
                                     </div>
                                     <div class="funkyradio">
-                                            <span th:each="ind,row : ${kpi.get().kpi.indicatorsList}">
+                                            <span th:each="ind : ${k.indicatorsList}">
                                             <div class="funkyradio-success">
-                                                <label><b><span th:text="${(row.index + 1)}">5</span> . <span
-                                                        th:text="${ind.content}">NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</span></b> </label>
+                                                <label>
+                                                    <b><span th:text="${ind.score}">5</span> .
+                                                    <span th:text="${ind.content}">
+                                                    NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan
+                                                    </span></b>
+                                                </label>
                                             </div>
                                             </span>
                                     </div>
-                                    </span>
                                     <br><br>
                                     <div class="funkyradio">
                                         <center>

@@ -1,5 +1,6 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 
+import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.constants.CategoryConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.*;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
@@ -50,6 +51,12 @@ public class DaftarBawahanController {
     @Autowired
     private EvidenceDao evidenceDao;
 
+    @Autowired
+    private KpiDao kpiDao;
+
+    @Autowired
+    private PeriodeDao periodeDao;
+
 
     @Value("${upload.folder}")
     private String uploadFolder;
@@ -64,6 +71,8 @@ public class DaftarBawahanController {
         tazkiaValueCategory = new Category();
         tazkiaValueCategory.setId(CategoryConstants.TAZKIA_INDICATOR_ID);
     }
+
+
 
 
     @GetMapping("/daftarbawahan/list")
@@ -344,25 +353,51 @@ public class DaftarBawahanController {
 
     }
 
-    /*@GetMapping("/daftarbawahan/evidence/form")
+    @GetMapping("/daftarbawahan/evidence/form")
     public String inputEvidence(String id, Model m) {
-        Optional<StaffKpi> staffKpi = staffKpiDao.findById(id);
-        m.addAttribute("kpi", staffKpi);
-        if (staffKpi != null) {
+        Kpi kpi = kpiDao.findById(id).get();
+        if (id == null) {
+            return "redirect:/404";
         }
 
-        Evidence evidence = new Evidence();
-        evidence.setStaffKpi(staffKpi.get());
-        m.addAttribute("evidence", evidence);
+        m.addAttribute("kpi", kpi);
 
+        Evidence evidence = new Evidence();
         return "/daftarbawahan/evidence/form";
 
-    }*/
+    }
 
     @PostMapping("/daftarbawahan/evidence/form")
-    public String uploadBukti(/*@RequestParam StaffKpi id,*/ MultipartFile file) throws Exception {
-       /* Optional<StaffKpi> s = staffKpiDao.findById(id.getId());
-        String idEmployee = s.get().getStaff().getId();
+    public String uploadBukti(@RequestParam String id, MultipartFile file, Authentication currentUser) throws Exception {
+        Kpi kpi = kpiDao.findById(id).get();
+//        mengambil data user yang login
+        LOGGER.debug("Authentication class : {}", currentUser.getClass().getName());
+
+        if (currentUser == null) {
+            LOGGER.warn("Current user is null");
+            return "redirect:/404";
+        }
+
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
+        User u = userDao.findByUsername(username);
+        LOGGER.debug("User ID : {}", u.getId());
+        if (u == null) {
+            LOGGER.warn("Username {} not found in database ", username);
+            return "redirect:/404";
+        }
+
+        Staff staff = staffDao.findByUser(u);
+        LOGGER.debug("Nama Pendaftar : " + staff.getEmployeeName());
+        if (staff == null) {
+            LOGGER.warn("Pendaftar not found for username {} ", username);
+            return "redirect:/404";
+        }
+
+
+//
+        
+        
+        String idEmployee = staff.getId();
 
         String namaFile = file.getName();
         String jenisFile = file.getContentType();
@@ -392,10 +427,15 @@ public class DaftarBawahanController {
         file.transferTo(tujuan);
         LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
 
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+
         Evidence evidence = new Evidence();
-        evidence.setStaffKpi(id);
-        evidence.setFileName(idFile + "." + extension);
-        evidenceDao.save(evidence);*/
+        evidence.setStaff(staff);
+        evidence.setPeriode(periode);
+        evidence.setKpi(kpi);
+        evidence.setFilename(idFile);
+        evidence.setDescription("Upload Bukti Karyawan");
+        evidenceDao.save(evidence);
 
 
         return "redirect:list";
