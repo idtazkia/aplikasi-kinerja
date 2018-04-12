@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -84,22 +86,29 @@ public class LihatPenilaianController {
 
     }
 
-    /*@GetMapping("/lihatpenilaian/comment")
-    public void detailComment(@RequestParam(required = false) String id, Model m, Pageable page) {
-        Optional<Score> score = scoreDao.findById(id);
-        if (score != null) {
-            m.addAttribute("score", scoreDao.findById(id));
-            m.addAttribute("score", score);
+    @GetMapping("/lihatpenilaian/comment")
+    public String detailComment(@RequestParam(required = false) Score id, Model m, Pageable page) {
+        if (id == null){
+            LOGGER.debug("tidak ada data");
+            return "redirect:/404";
+        }
+
+        if (id != null) {
+            m.addAttribute("score", id);
+            BigDecimal perkalian = id.getKpi().getWeight().multiply(new BigDecimal(id.getScore()));
+            m.addAttribute("total",perkalian);
         }
 
         Evidence evidence = new Evidence();
         m.addAttribute("evidence", evidence);
 
+        return null;
 
-    }*/
+
+    }
 
 //    @PostMapping("/lihatpenilaian/comment")
-//    public String proses(@ModelAttribute @Valid Score score, MultipartFile fileBukti) throws Exception {
+//    public String proses(@ModelAttribute @Valid Evidence evidence, MultipartFile fileBukti) throws Exception {
 //        String idEmployee = score.getStaffKpi().getStaff().getId();
 //
 //        String namaFile = fileBukti.getName();
