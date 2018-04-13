@@ -79,6 +79,7 @@ create table periode (
   start_date DATE NOT NULL ,
   end_date DATE NOT NULL ,
   active VARCHAR (36) NOT NULL,
+  status VARCHAR(36) NOT NULL,
   PRIMARY KEY (id)
 
 );

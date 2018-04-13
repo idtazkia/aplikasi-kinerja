@@ -4,10 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -37,4 +34,7 @@ public class Periode {
 
     @NotNull
     private String description;
+
+    @NotNull @Enumerated(EnumType.STRING)
+    private StatusKpi status= StatusKpi.AKTIF;
 }
