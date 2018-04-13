@@ -94,5 +94,17 @@ public class PeriodeController {
         return "redirect:list";
     }
 
+    @PostMapping("/delete/periode")
+    public String delete(@RequestParam Periode delete){
+        if (delete == null){
+            return "redirect:/404";
+        }
+
+        delete.setStatus(StatusKpi.NONAKTIF);
+        periodeDao.save(delete);
+
+        return "redirect:/periode/list";
+    }
+
 
 }

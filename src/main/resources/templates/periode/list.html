@@ -4,7 +4,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Period</title>
 </head>
 <body>
 <section layout:fragment="content">
@@ -60,14 +60,21 @@
                                                     </form>
 
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-xs-1">
                                                     <a th:href="@{/periode/form(id=${list.id})}" class="btn btn-info">
                                                         <i class="ti-pencil"></i>
                                                         Edit
                                                     </a>
-                                                    <button type="submit" class="btn btn-danger"><i
-                                                            class="ti-eraser"></i> Hapus
-                                                    </button>
+                                                </div>
+                                                <div class="col-xs-1">
+                                                    <form th:action="@{/delete/periode(delete=${list.id})}"
+                                                          th:if="${list.active == 'NONAKTIF'}" method="post">
+                                                        <button type="submit" class="btn btn-danger"
+                                                                onclick="return confirm('Are you sure? Once deleted, you will not be able' +
+                                                                 ' to recover this imaginary file!')">
+                                                            <i class="ti-eraser"></i> Hapus
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -90,3 +97,8 @@
 </section>
 </body>
 </html>
+<script>
+    function myFunction() {
+        alert("Active Period, can't removed");
+    }
+</script>
