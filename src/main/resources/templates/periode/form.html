@@ -25,7 +25,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Periode Name</label>
-                                            <input type="text" class="form-control border-input" th:field="*{periodeName}" placeholder="Periode Name" id="periodeName" name="periodeName" >
+                                            <input type="text" required class="form-control border-input" th:field="*{periodeName}" placeholder="Periode Name" id="periodeName" name="periodeName" >
                                             <input type="hidden" th:field="*{active}" name="active">
                                             <input type="hidden" th:field="*{status}" name="status">
                                             <input type="hidden" th:field="*{id}" name="id">
@@ -34,7 +34,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Description</label>
-                                            <textarea name="description" maxlength="220" th:field="*{description}" class="form-control border-input" id="" cols="30" rows="10"></textarea>
+                                            <textarea name="description" required maxlength="220" th:field="*{description}" class="form-control border-input" id="" cols="30" rows="10"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -43,13 +43,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Start Date</label>
-                                            <input type="date" class="form-control border-input" th:field="*{startDate}" id="startDate" name="startDate" >
+                                            <input type="date" required class="form-control border-input" th:field="*{startDate}" id="startDate" name="startDate" >
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>End Date</label>
-                                            <input type="date" class="form-control border-input" id="endDate" th:field="*{endDate}" name="endDate"  >
+                                            <input type="date" required class="form-control border-input" id="endDate" th:field="*{endDate}" name="endDate"  >
                                         </div>
                                     </div>
                                 </div>
