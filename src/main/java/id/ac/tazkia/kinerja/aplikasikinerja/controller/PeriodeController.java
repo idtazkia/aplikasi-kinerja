@@ -3,6 +3,7 @@ package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.PeriodeDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.Periode;
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.StatusKpi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,7 +29,7 @@ public class PeriodeController {
     @GetMapping("/periode/list")
     public ModelMap list(@PageableDefault(direction = Sort.Direction.ASC) Pageable page){
         return new ModelMap()
-                .addAttribute("list",periodeDao.findAll(page));
+                .addAttribute("list",periodeDao.findByStatusOrderByActiveAsc(StatusKpi.AKTIF));
     }
 
     @PostMapping("/periode/aktif")
@@ -87,6 +88,7 @@ public class PeriodeController {
         periode.setActive(AktifConstants.Nonaktif);
         periode.setStartDate(start);
         periode.setEndDate(end);
+        periode.setStatus(StatusKpi.AKTIF);
         periodeDao.save(periode);
 
         return "redirect:list";
