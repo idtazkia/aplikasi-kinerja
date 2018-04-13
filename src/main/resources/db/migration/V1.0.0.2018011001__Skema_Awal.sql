@@ -54,15 +54,6 @@ create table staff_role_kpi (
   FOREIGN KEY (id_staff_role) REFERENCES staff_role(id)
 );
 
-CREATE TABLE staff_kpi(
-id VARCHAR (36)NOT NULL,
-id_staff VARCHAR (36)NOT NULL ,
-id_kpi VARCHAR (36)NOT NULL,
-evidence VARCHAR (255),
-PRIMARY KEY (id),
-FOREIGN KEY (id_staff) REFERENCES staff(id)
-);
-
 CREATE TABLE indicators (
   id VARCHAR(36)not null,
   id_kpi VARCHAR(36) NOT NULL ,
