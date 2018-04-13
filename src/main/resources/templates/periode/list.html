@@ -61,9 +61,10 @@
 
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <button type="submit" class="btn btn-info"><i class="ti-pencil"></i>
+                                                    <a th:href="@{/periode/form(id=${list.id})}" class="btn btn-info">
+                                                        <i class="ti-pencil"></i>
                                                         Edit
-                                                    </button>
+                                                    </a>
                                                     <button type="submit" class="btn btn-danger"><i
                                                             class="ti-eraser"></i> Hapus
                                                     </button>
