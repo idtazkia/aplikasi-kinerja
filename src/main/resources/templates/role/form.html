@@ -21,15 +21,25 @@
                             <h4 class="title">Input Role</h4>
                         </div>
                         <div class="content">
-                            <form>
+                            <form th:action="@{/role/form}" th:object="${role}" method="post">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Role Name</label>
-                                            <input type="text" class="form-control border-input" name="roleName"  placeholder="Role Name"><br>
-                                            <label>Superior</label>
-                                            <select class="js-example-placeholder-single js-states form-control border-input">
-                                                <option></option>
+                                            <input type="hidden" name="kpi" th:field="*{kpi}">
+                                            <input type="hidden" name="id" th:field="*{id}">
+                                            <input type="hidden" name="status" th:field="*{status}">
+                                            <input type="text" th:field="*{roleName}" class="form-control border-input" name="roleName"  placeholder="Role Name"><br>
+                                            <label>Superior Role</label>
+                                            <select class="js-example-placeholder-single js-states form-control border-input"
+                                                    name="superiorRole" th:field="*{superiorRole}">
+                                                <option value=""></option>
+                                                <option th:each="sr :${staffRole}"
+                                                        th:text="${sr.roleName}"
+                                                        th:value="${sr.id}">Ketua</option>
+                                                <!--<option>Direktur</option>-->
+                                                <!--<option>Kepala Bagian IT</option>-->
+                                                <!--<option>Kepala Bagian SDM</option>-->
                                             </select>
                                         </div>
                                     </div>
@@ -37,7 +47,7 @@
                                         <div class="form-group">
                                             <label>Description</label><br>
                                             <textarea name="description" style="height: 130px"
-                                                      placeholder="Description"
+                                                      placeholder="Description" th:field="*{description}"
                                                       class="form-control border-input"
                                                       maxlength="254"></textarea>
                                         </div>
