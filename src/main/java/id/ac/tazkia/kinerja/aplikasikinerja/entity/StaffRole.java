@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,5 +35,8 @@ public class StaffRole {
 
     @ManyToOne
     @JoinColumn(name = "id_role_superior")
-    private Role superiorRole;
+    private StaffRole superiorRole;
+
+    @NotNull
+    private String status;
 }

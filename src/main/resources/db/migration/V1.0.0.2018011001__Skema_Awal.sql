@@ -3,6 +3,7 @@ create table staff_role (
   role_name VARCHAR (36)NOT NULL ,
   description VARCHAR (255),
   id_role_superior VARCHAR(36),
+  status VARCHAR(36),
   PRIMARY KEY (id)
 
 );
