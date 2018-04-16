@@ -28,8 +28,9 @@
                                             <label>Role Name</label>
                                             <input type="text" class="form-control border-input" name="roleName"  placeholder="Role Name"><br>
                                             <label>Superior</label>
-                                            <input type="text" class="form-control border-input"  placeholder="Last Name">
-                                            <small style="color: red;">Choose One</small>
+                                            <select class="js-example-placeholder-single js-states form-control border-input">
+                                                <option></option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -44,9 +45,9 @@
                                 </div>
 
                                 <div class="clearfix">
-                                   <center>
-                                    <button type="submit" class="btn btn-success">Save</button>
-                                   </center>
+                                    <center>
+                                        <button type="submit" class="btn btn-success">Save</button>
+                                    </center>
                                 </div>
                             </form>
                         </div>
@@ -61,3 +62,9 @@
 
 </body>
 </html>
+<script>
+    $(".js-example-placeholder-single").select2({
+        placeholder: "--Superior Role--",
+        allowClear: true
+    });
+</script>
