@@ -1,10 +1,8 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 
+import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.constants.CategoryConstants;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.EvidenceDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.ScoreDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.UserDao;
+import id.ac.tazkia.kinerja.aplikasikinerja.dao.*;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +37,8 @@ public class LihatPenilaianController {
     private StaffDao staffDao;
     @Autowired
     private ScoreDao scoreDao;
+    @Autowired
+    private PeriodeDao periodeDao;
     @Autowired
     private EvidenceDao evidenceDao;
     @Value("${upload.folder}")
@@ -81,8 +81,10 @@ public class LihatPenilaianController {
             return;
         }
 
-        model.addAttribute("individual", scoreDao.findByStaffAndKpiCategory(p, individualCategory));
-        model.addAttribute("tazkiaValue", scoreDao.findByStaffAndKpiCategory(p, tazkiaValueCategory));
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+
+        model.addAttribute("individual", scoreDao.findByStaffAndKpiCategoryAndPeriode(p, individualCategory,periode));
+        model.addAttribute("tazkiaValue", scoreDao.findByStaffAndKpiCategoryAndPeriode(p, tazkiaValueCategory,periode));
 
     }
 
