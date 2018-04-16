@@ -1,5 +1,7 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,6 +15,9 @@ import java.util.Set;
 @Entity
 @Data
 @EqualsAndHashCode(of = "roleName")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class StaffRole {
 
     @Id

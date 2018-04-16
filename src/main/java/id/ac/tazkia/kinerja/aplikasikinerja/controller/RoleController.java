@@ -5,10 +5,13 @@ import id.ac.tazkia.kinerja.aplikasikinerja.dao.KpiDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.StaffKpiDto;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.Kpi;
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.Periode;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.StaffRole;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.StatusKpi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -33,7 +36,7 @@ public class RoleController {
     private KpiDao kpiDao;
 
     @GetMapping("/role/list")
-    private void roleList(Model model,String role,Pageable page) {
+    private void roleList(Model model,String role,@PageableDefault(size = 10) Pageable page) {
         if (StringUtils.hasText(role)) {
             model.addAttribute("role", role);
             model.addAttribute("roleList", staffRoleDao.findByStatusAndAndRoleNameContainingIgnoreCaseOrderByRoleName(AktifConstants.Aktif,role,page));
@@ -76,7 +79,25 @@ public class RoleController {
     }
 
     @GetMapping("/role/form")
-    private void displayForm(){
+    private void displayForm(Model m,@RequestParam(value="role", required = false) String role){
 
+        m.addAttribute("role", new StaffRole());
+        m.addAttribute("staffRole",staffRoleDao.findByStatus(AktifConstants.Aktif));
+
+        if (role != null && !role.isEmpty()) {
+            StaffRole staffRole = staffRoleDao.findById(role).get();
+            if (staffRole != null) {
+                m.addAttribute("role",staffRole);
+            }
+        }
     }
+
+    @PostMapping("/role/form")
+    public String proses(@ModelAttribute @Valid StaffRole staffRole, BindingResult error){
+        staffRole.setStatus(AktifConstants.Aktif);
+        staffRoleDao.save(staffRole);
+
+        return "redirect:list";
+    }
+
 }
