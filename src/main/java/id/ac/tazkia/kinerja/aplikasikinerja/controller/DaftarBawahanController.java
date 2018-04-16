@@ -43,6 +43,9 @@ public class DaftarBawahanController {
     private StaffDao staffDao;
 
     @Autowired
+    private StaffRoleDao staffRoleDao;
+
+    @Autowired
     private IndicatorsDao indicatorsDao;
 
     @Autowired
@@ -76,7 +79,7 @@ public class DaftarBawahanController {
 
 
     @GetMapping("/daftarbawahan/list")
-    public String daftarStaff(Model model, String user, Authentication currentUser,
+    public String daftarStaff(Model model, String staff, Authentication currentUser,
                               @PageableDefault(size = 10)
                                       Pageable page, String search) throws Exception {
         System.out.println("username" + currentUser.getClass().getName());
@@ -102,15 +105,12 @@ public class DaftarBawahanController {
             return "redirect:/404";
         }
 
-        Optional<Staff> atasan = staffDao.findById(p.getId());
-        Page<Staff> daftarBawahan = staffDao.findSubordinate(atasan, page);
 
-        if (StringUtils.hasText(search)) {
-            model.addAttribute("search", search);
-            model.addAttribute("subordinate", staffDao.findBySuperiorsAndEmployeeNameContainingIgnoreCaseOrderByEmployeeName(atasan, search, page));
-        } else {
-            model.addAttribute("subordinate", daftarBawahan);
-        }
+        Set<StaffRole> daftarRoleBawahan = staffRoleDao.findBySuperiorRoleIn(p.getRoles());
+        Iterable<Staff> daftarBawahan = staffDao.findByRolesIn(daftarRoleBawahan);
+
+        model.addAttribute("subordinate",daftarBawahan);
+
 
         return "/daftarbawahan/list";
 
