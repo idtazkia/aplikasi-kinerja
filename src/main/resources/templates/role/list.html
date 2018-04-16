@@ -19,6 +19,22 @@
                             <p class="category">Daftar Kpi</p>
                         </div>
                         <div class="content table-responsive table-full-width">
+                            <table class="table" border="0">
+                                <form method="get">
+                                    <tr>
+                                        <td>Search by :
+                                            <input type="text" id="role" autocomplete="off"
+                                                   placeholder="Role Name" name="role"
+                                                   th:value="${role}">
+                                            <input type="submit" value="Search" class="btn btn-success">
+                                            <a th:href="@{/role/form}" class="btn btn-info col-sm-offset-6">Create New Role</a>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom-color: whitesmoke">
+                                        <!--<td>Show <span sd:page-size-selector="javascript"></span> entries</td>-->
+                                    </tr>
+                                </form>
+                            </table>
                             <table class="table table-bordered">
                                 <thead>
                                 <th>No.</th>
@@ -39,6 +55,27 @@
 
                                 </tbody>
                             </table>
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div sd:pagination-summary="" style="font-size: small">info</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <nav class="pull-right">
+                                        <ul class="pagination" sd:pagination="full">
+                                            <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+                                            <li class="disabled"><a href="#" aria-label="Previous"><span
+                                                    aria-hidden="true">&laquo;</span></a>
+                                            </li>
+                                            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
 
                         </div>
                     </div>

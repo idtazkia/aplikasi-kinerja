@@ -9,4 +9,6 @@ import java.util.List;
 
 
 public interface StaffRoleDao extends PagingAndSortingRepository <StaffRole, String> {
+    Page<StaffRole> findByStatusAndAndRoleNameContainingIgnoreCaseOrderByRoleName(String s, String role, Pageable page);
+    Page<StaffRole> findByStatus(String s,Pageable page);
 }

@@ -1,5 +1,6 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 
+import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.KpiDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.StaffKpiDto;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,9 +33,13 @@ public class RoleController {
     private KpiDao kpiDao;
 
     @GetMapping("/role/list")
-    private ModelMap roleList(Pageable page) {
-        return new ModelMap()
-                .addAttribute("roleList", staffRoleDao.findAll(page));
+    private void roleList(Model model,String role,Pageable page) {
+        if (StringUtils.hasText(role)) {
+            model.addAttribute("role", role);
+            model.addAttribute("roleList", staffRoleDao.findByStatusAndAndRoleNameContainingIgnoreCaseOrderByRoleName(AktifConstants.Aktif,role,page));
+        } else {
+            model.addAttribute("roleList", staffRoleDao.findByStatus(AktifConstants.Aktif,page));
+        }
     }
 
     @GetMapping("role/kpi")
