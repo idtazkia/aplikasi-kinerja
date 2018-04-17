@@ -1,6 +1,10 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Getter @Setter
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Kpi {
 
     @Id
@@ -40,6 +47,7 @@ public class Kpi {
     private BigDecimal target;
 
     @OneToMany(mappedBy = "kpi")
+    @JsonBackReference
     private List<Indicators> indicatorsList = new ArrayList<>();
 
     @NotNull @Enumerated(EnumType.STRING)

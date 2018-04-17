@@ -1,6 +1,9 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,6 +15,9 @@ import java.math.BigInteger;
 
 @Entity
 @Getter @Setter
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Indicators {
     @Id
     @GeneratedValue(generator = "uuid" )
@@ -21,6 +27,7 @@ public class Indicators {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "id_kpi")
+    @JsonManagedReference
     private Kpi kpi;
 
     @NotNull @Min(0)
