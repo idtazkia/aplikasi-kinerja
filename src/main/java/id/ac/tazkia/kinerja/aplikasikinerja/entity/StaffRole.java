@@ -2,8 +2,9 @@ package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter @Setter
 @EqualsAndHashCode(of = "roleName")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
