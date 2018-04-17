@@ -106,7 +106,7 @@ public class DaftarBawahanController {
         }
 
 
-        Set<StaffRole> daftarRoleBawahan = staffRoleDao.findBySuperiorRoleIn(p.getRoles());
+        Set<StaffRole> daftarRoleBawahan = staffRoleDao.findDistinctBySuperiorRoleIn(p.getRoles());
         Iterable<Staff> daftarBawahan = staffDao.findByRolesIn(daftarRoleBawahan);
 
         model.addAttribute("subordinate",daftarBawahan);
