@@ -56,7 +56,7 @@ public class LihatPenilaianController {
     }
 
 
-  /*  @GetMapping("/lihatpenilaian/list")
+    @GetMapping("/lihatpenilaian/list")
     public void list(Model model, Authentication currentUser) {
         LOGGER.debug("username" + currentUser.getClass().getName());
 
@@ -87,7 +87,7 @@ public class LihatPenilaianController {
         model.addAttribute("tazkiaValue", scoreDao.findByStaffAndKpiCategoryAndPeriode(p, tazkiaValueCategory,periode));
 
     }
-*/
+
     @GetMapping("/lihatpenilaian/comment")
     public String detailComment(@RequestParam(required = false) Score id, Model m, Pageable page) {
         if (id == null){
