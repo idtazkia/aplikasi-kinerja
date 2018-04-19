@@ -40,7 +40,7 @@
                                 <th>No.</th>
                                 <th>Role Name</th>
                                 <th>Description</th>
-                                <th colspan="2">
+                                <th >
                                     <center>Aksi</center>
                                 </th>
                                 </thead>
@@ -50,7 +50,6 @@
                                     <td th:text="${l.roleName}">Staff</td>
                                     <td th:text="${l.description}">asaa</td>
                                     <td><center><a target="output" th:href="@{/role/form(role=${l.id})}" class="btn btn-info">Edit</a></center></td>
-                                    <td><center><a target="output" th:href="@{/role/kpi(role=${l.id})}" class="btn btn-success">Input Kpi</a></center></td>
                                 </tr>
 
                                 </tbody>
