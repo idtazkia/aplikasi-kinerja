@@ -81,37 +81,6 @@ public class StaffController {
     }
 
 
-    @GetMapping("/staff/role")
-    public void formPageRole(Model m2,Staff staff) throws Exception{
-        StaffRoleForm srf = new StaffRoleForm();
-        srf.setStaff(staff);
-        m2.addAttribute("staffRoleForm",srf);
-        m2.addAttribute("pilihanRole",staffRoleDao.findAll());
-        m2.addAttribute("roleSekarang",staff.getRoles());
-    }
-
-    @PostMapping("/staff/role")
-    public String prosesFormRole(@ModelAttribute @Valid StaffRoleForm srs, BindingResult errors)throws Exception {
-
-        Staff staff = srs.getStaff();
-        Set<StaffRole> roles = srs.getRoles();
-
-        LOGGER.debug("Staff : {}" , staff.getEmployeeName());
-        LOGGER.debug(" === Roles === ");
-        for(StaffRole r : roles){
-            LOGGER.debug("Role : {}",r.getRoleName());
-        }
-        LOGGER.debug(" === Roles === ");
-
-        staff.setRoles(roles);
-        staffDao.save(staff);
-
-        if(errors.hasErrors()){
-            return "/staff/role";
-        }
-        return "redirect:list";
-    }
-
     @GetMapping("/staff/detail")
     public String detail(@RequestParam(required = false) Staff staff, Model m, Pageable page, Authentication currentUser) {
         if (staff == null) {
