@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Staff Kpi</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Your Profile</h4>
+                            <p class="category"></p>
+                        </div>
+                        <hr>
+                        <div class="content" th:each="d : ${detail}">
+                            <form method="post">
+                                <center><h3>Your Profile</h3></center>
+                                <br>
+                                <div class="row col-sm-offset-1">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>Employee Name</b></label><br><br>
+                                            <span th:text="${d.employeeName}">asdasdas</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>NIK</b></label><br><br>
+                                            <span th:text="${d.employeeNumber}">234343553</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>Job Title</b></label><br><br>
+                                            <span th:text="${d.jobTitle}">asdsadsad</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-sm-offset-1">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>Department</b></label><br><br>
+                                            <span th:text="${d.department}">asdasdas</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>area</b></label><br><br>
+                                            <span th:text="${d.area}">234343553</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><b>Username</b></label><br><br>
+                                            <span th:text="${d.user.username}">asdsadsad</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" data-toggle="collapse" href="#collapse1">
+                                                <h4 class="panel-title"><center>
+                                                    <a data-toggle="collapse" href="#collapse1">List of Subordinates by Role(s)</a>
+                                                </center></h4>
+                                            </div>
+                                            <div id="collapse1" class="panel-collapse collapse">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">
+                                                        <span th:each="r : ${role}">&nbsp&nbsp
+                                                            <a class="btn btn-info" target="output" th:href="@{/daftarbawahan/list(role=${r.id})}" th:text="${r.roleName}"></a>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="tab-content">
+                                    <div class="row">
+                                    </div>
+                                    <!--ENDTAZKIAVALUE-->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

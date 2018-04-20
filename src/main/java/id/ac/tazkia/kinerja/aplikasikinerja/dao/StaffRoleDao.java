@@ -1,6 +1,5 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.dao;
 
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Staff;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.StaffRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

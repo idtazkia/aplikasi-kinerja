@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -439,6 +437,42 @@ public class DaftarBawahanController {
 
 
         return "redirect:list";
+
+    }
+
+    @GetMapping("daftarbawahan/role")
+    public String role(Model model, Authentication currentUser) throws Exception {
+        System.out.println("username" + currentUser.getClass().getName());
+
+        if (currentUser == null) {
+            LOGGER.warn("Current user is null");
+            return "redirect:/404";
+        }
+
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
+        User u = userDao.findByUsername(username);
+
+        if (u == null) {
+            LOGGER.warn("Username {} not found in database " + username);
+            return "redirect:/404";
+        }
+
+        Staff p = staffDao.findByUser(u);
+
+
+        if (p == null) {
+            LOGGER.warn("Staff not found for username {} " + username);
+            return "redirect:/404";
+        }
+
+
+        Set<StaffRole> daftarRoleBawahan = staffRoleDao.findDistinctBySuperiorRoleIn(p.getRoles());
+
+        model.addAttribute("role", daftarRoleBawahan);
+        model.addAttribute("detail", p);
+
+        return "/daftarbawahan/role";
+
 
     }
 
