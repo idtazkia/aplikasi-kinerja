@@ -14,3 +14,74 @@ body {
 	box-sizing: border-box;
 }
 
+
+
+
+/*Comment*/
+.panel{
+	width: 1043px;
+	border: 1px #A0A0A0 solid;
+}
+
+.icon{
+	height: 70px;
+	padding-top:23px;
+
+}
+#contact{
+	width: 50px;
+	height: 50px;
+	margin:auto;
+	padding:7px 8px 7px 8px;
+	background-color :#A4A4A4;
+	border-radius: 25px 25px 25px 25px;
+}
+
+.glyphicon-info-sign, .glyphicon-chevron-left{
+	font-size: 25px;
+	color: #37A7FD;
+}
+.glyphicon-user{
+	font-size: 35px;
+	color: #FFFFFF;
+}
+
+.panel-body{
+	height :350px;
+	overflow-y: scroll;
+}
+
+.date{
+	color: #A4A4A4;
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+.bold{
+	font-weight: bold;
+}
+
+
+.message{
+	font-size: 1.2em;
+	width: auto;
+	max-width:300px;
+	border-radius: 15px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.message-in {
+	background-color: #E5E5EA;
+	margin-left: 20px;
+
+}
+.message-out{
+	background-color : #22D351;
+	margin-right: 20px;
+	color: #FFFFFF;
+}
+
+.glyphicon-send, .glyphicon-camera{
+	color: #848484;
+}
+/*------*/
