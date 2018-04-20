@@ -77,37 +77,13 @@ public class DaftarBawahanController {
 
 
     @GetMapping("/daftarbawahan/list")
-    public String daftarStaff(Model model, String staff, Authentication currentUser,
-                              @PageableDefault(size = 10)
-                                      Pageable page, String search) throws Exception {
-        System.out.println("username" + currentUser.getClass().getName());
+    public String daftarStaff(Model model, String role, Authentication currentUser) throws Exception {
+        StaffRole staffRole = staffRoleDao.findById(role).get();
 
-        if (currentUser == null) {
-            LOGGER.warn("Current user is null");
-            return "redirect:/404";
-        }
-
-        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
-        User u = userDao.findByUsername(username);
-
-        if (u == null) {
-            LOGGER.warn("Username {} not found in database " + username);
-            return "redirect:/404";
-        }
-
-        Staff p = staffDao.findByUser(u);
-
-
-        if (p == null) {
-            LOGGER.warn("Staff not found for username {} " + username);
-            return "redirect:/404";
-        }
-
-
-        Set<StaffRole> daftarRoleBawahan = staffRoleDao.findDistinctBySuperiorRoleIn(p.getRoles());
-        Iterable<Staff> daftarBawahan = staffDao.findByRolesIn(daftarRoleBawahan);
-
-        model.addAttribute("subordinate",daftarBawahan);
+        Iterable<Staff> daftarBawahan = staffDao.findByRoles(staffRole);
+        model.addAttribute("subordinate", daftarBawahan);
+        model.addAttribute("roles",staffRole);
+        System.out.println(staffRole.getRoleName());
 
 
         return "/daftarbawahan/list";
