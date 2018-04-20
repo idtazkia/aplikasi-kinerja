@@ -64,13 +64,13 @@
                 <li sec:authorize="hasAuthority('VIEW_SUPERIOR')" >
                     <a th:href="@{/daftarbawahan/list}">
                         <i class="ti-user"></i>
-                        <p>Daftar Bawahan</p>
+                        <p>List of Subordinates</p>
                     </a>
                 </li>
                 <li>
                     <a th:href="@{/lihatpenilaian/list}">
                         <i class="ti-book"></i>
-                        <p>Lihat Penilaian</p>
+                        <p>See Ratings</p>
                     </a>
                 </li>
                 <li>
@@ -94,13 +94,13 @@
                 <li sec:authorize="hasAuthority('VIEW_SUPERIOR')">
                     <a th:href="@{/staff/list}">
                         <i class="ti-user"></i>
-                        <p>Daftar Staff</p>
+                        <p>Staff List</p>
                     </a>
                 </li>
                 <li sec:authorize="hasAuthority('VIEW_SUPERIOR')">
                     <a th:href="@{/periode/list}">
                         <i class="ti-calendar"></i>
-                        <p>periode</p>
+                        <p>period</p>
                     </a>
                 </li>
             </ul>
@@ -135,7 +135,7 @@
                                     <a th:href="@{/user/data}">
                                     <button class="btn btn-info btn-lg">
                                         <span class="ti-user"></span>
-                                        User</button></a>
+                                        Edit Profile</button></a>
                                 </center></li>
                                 <form name="f" th:action="@{/logout}" method="post">
                                     <li><center><button class="btn btn-danger btn-lg">
