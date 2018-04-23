@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
@@ -72,7 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" sec:authorize="hasAuthority('VIEW_SUPERIOR')">
                                     <div class="panel-group">
                                         <div class="panel panel-default">
                                             <div class="panel-heading" data-toggle="collapse" href="#collapse1">
