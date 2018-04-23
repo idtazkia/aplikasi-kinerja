@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -74,8 +73,6 @@ public class DaftarBawahanController {
     }
 
 
-
-
     @GetMapping("/daftarbawahan/list")
     public String daftarStaff(Model model, String role, Authentication currentUser) throws Exception {
         StaffRole staffRole = staffRoleDao.findById(role).get();
@@ -91,35 +88,14 @@ public class DaftarBawahanController {
     }
 
     @GetMapping("/daftarbawahan/form")
-    public String daftarKpi(String id, Model m, Pageable page, Authentication currentUser) {
-        /*Optional<Staff> s = staffDao.findById(id);
+    public String daftarKpi(@RequestParam  String id,String staff, Model m, Pageable page, Authentication currentUser) {
+        StaffRole staffRole = staffRoleDao.findById(id).get();
+        Staff s = staffDao.findById(staff).get();
 
-        if (s == null) {
-            LOGGER.warn("Staff not found");
-            return "redirect:/404";
-        }
+        m.addAttribute("kpi",staffRole.getKpi());
+        m.addAttribute("staff",s);
+        m.addAttribute("role",staffRole);
 
-        m.addAttribute("staff", s);
-
-        System.out.println("username" + currentUser.getClass().getName());
-
-        if (currentUser == null) {
-            LOGGER.warn("Current user is null");
-            return "redirect:/404";
-        }
-
-        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
-        User u = userDao.findByUsername(username);
-
-        if (u == null) {
-            LOGGER.warn("Username {} not found in database " + username);
-            return "redirect:/404";
-        }
-
-
-        m.addAttribute("individual", staffKpiDao.findAllByStaffAndKpiCategory(s, individualCategory));
-        m.addAttribute("tazkiaValue", staffKpiDao.findAllByStaffAndKpiCategory(s, tazkiaValueCategory));
-*/
         return "/daftarbawahan/form";
 
     }
@@ -131,61 +107,32 @@ public class DaftarBawahanController {
 
 
     @PostMapping(value = "/daftarbawahan/form")
-    public String prosesForm(@RequestParam String staff, HttpServletRequest request) {
-        /*Optional<Staff> s = staffDao.findById(staff);
-        System.out.println("Staff : " + s.get().getEmployeeName());
+    public String prosesForm(@RequestParam String id, String staff, HttpServletRequest request) {
+        Staff s = staffDao.findById(staff).get();
+        StaffRole roles = staffRoleDao.findById(id).get();
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
 
-        List<StaffKpi> daftarKpi = staffKpiDao.findAllByStaffAndKpiCategory(s, tazkiaValueCategory);
-        List<StaffKpi> daftarKpiIndividual = staffKpiDao.findAllByStaffAndKpiCategory(s, individualCategory);
 
-        for (StaffKpi skp : daftarKpi) {
-            String pilihan = request.getParameter(skp.getKpi().getId() + "-score");
-            System.out.println("Pilihan : " + pilihan);
+        Set<Kpi> getKpi = roles.getKpi();
+        for (Kpi kpi : getKpi) {
+            LOGGER.info("kpinya :" + kpi.getKeyResult());
+            String pilihan = request.getParameter(kpi.getId() + "-score");
+            LOGGER.info("Pilihan : " + pilihan);
             Optional<Indicators> indicators = indicatorsDao.findById(pilihan);
             if (indicators != null) {
                 Score score = new Score();
-                score.setStaffKpi(skp);
+                score.setKpi(kpi);
                 score.setScore(indicators.get().getScore());
                 score.setRemark(indicators.get().getContent());
-                float val = Float.parseFloat(score.getStaffKpi().getKpi().getWeight());
-                float scoree = Float.parseFloat(score.getScore());
-                LOGGER.info("perkalian 1         " + val);
-                LOGGER.info(" perkalian 2          " + scoree);
-                LOGGER.info("hasilnya         " + val * scoree);
-                float perkalian = val * scoree;
-                String hasile = String.valueOf(perkalian);
-                score.setTotal(hasile);
+                score.setPeriode(periode);
+                score.setStaff(s);
                 scoreDao.save(score);
             }
 
         }
+        return "redirect:/daftarbawahan/list?role=" +roles.getId();
 
-        for (StaffKpi sk : daftarKpiIndividual) {
-            String pilihan = request.getParameter(sk.getKpi().getId() + "-score");
-
-            System.out.println("Pilihan : " + pilihan);
-            Optional<Indicators> indicators = indicatorsDao.findById(pilihan);
-            if (indicators != null) {
-                Score score = new Score();
-                score.setStaffKpi(sk);
-                score.setScore(indicators.get().getScore());
-                score.setRemark(indicators.get().getContent());
-                float val = Float.parseFloat(score.getStaffKpi().getKpi().getWeight());
-                float scoree = Float.parseFloat(score.getScore());
-                LOGGER.info("perkalian 1         " + val);
-                LOGGER.info(" perkalian 2          " + scoree);
-                LOGGER.info("hasilnya         " + val * scoree);
-                float perkalian = val * scoree;
-                String hasile = String.valueOf(perkalian);
-                score.setTotal(hasile);
-                scoreDao.save(score);
-            }
-
-
-        }*/
-        return "redirect:list";
     }
-
 
     @GetMapping("/daftarbawahan/detail")
     public String detail(@RequestParam(required = false) String id, Model m, Pageable page, Authentication currentUser) {
@@ -264,7 +211,7 @@ public class DaftarBawahanController {
 
     @GetMapping("/uploaded/{evidence}/bukti/")
     public ResponseEntity<byte[]> tampilkanBuktiPembayaran(@PathVariable Evidence evidence) throws Exception {
-        String lokasiFile = uploadFolder + File.separator + evidence. getStaff().getId()
+        String lokasiFile = uploadFolder + File.separator + evidence.getStaff().getId()
                 + File.separator + evidence.getFilename();
         LOGGER.debug("Lokasi file bukti : {}", lokasiFile);
 
@@ -427,7 +374,5 @@ public class DaftarBawahanController {
 
 
     }
-
-
 }
 

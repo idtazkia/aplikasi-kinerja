@@ -24,19 +24,19 @@
                             <h4 class="title">Edit Profile</h4>
                         </div>
                         <div class="content">
-                            <form th:action="@{/user/data}"method="post">
+                            <form th:action="@{/user/data}" method="post" th:object="${staff}">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nama</label>
-                                            <input type="text" class="form-control border-input"
-                                                   placeholder="Nama" id="employee_name" name="employeeName">
+                                            <input type="text" readonly class="form-control border-input"
+                                                   placeholder="Nama" th:field="*{employeeName}" id="employee_name" name="employeeName">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>NIK</label>
-                                            <input type="text" class="form-control border-input" placeholder="NIK" id="employee_number" name="employeeNumber"  >
+                                            <input type="text" th:field="*{employeeNumber}" readonly class="form-control border-input" placeholder="NIK" id="employee_number" name="employeeNumber"  >
                                         </div>
                                     </div>
                                 </div>
@@ -44,14 +44,14 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Pangkat</label>
-                                            <input type="text" class="form-control border-input"placeholder="Pangkat" id="job_level" name="jobLevel" >
+                                            <label>Job Level</label>
+                                            <input type="text" th:field="*{jobLevel}" readonly class="form-control border-input"placeholder="Pangkat" id="job_level" name="jobLevel" >
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Jabatan</label>
-                                            <input type="text" class="form-control border-input" placeholder="Jabatan" id="job_title" name="jobTitle"  >
+                                            <label>Job Title</label>
+                                            <input type="text" th:field="*{jobTitle}" readonly class="form-control border-input" placeholder="Jabatan" id="job_title" name="jobTitle"  >
                                         </div>
                                     </div>
                                 </div>
@@ -59,14 +59,14 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Departemen</label>
-                                            <input type="text" class="form-control border-input" placeholder="Departemen" id="department" name="department">
+                                            <label>Department</label>
+                                            <input type="text" th:field="*{department}" readonly class="form-control border-input" placeholder="Departemen" id="department" name="department">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Area</label>
-                                            <input type="text" class="form-control border-input" placeholder="Area" id="area" name="area">
+                                            <input type="text" th:field="*{area}" readonly class="form-control border-input" placeholder="Area" id="area" name="area">
                                         </div>
                                     </div>
                                 </div>
@@ -75,13 +75,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" class="form-control border-input" placeholder="Username" id="username" name="username">
+                                            <input type="text" readonly th:field="*{username}" class="form-control border-input" placeholder="Username" id="username" name="username">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control border-input"
+                                            <input type="email" th:field="*{email}" class="form-control border-input"
                                                    placeholder="Email" name="email">
                                         </div>
                                     </div>
@@ -91,19 +91,24 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input type="text" class="form-control border-input" placeholder="Password" name="password" >
+                                            <input type="password" id="pass1" th:field="*{password}" class="form-control border-input" placeholder="Password" name="password" >
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Re-type Password</label>
-                                            <input type="text" class="form-control border-input" placeholder="Password" name="password" >
+                                            <input type="password" id="pass2" onkeyup="checkPass(); return false;" class="form-control border-input" placeholder="Password">
+                                            <span id="confirmMessage" class="confirmMessage"></span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="id" >
+                                <input type="hidden" name="id" th:field="*{id}">
+                                <input type="hidden" name="roles" th:field="*{roles}">
+                                <input type="hidden" name="user" th:field="*{user}">
+                                <input type="hidden" name="userPassword" th:field="*{userPassword}">
+                                <input type="hidden" name="securityRole" th:field="*{securityRole}">
 
                                 <hr>
                                 <div class="text-center">
@@ -128,3 +133,33 @@
 
 </body>
 </html>
+<script>
+    function checkPass()
+    {
+        //Store the password field objects into variables ...
+        var pass1 = document.getElementById('pass1');
+        var pass2 = document.getElementById('pass2');
+        //Store the Confimation Message Object ...
+        var message = document.getElementById('confirmMessage');
+        //Set the colors we will be using ...
+        var goodColor = "#66cc66";
+        var badColor = "#ff6666";
+        //Compare the values in the password field
+        //and the confirmation field
+        if(pass1.value == pass2.value){
+            //The passwords match.
+            //Set the color to the good color and inform
+            //the user that they have entered the correct password
+            pass2.style.backgroundColor = goodColor;
+            message.style.color = goodColor;
+            message.innerHTML = "Passwords Match!"
+        }else{
+            //The passwords do not match.
+            //Set the color to the bad color and
+            //notify the user.
+            pass2.style.backgroundColor = badColor;
+            message.style.color = badColor;
+            message.innerHTML = "Passwords Do Not Match!"
+        }
+    }
+</script>
