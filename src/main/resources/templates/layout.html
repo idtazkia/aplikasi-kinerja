@@ -73,12 +73,6 @@
                         <p>See Ratings</p>
                     </a>
                 </li>
-                <li>
-                    <a th:href="@{/daftarbawahan/evidence/list}">
-                        <i class="ti-pencil"></i>
-                        <p>Input Evidence</p>
-                    </a>
-                </li>
                 <li sec:authorize="hasAuthority('VIEW_SUPERIOR')">
                     <a th:href="@{/kpi/list}">
                         <i class="ti-pencil"></i>
