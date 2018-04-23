@@ -288,53 +288,26 @@ public class DaftarBawahanController {
     }
 
     @GetMapping("/daftarbawahan/evidence/list")
-    public void evidence(Model model, Authentication currentUser) {
-        LOGGER.debug("username" + currentUser.getClass().getName());
+    public void evidence(@RequestParam String role, Model model) {
+        StaffRole sr = staffRoleDao.findById(role).get();
 
-        if (currentUser == null) {
-            LOGGER.warn("Current user is null");
-            return;
-        }
-
-        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
-        User u = userDao.findByUsername(username);
-
-        if (u == null) {
-            LOGGER.warn("Username {} not found in database " + username);
-            return;
-        }
-
-        Staff p = staffDao.findByUser(u);
-
-        if (p == null) {
-            LOGGER.info("Employee not found for username {} " + username);
-            return;
-
-        }
-
-
-        Set<StaffRole> staffRole = p.getRoles();
-        for (StaffRole role : staffRole){
-            Set<Kpi> kpis = role.getKpi();
-            for (Kpi kpi : kpis){
-                System.out.println("kpinya :" + kpi.getKeyResult());
-            }
-            model.addAttribute("individual",kpis);
-
-        }
-
-
+        model.addAttribute("individual",sr.getKpi());
+        model.addAttribute("role",sr);
 
     }
 
     @GetMapping("/daftarbawahan/evidence/form")
-    public String inputEvidence(String id, Model m) {
+    public String inputEvidence(@RequestParam String role,String id, Model m) {
         Kpi kpi = kpiDao.findById(id).get();
-        if (id == null) {
+        StaffRole sr = staffRoleDao.findById(role).get();
+        if (kpi.getId() == null && sr.getId() == null) {
             return "redirect:/404";
         }
 
+
+
         m.addAttribute("kpi", kpi);
+        m.addAttribute("role", sr);
 
         Evidence evidence = new Evidence();
         return "/daftarbawahan/evidence/form";
@@ -342,8 +315,11 @@ public class DaftarBawahanController {
     }
 
     @PostMapping("/daftarbawahan/evidence/form")
-    public String uploadBukti(@RequestParam String id, MultipartFile file, Authentication currentUser) throws Exception {
+    public String uploadBukti(@RequestParam String role, String id, MultipartFile file,
+                              Authentication currentUser) throws Exception {
         Kpi kpi = kpiDao.findById(id).get();
+        StaffRole sr = staffRoleDao.findById(role).get();
+
 //        mengambil data user yang login
         LOGGER.debug("Authentication class : {}", currentUser.getClass().getName());
 
@@ -369,8 +345,8 @@ public class DaftarBawahanController {
 
 
 //
-        
-        
+
+
         String idEmployee = staff.getId();
 
         String namaFile = file.getName();
@@ -412,7 +388,7 @@ public class DaftarBawahanController {
         evidenceDao.save(evidence);
 
 
-        return "redirect:list";
+        return "redirect:/daftarbawahan/evidence/list?role=" +sr.getId();
 
     }
 

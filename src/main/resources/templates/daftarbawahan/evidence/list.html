@@ -49,7 +49,7 @@
                                                                 <td th:if="${sd.category.id == '002'}"><b>Tazkia Value Score</b></td>
                                                                 <td>
                                                                     <center><a
-                                                                            th:href="@{/daftarbawahan/evidence/form(id=${sd.id})}"
+                                                                            th:href="@{/daftarbawahan/evidence/form(role=${role.id},id=${sd.id})}"
                                                                             target="output" class="btn btn-success">Upload
                                                                         Evidence</a></center>
                                                                 </td>

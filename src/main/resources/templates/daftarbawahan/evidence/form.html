@@ -27,7 +27,7 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade in active" id="individual">
                                 <form method="post" th:each="k : ${kpi}"
-                                      th:action="@{/daftarbawahan/evidence/form(id=${k.id})}"
+                                      th:action="@{/daftarbawahan/evidence/form(role=${role.id},id=${k.id})}"
                                       th:object="${evidence}"
                                       enctype="multipart/form-data">
                                 <div class="container">
