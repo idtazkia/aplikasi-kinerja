@@ -127,6 +127,7 @@ public class DaftarBawahanController {
                 score.setPeriode(periode);
                 score.setStaff(s);
                 scoreDao.save(score);
+
             }
 
         }
@@ -159,17 +160,7 @@ public class DaftarBawahanController {
         }
 
         Staff p = staffDao.findByUser(u);
-
-        Optional<Staff> atasan = staffDao.findById(p.getId());
-
-        if (StringUtils.hasText(id)) {
-            m.addAttribute("nama", id);
-            m.addAttribute("detail", staffDao.findById(id));
-            m.addAttribute("superior", atasan);
-        } else {
-            m.addAttribute("detailStaff", staffDao.findAll(page));
-        }
-
+        m.addAttribute("detail", p);
 
         return "/daftarbawahan/detail";
 

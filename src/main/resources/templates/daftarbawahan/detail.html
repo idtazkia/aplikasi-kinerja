@@ -32,21 +32,19 @@
                                 <th>Pangkat</th>
                                 <th>Nama Jabatan</th>
                                 <th>Departemen</th>
-                                <th>Atasan</th>
                                 <th>Area</th>
                                 <th>Aksi</th>
                                 </thead>
                                 <tbody>
                                 <tr th:each="sd,row : ${detail}">
                                     <td th:text="${(row.index + 1)}"></td>
-                                    <td th:text="${sd.get().employeeName}"></td>
-                                    <td th:text="${sd.get().employeeNumber}"></td>
-                                    <td th:text="${sd.get().jobLevel}"></td>
-                                    <td th:text="${sd.get().jobTitle}"></td>
-                                    <td th:text="${sd.get().department}"></td>
-                                    <td th:text="${superior.get().employeeName}"></td>
-                                    <td th:text="${sd.get().area}"></td>
-                                    <td><a th:href="@{/daftarbawahan/komen(id=${sd.get().id})}" class="btn btn-warning">Lihat
+                                    <td th:text="${sd.employeeName}"></td>
+                                    <td th:text="${sd.employeeNumber}"></td>
+                                    <td th:text="${sd.jobLevel}"></td>
+                                    <td th:text="${sd.jobTitle}"></td>
+                                    <td th:text="${sd.department}"></td>
+                                    <td th:text="${sd.area}"></td>
+                                    <td><a th:href="@{/daftarbawahan/komen(id=${sd.id})}" class="btn btn-warning">Lihat
                                         Komentar</a></td>
                                 </tr>
                                 </tbody>
