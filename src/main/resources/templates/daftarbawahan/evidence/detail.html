@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Penilaian Kinerja Staf</title>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="title">Input Evidence</h2>
+                            <p class="category"></p>
+                        </div>
+                        <hr/>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="individual">
+                                <div class="container">
+                                    <!---->
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-11">
+                                                <div class="card">
+
+                                                    <div class="content" th:each="de : ${detailevidence}">
+                                                            <br>
+                                                            <div class="row col-sm-offset-1">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label><b>KPI</b></label><br><br>
+
+                                                                      <!--  <span th:each="rn : ${de.kpi}">
+                                                                            <span th:text="${rn.keyResult}">
+
+                                                                            </span>
+                                                                        </span>
+-->
+                                                                        <span th:text="${de.keyResult}">
+                                                                        </span>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label><b>Category</b></label><br><br>
+
+                                                                                <span th:if="${de.category.id == '001'}">
+                                                                                    Individual Score
+                                                                                </span>
+                                                                                <span th:if="${de.category.id == '002'}">
+                                                                                    Tazkia Value Score
+                                                                                </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label><b>Periode</b></label><br><br>
+                                                                        <span ></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br>
+                                                        <!--Link View Evidence-->
+                                                        <hr>
+                                                        <ul>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                        </ul>
+                                                        <hr>
+                                                        <!---------------------->
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!---->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

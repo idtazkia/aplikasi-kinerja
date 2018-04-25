@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -209,8 +210,44 @@ public class DaftarBawahanController {
         return "/daftarbawahan/komen";
     }
 
+
+    @GetMapping("/daftarbawahan/evidence/list")
+    public void evidence(@RequestParam String role,String evidence, Model model) {
+        StaffRole sr = staffRoleDao.findById(role).get();
+
+        model.addAttribute("individual",sr.getKpi());
+        model.addAttribute("role",sr);
+
+      /*  Evidence ev;
+        ev = evidenceDao.findById(evidence).get();
+
+        model.addAttribute("evidence", ev.getKpi().getKeyResult()).addAttribute("evidence", ev);
+*/
+    }
+
+    @GetMapping("/daftarbawahan/evidence/detail")
+    public void daftarNilaiBiaya(@RequestParam(required = false)String kpi, Model m, Pageable page){
+        /*if(StringUtils.hasText(role)) {
+            m.addAttribute("staff", role);
+            m.addAttribute("detailevidence", staffRoleDao.findById(role));
+        } else {
+            m.addAttribute("detailevidence", staffRoleDao.findAll(page));
+        }*/
+
+     /*   List<StaffRole> sr = staffRoleDao.findDistinctByKpi_Id(kpi);
+
+        m.addAttribute("detailevidence",sr);
+        m.addAttribute("role",sr);*/
+
+        Kpi kpi1 = kpiDao.findById(kpi).get();
+
+        m.addAttribute("detailevidence", kpi1);
+
+
+    }
+
     @GetMapping("/uploaded/{evidence}/bukti/")
-    public ResponseEntity<byte[]> tampilkanBuktiPembayaran(@PathVariable Evidence evidence) throws Exception {
+    public ResponseEntity<byte[]> tampilkanEvidence(@PathVariable Evidence evidence, Model model) throws Exception {
         String lokasiFile = uploadFolder + File.separator + evidence.getStaff().getId()
                 + File.separator + evidence.getFilename();
         LOGGER.debug("Lokasi file bukti : {}", lokasiFile);
@@ -231,15 +268,9 @@ public class DaftarBawahanController {
         } catch (Exception err) {
             LOGGER.warn(err.getMessage(), err);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+
         }
-    }
-
-    @GetMapping("/daftarbawahan/evidence/list")
-    public void evidence(@RequestParam String role, Model model) {
-        StaffRole sr = staffRoleDao.findById(role).get();
-
-        model.addAttribute("individual",sr.getKpi());
-        model.addAttribute("role",sr);
 
     }
 
