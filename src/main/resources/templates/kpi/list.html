@@ -23,11 +23,15 @@
                                 <form method="get">
                                     <tr>
                                         <td>Search by :
-                                            <input type="text" id="keyresult" autocomplete="off"
-                                                   placeholder="key result" name="keyresult"
-                                                   th:value="${keyresult}">
-                                            <input type="submit" value="Search" class="btn btn-success">
-                                            <a th:href="@{/kpi/form}" class="btn btn-info col-sm-offset-7"> New Kpi</a>
+                                                <input type="text" id="keyresult" autocomplete="off"
+                                                       placeholder="key result" name="keyresult"
+                                                       th:value="${keyresult}">
+                                                <input type="submit" value="Search" class="btn btn-success">  |
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                            data-target="#exampleModal">
+                                                        Upload Kpi
+                                                    </button>  |
+                                                    <a th:href="@{/kpi/form}" class="btn btn-info"> New Kpi</a>
                                         </td>
                                     </tr>
                                     <tr style="border-bottom-color: whitesmoke">
@@ -55,8 +59,9 @@
                                     <td th:text="${key.weight}">2</td>
                                     <td th:text="${key.baseLine}">4</td>
                                     <td th:text="${key.target}">3</td>
-                                    <td><a th:href="@{/kpi/update(id=${key.id})}" target="_blank" class="btn btn-warning"> Edit</a></td>
-                                    <td><a th:href="@{/kpi/hapus(kpi=${key.id})}" class="btn btn-danger"> Hapus</a></td>
+                                    <td><a th:href="@{/kpi/update(id=${key.id})}" target="_blank"
+                                           class="btn btn-warning"> Edit</a></td>
+                                    <td><a th:href="@{/kpi/hapus(kpi=${key.id})}" class="btn btn-danger"> Delete</a></td>
                                 </tr>
 
                                 </tbody>
@@ -88,6 +93,35 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:action="@{/upload/kpi}" method="post" enctype="multipart/form-data">
+        <br><br><br><br><div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Upload Kpi
+                    <a th:href="@{/contoh/kpi}"
+                       class="btn btn-info" style="margin-left: 45%" type="submit">Example File Upload</a>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <input type="file" name="kpiFile" class="form-control"><br>
+                <input type="checkbox" id="pakaiHeader" name="pakaiHeader" checked value="true" class="filled-in">
+                <label for="pakaiHeader">Use Column Headings</label><br>
+                <p>
+                    <b>Note :</b><br>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 1. 001 for Individual Score <br>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 2. 002 for Tazkia Score
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Upload File</button>
+            </div>
+        </div>
+    </div>
+        </form>
     </div>
 </section>
 </body>
