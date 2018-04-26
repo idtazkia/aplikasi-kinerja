@@ -292,5 +292,11 @@ public class KpiController {
 
     }
 
-
+    @GetMapping("/contoh/kpi")
+    public void downloadContohFileTagihan(HttpServletResponse response) throws Exception {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=example.csv");
+        FileCopyUtils.copy(example.getInputStream(), response.getOutputStream());
+        response.getOutputStream().flush();
+    }
 }
