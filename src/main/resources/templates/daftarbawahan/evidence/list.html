@@ -54,17 +54,11 @@
                                                                         Evidence</a></center>
                                                                 </td>
                                                                 <td>
-                                                                    <!--<center>-->
-                                                                        <!--<div class="dropdown">-->
-                                                                        <!--<button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence-->
-                                                                            <!--<span class="caret"></span></button>-->
-                                                                        <!--<ul class="dropdown-menu">-->
-                                                                            <!--<li th:each="img,row : ${sd.evidence}">-->
-                                                                                <!--<a target="_blank" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"-->
-                                                                                   <!--th:text="${'Evidence'+(row.index + 1)}">HTML</a>-->
-                                                                            <!--</li>-->
-                                                                        <!--</ul>-->
-                                                                    <!--</div></center>-->
+                                                                    <center>
+                                                                        <div class="dropdown">
+                                                                            <a th:href="@{/daftarbawahan/evidence/detail(role=${role.id},kpi=${sd.id})}" class="btn btn-primary">View(s) Evidence</a>
+                                                                        </div>
+                                                                    </center>
                                                                 </td>
                                                             </tr>
 

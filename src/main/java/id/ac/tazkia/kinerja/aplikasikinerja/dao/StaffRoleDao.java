@@ -15,4 +15,5 @@ public interface StaffRoleDao extends PagingAndSortingRepository <StaffRole, Str
     Page<StaffRole> findByStatusAndAndRoleNameContainingIgnoreCaseOrderByRoleName(String s, String role, Pageable page);
     Page<StaffRole> findByStatus(String s,Pageable page);
     List<StaffRole> findByStatus(String s);
+    List<StaffRole> findDistinctByKpi_Id(String kpi);
 }
