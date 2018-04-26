@@ -287,5 +287,10 @@ public class KpiController {
         return "redirect:/kpi/hasil";
     }
 
+    @GetMapping("/kpi/hasil")
+    public void hasil(){
+
+    }
+
 
 }

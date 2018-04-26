@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Staff Kpi</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Uploaded Results</h4>
+                            <p class="category"></p>
+                        </div>
+                        <hr>
+                        <div class="content">
+                            <div class="body">
+                                <h2 th:if="${jumlahBaris}">Uploaded Kpi Results</h2>
+                                <h2 th:unless="${jumlahBaris}">Upload not done yet</h2>
+
+                                <hr>
+                                <div class="table-responsive" th:if="${jumlahBaris}">
+                                    <h4>Upload Finish</h4>
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <tbody>
+                                        <tr>
+                                            <td>The Number of Rows That Process</td>
+                                            <td th:text="${jumlahBaris}">1000</td>
+                                        </tr><tr>
+                                            <td>Number of Successful Lines</td>
+                                            <td th:text="${jumlahSukses}">990</td>
+                                        </tr><tr>
+                                            <td>Number of Line Errors</td>
+                                            <td th:text="${jumlahError}">10</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="table-responsive" th:unless="${#lists.isEmpty(errors)}">
+                                    <h4 >Failure to Process</h4>
+                                    <div style="overflow: auto">
+                                        <table class="table table-bordered table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Line Number</th>
+                                                <th>Error Description</th>
+                                                <th>Data</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="err, rowStat : ${errors}">
+                                                <td th:text="${rowStat.count}">1</td>
+                                                <td th:text="${err.baris}">20</td>
+                                                <td th:text="${err.keterangan}">Format Tanggal Salah</td>
+                                                <td><pre th:text="${err.data}">2018011235,Pendaftar 005,201801123501,Tagihan Pendaftaran 005,500005.12,5 Jan 2019</pre></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
