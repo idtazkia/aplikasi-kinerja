@@ -7,15 +7,14 @@
     <title>Period</title>
 </head>
 <body>
-<section layout:fragment="content">
-    <br/>
+<section layout:fragment="content"><br>
     <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h2 class="title">Periode</h2>
+                            <h2 class="title">Period</h2>
                             <p class="category">
                                 <a th:href="@{/periode/form}" class="btn btn-info col-sm-offset-10"><i
                                         class="ti-pencil"></i> Create New Periode</a>
@@ -27,63 +26,62 @@
                         <div class="container">
                             <!---->
                             <div class="content">
-                            <div class="col-md-12" th:each="list : ${list}">
-                                <div class="card text-white bg-secondary">
-                                    <div class="card-header">
-                                        <span th:text="${list.periodeName}">Periode 1</span> &nbsp;
-                                        <span th:if="${list.active == 'AKTIF'}" class="label label-success">Active Period</span>
-                                        <span th:if="${list.active == 'NONAKTIF'}" class="label label-danger"> Inactive Period</span>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title" th:text="${list.description}">Input kpi di periode 1</h5>
-                                        <p class="card-text"><span th:text="${list.startDate}">28-Juli-2022 </span> <b>s/d</b>
-                                            <span th:text="${list.endDate}">28-Juli-2025</span></p>
+                                <div class="col-md-12" th:each="list : ${list}">
+                                    <div class="card text-white bg-secondary">
+                                        <div class="card-header">
+                                            <span th:text="${list.periodeName}">Periode 1</span> &nbsp;
+                                            <span th:if="${list.active == 'AKTIF'}" class="label label-success">Active Period</span>
+                                            <span th:if="${list.active == 'NONAKTIF'}" class="label label-danger"> Inactive Period</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title" th:text="${list.description}">Input kpi di periode 1</h5>
+                                            <p class="card-text"><span th:text="${list.startDate}">28-Juli-2022 </span> <b>s/d</b>
+                                                <span th:text="${list.endDate}">28-Juli-2025</span></p>
 
-                                        <div class="content">
-                                            <div class="row">
-                                                <div class="col-sm-2">
-                                                    <form th:action="@{/periode/aktif(id=${list.id})}" method="post">
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="col-sm-2">
+                                                        <form th:action="@{/periode/aktif(id=${list.id})}" method="post">
 
-                                                        <button type="submit" class="btn btn-success"
-                                                                th:if="${list.active == 'NONAKTIF'}">
-                                                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<i
-                                                                class="ti-unlock"></i> Aktifkan
-                                                            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                        </button>
-                                                    </form>
+                                                            <button type="submit" class="btn btn-success col-lg-push-3"
+                                                                    th:if="${list.active == 'NONAKTIF'}">
+                                                                &nbsp&nbsp <i &nbsp&nbsp&nbsp
+                                                                              class="ti-unlock"></i> Enable Period &nbsp&nbsp
+                                                            </button>
+                                                        </form>
 
-                                                    <form th:action="@{/periode/nonaktif(id=${list.id})}" method="post">
-                                                    <button type="submit" class="btn btn-warning"
-                                                            th:if="${list.active == 'AKTIF'}"><i class="ti-lock"></i>
-                                                        Non Aktifkankan
-                                                    </button>
-                                                    </form>
+                                                        <form th:action="@{/periode/nonaktif(id=${list.id})}" method="post">
+                                                            <button type="submit" class="btn btn-warning"
+                                                                    th:if="${list.active == 'AKTIF'}"><i class="ti-lock"></i>
+                                                                Disable Period
+                                                            </button>
+                                                        </form>
 
-                                                </div>
-                                                <div class="col-xs-1">
-                                                    <a th:href="@{/periode/form(id=${list.id})}" class="btn btn-info">
-                                                        <i class="ti-pencil"></i>
-                                                        Edit
-                                                    </a>
-                                                </div>
-                                                <div class="col-xs-1">
-                                                    <form th:action="@{/delete/periode(delete=${list.id})}"
-                                                          th:if="${list.active == 'NONAKTIF'}" method="post">
-                                                        <button type="submit" class="btn btn-danger"
-                                                                onclick="return confirm('Are you sure? Once deleted, you will not be able' +
+                                                    </div>
+                                                    <div class="col-xs-1">
+                                                        <a th:href="@{/periode/form(id=${list.id})}" class="btn btn-info">
+                                                            <i class="ti-pencil"></i>
+                                                            Edit
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-xs-1">
+                                                        <form th:action="@{/delete/periode(delete=${list.id})}"
+                                                              th:if="${list.active == 'NONAKTIF'}" method="post">
+                                                            <button type="submit" class="btn btn-danger"
+                                                                    onclick="return confirm('Are you sure? Once deleted, you will not be able' +
                                                                  ' to recover this imaginary file!')">
-                                                            <i class="ti-eraser"></i> Hapus
-                                                        </button>
-                                                    </form>
+                                                                <i class="ti-eraser"></i> Delete Period
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
+                                        <br><br>
                                     </div>
-
-                                    <br><br>
                                 </div>
-                            </div>
                             </div>
                         </div>
                         <!---->
@@ -93,7 +91,7 @@
             </div>
         </div>
     </div>
-    </div>
+
 </section>
 </body>
 </html>
