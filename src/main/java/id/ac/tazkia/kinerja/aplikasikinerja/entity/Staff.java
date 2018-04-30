@@ -40,14 +40,6 @@ public class Staff {
     private String department;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "staff_superior",
-            joinColumns = @JoinColumn(name = "id_staff"),
-            inverseJoinColumns = @JoinColumn(name = "id_superior")
-    )
-    private Set<Staff> superiors = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "staff_role_staff",
                joinColumns=@JoinColumn(name = "id_staff"),
                inverseJoinColumns = @JoinColumn(name = "id_staff_role"))
