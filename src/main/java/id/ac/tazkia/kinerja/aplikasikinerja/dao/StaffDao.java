@@ -16,9 +16,6 @@ import java.util.Optional;
 public interface StaffDao extends PagingAndSortingRepository<Staff, String> {
     Staff findByUser(User u);
 
-    @Query("select s from Staff s where :superior member of s.superiors")
-    List<Staff> test(@Param("superior") Optional<Staff> superior);
-
     Page<Staff> findByEmployeeNameContainingIgnoreCaseOrderByEmployeeName(String search,Pageable page);
 
     Iterable<Staff> findByRoles(StaffRole staffRole);

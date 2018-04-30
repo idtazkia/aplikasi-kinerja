@@ -23,22 +23,6 @@ public class StaffDaoTests {
 
     @Autowired private StaffRoleDao staffRoleDao;
 
-    @Test
-    public void testAmbilBawahan() {
-
-        String id = "001";
-        Optional<Staff> atasan = staffDao.findById(id);
-        Assert.assertNotNull(atasan);
-
-
-        List<Staff> daftarBawahan = staffDao.test(atasan);
-        Assert.assertNotNull(daftarBawahan);
-
-        System.out.println("Atasan : " + atasan.get().getEmployeeName());
-        for (Staff bawahan : daftarBawahan) {
-            System.out.println("Nama : " + bawahan.getEmployeeName());
-        }
-    }
 
     @Test
     public void testAmbilRole(){
