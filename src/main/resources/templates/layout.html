@@ -91,7 +91,7 @@
                         <p>Staff List</p>
                     </a>
                 </li>
-                <li security:authorize access="hasAnyRole('VIEW_STAFF', 'VIEW_KABAG')">
+                <li security:authorize access="hasAnyAuthority('VIEW_STAFF', 'VIEW_KABAG')">
                     <a th:href="@{/periode/list}">
                         <i class="ti-calendar"></i>
                         <p>period</p>
