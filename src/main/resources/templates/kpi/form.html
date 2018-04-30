@@ -32,7 +32,7 @@
                                         <label>Category</label>
 
                                         <select name="category" class="form-control border-input" required autofocus>
-                                            <option value="">-Pilih Program Studi-</option>
+                                            <option value="">-Select Category-</option>
                                             <option th:each="ins : ${daftarCategory}"
                                                     th:value="${ins.id}"
                                                     th:text="${ins.name}">Ekonomi Syariah</option>
