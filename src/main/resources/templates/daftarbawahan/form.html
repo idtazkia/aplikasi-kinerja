@@ -65,16 +65,10 @@
                                         </table>
 
 
-                                        <!-- <div class="dropdown">
-                                           <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
-                                           <span class="caret"></span></button>
-                                           <ul class="dropdown-menu">
-                                             <li th:each="img,row : ${k.evidence}">
-                                                 <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
-                                                    th:text="${'Evidence'+(row.index + 1)}">HTML</a>
-                                             </li>
-                                           </ul>
-                                         </div>-->
+                                        <div class="dropdown">
+                                             <a target="_blank" th:href="@{/daftarbawahan/evidence/detail(staff=${staff.id},kpi=${k.id})}"
+                                                class="btn btn-primary">View(s) Evidence</a>
+                                         </div>
 
                                     </div>
 
@@ -145,18 +139,10 @@
                                                 </tbody>
                                             </table>
 
-                                            <!--<div class="dropdown">-->
-                                            <!--<button class="btn btn-dark dropdown-toggle" type="button"-->
-                                            <!--data-toggle="dropdown">View(s) Evidence-->
-                                            <!--<span class="caret"></span></button>-->
-                                            <!--<ul class="dropdown-menu">-->
-                                            <!--<li th:each="img,row : ${k.evidence}">-->
-                                            <!--<a target="output"-->
-                                            <!--th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"-->
-                                            <!--th:text="${'Evidence'+(row.index + 1)}">HTML</a>-->
-                                            <!--</li>-->
-                                            <!--</ul>-->
-                                            <!--</div>-->
+                                            <div class="dropdown">
+                                             <a target="_blank" th:href="@{/daftarbawahan/evidence/detail(staff=${staff.id},kpi=${kv.id})}"
+                                                class="btn btn-primary">View(s) Evidence</a>
+                                         </div>
                                         </div>
 
 

@@ -32,20 +32,15 @@
                                             <div class="col-md-11">
                                                 <div class="card">
 
-                                                    <div class="content" th:each="de : ${detailevidence}">
+                                                    <div class="content">
                                                             <br>
                                                             <div class="row col-sm-offset-1">
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label><b>KPI</b></label><br><br>
 
-                                                                      <!--  <span th:each="rn : ${de.kpi}">
-                                                                            <span th:text="${rn.keyResult}">
-
-                                                                            </span>
-                                                                        </span>
--->
-                                                                        <span th:text="${de.keyResult}">
+                                                                      <p th:text="${kpi.keyResult}"></p>
+                                                                        <span>
                                                                         </span>
 
                                                                     </div>
@@ -53,30 +48,25 @@
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label><b>Category</b></label><br><br>
-
-                                                                                <span th:if="${de.category.id == '001'}">
-                                                                                    Individual Score
-                                                                                </span>
-                                                                                <span th:if="${de.category.id == '002'}">
-                                                                                    Tazkia Value Score
-                                                                                </span>
+                                                                        <p th:if="${kpi.category.id == '001'}">Individual Score</p>
+                                                                        <p th:if="${kpi.category.id == '002'}">Tazkia Value Score</p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label><b>Periode</b></label><br><br>
-                                                                        <span ></span>
+                                                                        <span th:text="${periode.periodeName}"></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <br>
                                                         <!--Link View Evidence-->
                                                         <hr>
-                                                        <ul>
-                                                            <li></li>
-                                                            <li></li>
-                                                            <li></li>
-                                                        </ul>
+                                                        <div class="list-group" th:each="ev : ${detailEvidence}">
+                                                            <a th:href="@{/uploaded/{evidence}/bukti/(evidence=${ev.id})}"
+                                                               th:text="${ev.description}" class="list-group-item list-group-item-action">Dapibus ac facilisis in
+                                                            </a>
+                                                        </div>
                                                         <hr>
                                                         <!---------------------->
 

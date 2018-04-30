@@ -46,7 +46,7 @@
                             <h4 class="title">Input Staff</h4>
                         </div>
                         <div class="content">
-                            <form th:action="@{/staff/form}" th:object="${staff}" method="post">
+                            <form th:action="@{/staff/update}" th:object="${staff}" method="post">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Job Title</label>
+                                            <label>job Title</label>
                                             <input type="text" class="form-control border-input"
                                                    th:field="*{jobTitle}" placeholder="Jabatan" id="job_title"
                                                    name="jobTitle">
@@ -114,9 +114,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Password</label>
-                                            <input type="text" class="form-control border-input"
-                                                   th:field="*{password}" placeholder="Password" name="password">
+                                            <label>Please Select Role</label>
+                                            <select name="roles" id="pilihanRole" class="form-control"
+                                                    multiple="multiple">
+                                                <option th:each="rl, row : ${pilihanRole}"
+                                                        th:text="${rl.roleName}"
+                                                        th:value="${rl.id}">Lektor
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -135,31 +140,18 @@
                                             <select class="form-control border-input js-sr"
                                                     name="securityRole" th:field="*{securityRole}">
                                                 <option value=""></option>
-                                                <option value="superior">Superior</option>
-                                                <option value="employee">Employee</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Please Select Role</label>
-                                            <select name="roles" id="pilihanRole" class="form-control border-input"
-                                                    multiple="multiple">
-                                                <option th:each="rl, row : ${pilihanRole}"
-                                                        th:text="${rl.roleName}"
-                                                        th:value="${rl.id}">Lektor
-                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <input type="hidden" name="id" th:field="*{id}">
+                                <input type="hidden" name="user" th:field="*{user}">
+                                <input type="hidden" name="userPassword" th:field="*{userPassword}">
+                                <input type="hidden" name="password" th:field="*{password}">
 
                                 <hr>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Save Employee Data
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Update Employee Data
                                     </button>
                                 </div>
                                 <div class="clearfix"></div>

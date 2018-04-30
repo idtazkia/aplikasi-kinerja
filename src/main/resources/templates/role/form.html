@@ -10,6 +10,27 @@
 
 
 <body>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+        var kpiSekarang = /*[[${kpiSekarang}]]*/ ["001", "002"];
+        $(document).ready(function () {
+            $('#pilihanKpi').select2();
+            console.log("Kpi sekarang : " + kpiSekarang);
+
+            var kpiSekarangId = [];
+            for (var i = 0; i < kpiSekarang.length; i++) {
+                kpiSekarangId.push(kpiSekarang[i].id);
+            }
+
+            console.log("ID Kpi sekarang : " + kpiSekarangId);
+
+            $('#pilihanKpi').val(kpiSekarangId);
+            $('#pilihanKpi').trigger("change");
+        });
+
+    </script>
+</th:block>
 <section layout:fragment="content">
     <br/>
     <div class="content">
@@ -26,30 +47,41 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Role Name</label>
-                                            <input type="hidden" name="kpi" th:field="*{kpi}">
                                             <input type="hidden" name="id" th:field="*{id}">
                                             <input type="hidden" name="status" th:field="*{status}">
-                                            <input type="text" th:field="*{roleName}" class="form-control border-input" name="roleName"  placeholder="Role Name"><br>
+                                            <input type="text" th:field="*{roleName}" class="form-control border-input"
+                                                   name="roleName" placeholder="Role Name"><br>
                                             <label>Superior Role</label>
                                             <select class="js-example-placeholder-single js-states form-control border-input"
                                                     name="superiorRole" th:field="*{superiorRole}">
                                                 <option value=""></option>
                                                 <option th:each="sr :${staffRole}"
                                                         th:text="${sr.roleName}"
-                                                        th:value="${sr.id}">Ketua</option>
-                                                <!--<option>Direktur</option>-->
-                                                <!--<option>Kepala Bagian IT</option>-->
-                                                <!--<option>Kepala Bagian SDM</option>-->
+                                                        th:value="${sr.id}">Ketua
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Description</label><br>
-                                            <textarea name="description" style="height: 130px"
+                                            <textarea name="description" style="height: 120px"
                                                       placeholder="Description" th:field="*{description}"
                                                       class="form-control border-input"
                                                       maxlength="254"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Please Select the Kpi</label>
+                                            <select name="kpi" id="pilihanKpi" class="form-control" multiple="multiple">
+                                                <option th:each="rl: ${pilihanKpi}"
+                                                        th:text="${rl.keyResult + '&nbsp&nbsp&nbsp&nbsp' +'('+rl.category.name+')'}"
+                                                        th:value="${rl.id}">Lektor
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
