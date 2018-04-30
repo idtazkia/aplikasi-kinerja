@@ -49,10 +49,16 @@
                                                     <tr>
                                                         <td><b>Upload Evidence</b></td>
                                                         <td>
-                                                            <input required type="file" name="file"
-                                                                   class="form-control"/><br>
-                                                            <small style="color: red">maximum file uploaded <b>2Mb</b></small>
+                                                            <input required id="file" type="file" name="file"
+                                                                   class="form-control" multiple/><br>
+                                                            <small style="color: red">maximum file uploaded <b>10000Kb</b></small>
+                                                            <br>
+                                                            <small><p id="demo"></p></small>
                                                         </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Description</b></td>
+                                                        <td><textarea name="description" class="form-control border-input" placeholder="Description"></textarea></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -114,3 +120,18 @@
 
 </body>
 </html>
+<script>
+
+
+    $(function(){
+        $('#file').change(function(){
+            var combinedSize = 0;
+            for(var i=0;i<this.files.length;i++) {
+                combinedSize += (this.files[i].size||this.files[i].fileSize);
+            }
+            document.getElementById("demo").innerHTML = "the size of the file that has been selected " + combinedSize+"kb";
+        })
+    })
+
+
+</script>
