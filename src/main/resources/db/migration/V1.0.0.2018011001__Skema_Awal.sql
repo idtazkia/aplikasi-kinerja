@@ -103,12 +103,3 @@ CREATE TABLE evidence (
   FOREIGN KEY (id_periode) REFERENCES periode(id)
 
 );
-
-CREATE TABLE staff_superior (
-  id VARCHAR (36)NOT NULL ,
-  id_staff VARCHAR (36)NOT NULL ,
-  id_superior VARCHAR (225) NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (id_staff) REFERENCES staff(id)
-
-);
