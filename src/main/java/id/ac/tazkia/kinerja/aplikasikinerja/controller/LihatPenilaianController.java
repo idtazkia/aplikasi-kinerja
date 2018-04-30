@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,6 +40,8 @@ public class LihatPenilaianController {
     private PeriodeDao periodeDao;
     @Autowired
     private EvidenceDao evidenceDao;
+    @Autowired
+    private ScoreCommentDao scoreCommentDao;
     @Value("${upload.folder}")
     private String uploadFolder;
 
@@ -87,10 +90,9 @@ public class LihatPenilaianController {
     }
 
     @GetMapping("/lihatpenilaian/comment")
-    public String detailComment(@RequestParam(required = false) Score id, Model m, Pageable page) {
+    public void detailComment(@RequestParam(required = false) Score id, Model m, Authentication currentUser) {
         if (id == null){
             LOGGER.debug("tidak ada data");
-            return "redirect:/404";
         }
 
         if (id != null) {
@@ -99,10 +101,22 @@ public class LihatPenilaianController {
             m.addAttribute("total",perkalian);
         }
 
-        Evidence evidence = new Evidence();
-        m.addAttribute("evidence", evidence);
+        LOGGER.debug("Authentication class : {}", currentUser.getClass().getName());
 
-        return null;
+        if (currentUser == null) {
+            LOGGER.warn("Current user is null");
+        }
+
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
+        User u = userDao.findByUsername(username);
+        LOGGER.debug("User ID : {}", u.getId());
+        if (u == null) {
+            LOGGER.warn("Username {} not found in database ", username);
+        }
+
+        Staff staff = staffDao.findByUser(u);
+
+        m.addAttribute("staff",staff);
 
 
     }
@@ -113,47 +127,56 @@ public class LihatPenilaianController {
     }
 
 
-//    @PostMapping("/lihatpenilaian/comment")
-//    public String proses(@ModelAttribute @Valid Evidence evidence, MultipartFile fileBukti) throws Exception {
-//        String idEmployee = score.getStaffKpi().getStaff().getId();
-//
-//        String namaFile = fileBukti.getName();
-//        String jenisFile = fileBukti.getContentType();
-//        String namaAsli = fileBukti.getOriginalFilename();
-//        Long ukuran = fileBukti.getSize();
-//
-//        LOGGER.debug("Nama File : {}", namaFile);
-//        LOGGER.debug("Jenis File : {}", jenisFile);
-//        LOGGER.debug("Nama Asli File : {}", namaAsli);
-//        LOGGER.debug("Ukuran File : {}", ukuran);
-//
-////        memisahkan extensi
-//        String extension = "";
-//
-//        int i = namaAsli.lastIndexOf('.');
-//        int p = Math.max(namaAsli.lastIndexOf('/'), namaAsli.lastIndexOf('\\'));
-//
-//        if (i > p) {
-//            extension = namaAsli.substring(i + 1);
-//        }
-//
-//        String idFile = UUID.randomUUID().toString();
-//        String lokasiUpload = uploadFolder + File.separator + idEmployee;
-//        LOGGER.debug("Lokasi upload : {}", lokasiUpload);
-//        new File(lokasiUpload).mkdirs();
-//        File tujuan = new File(lokasiUpload + File.separator + idFile + "." + extension);
-//        fileBukti.transferTo(tujuan);
-//        LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
-//
-//        Evidence evidence = new Evidence();
-//        evidence.setStaffKpi(score.getStaffKpi());
-//        evidence.setFileName(idFile + "." + extension);
-//        evidenceDao.save(evidence);
-//
-//
-//        scoreDao.save(score);
-//        return "redirect:/lihatpenilaian/list";
-//
-//    }
+    @PostMapping("/lihatpenilaian/comment")
+    public String proses(@ModelAttribute @Valid ScoreComment scoreComment, @RequestParam String id,
+                         MultipartFile[] fileBukti,Authentication currentUser,Model model) throws Exception {
+        Score score = scoreDao.findById(id).get();
+        model.addAttribute("score",score);
+
+        for (MultipartFile upload : fileBukti) {
+            String namaFile = upload.getName();
+            String jenisFile = upload.getContentType();
+            String namaAsli = upload.getOriginalFilename();
+            Long ukuran = upload.getSize();
+
+            LOGGER.debug("Nama File : {}", namaFile);
+            LOGGER.debug("Jenis File : {}", jenisFile);
+            LOGGER.debug("Nama Asli File : {}", namaAsli);
+            LOGGER.debug("Ukuran File : {}", ukuran);
+
+//        memisahkan extensi
+            String extension = "";
+
+            int i = namaAsli.lastIndexOf('.');
+            int p = Math.max(namaAsli.lastIndexOf('/'), namaAsli.lastIndexOf('\\'));
+
+            if (i > p) {
+                extension = namaAsli.substring(i + 1);
+            }
+
+            String idFile = UUID.randomUUID().toString();
+            String lokasiUpload = uploadFolder + File.separator + score.getStaff().getId();
+            LOGGER.debug("Lokasi upload : {}", lokasiUpload);
+            new File(lokasiUpload).mkdirs();
+            File tujuan = new File(lokasiUpload + File.separator + idFile + "." + extension);
+            upload.transferTo(tujuan);
+            LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
+
+            Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+
+            Evidence evidence = new Evidence();
+            evidence.setDescription("Score Comment");
+            evidence.setKpi(score.getKpi());
+            evidence.setFilename(idFile + "." + extension);
+            evidence.setStaff(score.getStaff());
+            evidence.setPeriode(periode);
+            evidenceDao.save(evidence);
+
+        }
+        scoreCommentDao.save(scoreComment);
+
+        return "redirect:/lihatpenilaian/list";
+
+    }
 
 }

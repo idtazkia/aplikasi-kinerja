@@ -26,7 +26,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content" th:each="s :${score}">
                             <div role="tabpanel" class="tab-pane fade in active" id="individual">
-                                <form th:action="@{/lihatpenilaian/comment}" method="post"  enctype="multipart/form-data">
+                                <form th:object="${sc}" th:action="@{/lihatpenilaian/comment(id = ${s.id})}" method="post"  enctype="multipart/form-data">
                                 <div class="container">
                                     <!---->
                                     <div class="row form-group has-danger">
@@ -48,23 +48,20 @@
                                                         <div class="col-sm-10 ">
                                                         <textarea id="komen" type="text"
 
-                                                                  name="employeeComment" required
+                                                                  name="content" required
 
                                                                   placeholder="Silahkan masukan komentar anda." ></textarea>
-                                                            <!--<input type="hidden" name="id" th:value="${score.get().id}">-->
-                                                            <!--<input type="hidden" name="score" th:value="${score.get().score}">-->
-                                                            <!--<input type="hidden" name="remark" th:value="${score.get().remark}">-->
-                                                            <!--<input type="hidden" name="staffKpi" th:value="${score.get().staffKpi.id}">-->
-                                                            <!--<input type="hidden" name="evidence" th:value="${score.get().id}">-->
+                                                            <input type="hidden" name="score" th:value="${score.id}">
+                                                            <input type="hidden" name="author" th:value="${staff.id}">
                                                         </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>Upload Bukti</b></td>
                                                     <td>
-                                                        <input required type="file" name="fileBukti"
+                                                        <input required type="file" multiple name="fileBukti"
                                                                class="form-control"/><br>
-                                                        <small style="color: red">maximum file uploaded <b>2Mb</b></small>
+                                                        <small style="color: red">maximum file uploaded <b>10Mb</b></small>
                                                     </td>
                                                 </tr>
                                                 </tbody>
