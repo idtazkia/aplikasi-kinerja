@@ -17,11 +17,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -209,30 +210,18 @@ public class DaftarBawahanController {
         model.addAttribute("individual",sr.getKpi());
         model.addAttribute("role",sr);
 
-      /*  Evidence ev;
-        ev = evidenceDao.findById(evidence).get();
-
-        model.addAttribute("evidence", ev.getKpi().getKeyResult()).addAttribute("evidence", ev);
-*/
     }
 
     @GetMapping("/daftarbawahan/evidence/detail")
-    public void daftarNilaiBiaya(@RequestParam(required = false)String kpi, Model m, Pageable page){
-        /*if(StringUtils.hasText(role)) {
-            m.addAttribute("staff", role);
-            m.addAttribute("detailevidence", staffRoleDao.findById(role));
-        } else {
-            m.addAttribute("detailevidence", staffRoleDao.findAll(page));
-        }*/
+    public void detailEvidence(@RequestParam String staff, String kpi, Model m, Pageable page){
+        Staff s = staffDao.findById(staff).get();
+        Kpi k = kpiDao.findById(kpi).get();
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
 
-     /*   List<StaffRole> sr = staffRoleDao.findDistinctByKpi_Id(kpi);
-
-        m.addAttribute("detailevidence",sr);
-        m.addAttribute("role",sr);*/
-
-        Kpi kpi1 = kpiDao.findById(kpi).get();
-
-        m.addAttribute("detailevidence", kpi1);
+        List<Evidence> evidence = evidenceDao.findByKpiAndStaffAndPeriode(k,s,periode); 
+        m.addAttribute("detailEvidence",evidence);
+        m.addAttribute("kpi",k);
+        m.addAttribute("periode",periode);
 
 
     }
@@ -284,7 +273,8 @@ public class DaftarBawahanController {
     }
 
     @PostMapping("/daftarbawahan/evidence/form")
-    public String uploadBukti(@RequestParam String role, String id, MultipartFile file,
+    public String uploadBukti(@RequestParam String role, String id, @Valid Evidence evidence,
+                              BindingResult error, MultipartFile[] file,
                               Authentication currentUser) throws Exception {
         Kpi kpi = kpiDao.findById(id).get();
         StaffRole sr = staffRoleDao.findById(role).get();
@@ -313,48 +303,44 @@ public class DaftarBawahanController {
         }
 
 
-//
+        for (MultipartFile upload : file){
+            String namaFile = upload.getName();
+            String jenisFile = upload.getContentType();
+            String namaAsli = upload.getOriginalFilename();
+            Long ukuran = upload.getSize();
 
-
-        String idEmployee = staff.getId();
-
-        String namaFile = file.getName();
-        String jenisFile = file.getContentType();
-        String namaAsli = file.getOriginalFilename();
-        Long ukuran = file.getSize();
-
-        LOGGER.debug("Nama File : {}", namaFile);
-        LOGGER.debug("Jenis File : {}", jenisFile);
-        LOGGER.debug("Nama Asli File : {}", namaAsli);
-        LOGGER.debug("Ukuran File : {}", ukuran);
+            LOGGER.debug("Nama File : {}", namaFile);
+            LOGGER.debug("Jenis File : {}", jenisFile);
+            LOGGER.debug("Nama Asli File : {}", namaAsli);
+            LOGGER.debug("Ukuran File : {}", ukuran);
 
 //        memisahkan extensi
-        String extension = "";
+            String extension = "";
 
-        int i = namaAsli.lastIndexOf('.');
-        int p = Math.max(namaAsli.lastIndexOf('/'), namaAsli.lastIndexOf('\\'));
+            int i = namaAsli.lastIndexOf('.');
+            int p = Math.max(namaAsli.lastIndexOf('/'), namaAsli.lastIndexOf('\\'));
 
-        if (i > p) {
-            extension = namaAsli.substring(i + 1);
+            if (i > p) {
+                extension = namaAsli.substring(i + 1);
+            }
+
+            String idFile = UUID.randomUUID().toString();
+            String lokasiUpload = uploadFolder + File.separator + staff.getId();
+            LOGGER.debug("Lokasi upload : {}", lokasiUpload);
+            new File(lokasiUpload).mkdirs();
+            File tujuan = new File(lokasiUpload + File.separator + idFile + "." + extension);
+            upload.transferTo(tujuan);
+            LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
+
+            Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+
+            evidence.setStaff(staff);
+            evidence.setPeriode(periode);
+            evidence.setKpi(kpi);
+            evidence.setFilename(idFile + "." + extension);
+            evidenceDao.save(evidence);
         }
 
-        String idFile = UUID.randomUUID().toString();
-        String lokasiUpload = uploadFolder + File.separator + idEmployee;
-        LOGGER.debug("Lokasi upload : {}", lokasiUpload);
-        new File(lokasiUpload).mkdirs();
-        File tujuan = new File(lokasiUpload + File.separator + idFile + "." + extension);
-        file.transferTo(tujuan);
-        LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
-
-        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
-
-        Evidence evidence = new Evidence();
-        evidence.setStaff(staff);
-        evidence.setPeriode(periode);
-        evidence.setKpi(kpi);
-        evidence.setFilename(idFile + "." + extension);
-        evidence.setDescription("Upload Bukti Karyawan");
-        evidenceDao.save(evidence);
 
 
         return "redirect:/daftarbawahan/evidence/list?role=" +sr.getId();
