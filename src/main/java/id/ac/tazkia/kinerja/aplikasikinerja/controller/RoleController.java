@@ -4,6 +4,7 @@ import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.KpiDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.StaffRole;
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.StatusKpi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -42,11 +43,13 @@ public class RoleController {
 
         m.addAttribute("role", new StaffRole());
         m.addAttribute("staffRole",staffRoleDao.findByStatus(AktifConstants.Aktif));
+        m.addAttribute("pilihanKpi", kpiDao.findByStatus(StatusKpi.AKTIF));/*mengambil data kpi*/
 
         if (role != null && !role.isEmpty()) {
             StaffRole staffRole = staffRoleDao.findById(role).get();
             if (staffRole != null) {
                 m.addAttribute("role",staffRole);
+                m.addAttribute("kpiSekarang", staffRole.getKpi());
             }
         }
     }
