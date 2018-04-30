@@ -140,6 +140,9 @@
                                             <select class="form-control border-input js-sr"
                                                     name="securityRole" th:field="*{securityRole}">
                                                 <option value=""></option>
+                                                <option th:each="ins : ${securityRole}"
+                                                        th:value="${ins.id}"
+                                                        th:text="${ins.name}"></option>
                                             </select>
                                         </div>
                                     </div>

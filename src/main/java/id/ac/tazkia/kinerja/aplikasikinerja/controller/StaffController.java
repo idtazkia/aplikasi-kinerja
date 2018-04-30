@@ -80,6 +80,7 @@ public class StaffController {
     public void tampilkanForm(Model model) {
         model.addAttribute("staff", new InputStaffDto());
         model.addAttribute("pilihanRole", staffRoleDao.findByStatus(AktifConstants.Aktif));
+        model.addAttribute("securityRole",roleDao.findAll());
 
     }
 
@@ -126,6 +127,7 @@ public class StaffController {
         }
 
         m.addAttribute("detail", staffDao.findById(staff.getId()));
+
         return null;
 
     }
@@ -134,6 +136,8 @@ public class StaffController {
     public void viewUpdate(@RequestParam Staff staff, Model model) {
         User user = userDao.findByUsername(staff.getUser().getUsername());
         UserPassword up = userPasswordDao.findByUser(user);
+        model.addAttribute("securityRole",roleDao.findAll());
+
 
         InputStaffDto isd = new InputStaffDto();
         isd.setEmployeeName(staff.getEmployeeName());
