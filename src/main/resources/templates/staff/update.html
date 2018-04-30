@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Input Staff</title>
+</head>
+
+
+<body>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+        var roleSekarang = /*[[${roleSekarang}]]*/ ["001", "002"];
+        $(document).ready(function () {
+            $('#pilihanRole').select2();
+            console.log("Role sekarang : " + roleSekarang);
+
+            var roleSekarangId = [];
+            for (var i = 0; i < roleSekarang.length; i++) {
+                roleSekarangId.push(roleSekarang[i].id);
+            }
+
+            console.log("ID Role sekarang : " + roleSekarangId);
+
+            $('#pilihanRole').val(roleSekarangId);
+            $('#pilihanRole').trigger("change");
+        });
+
+    </script>
+</th:block>
+
+<section layout:fragment="content">
+    <br>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+
+
+                <div class="col-lg-8 col-md-7">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Input Staff</h4>
+                        </div>
+                        <div class="content">
+                            <form th:action="@{/staff/update}" th:object="${staff}" method="post">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Employee Name</label>
+                                            <input type="text" class="form-control border-input"
+                                                   th:field="*{employeeName}"
+                                                   placeholder="Nama" id="employee_name" name="employeeName">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>NIK</label>
+                                            <input type="text" class="form-control border-input"
+                                                   th:field="*{employeeNumber}" placeholder="NIK" id="employee_number"
+                                                   name="employeeNumber">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Job Level</label>
+                                            <input type="text" class="form-control border-input"
+                                                   th:field="*{jobLevel}" placeholder="Pangkat" id="job_level"
+                                                   name="jobLevel">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>job Title</label>
+                                            <input type="text" class="form-control border-input"
+                                                   th:field="*{jobTitle}" placeholder="Jabatan" id="job_title"
+                                                   name="jobTitle">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Department</label>
+                                            <input type="text" class="form-control border-input"
+                                                   th:field="*{department}" placeholder="Departemen" id="department"
+                                                   name="department">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Area</label>
+                                            <input type="text" class="form-control border-input"
+                                                   th:field="*{area}" placeholder="Area" id="area" name="area">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Username</label>
+                                            <input type="text" class="form-control border-input"
+                                                   th:field="*{username}" placeholder="Username" id="username"
+                                                   name="username">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Please Select Role</label>
+                                            <select name="roles" id="pilihanRole" class="form-control"
+                                                    multiple="multiple">
+                                                <option th:each="rl, row : ${pilihanRole}"
+                                                        th:text="${rl.roleName}"
+                                                        th:value="${rl.id}">Lektor
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" class="form-control border-input"
+                                                   th:field="*{email}" placeholder="Email" name="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Security Role</label>
+                                            <select class="form-control border-input js-sr"
+                                                    name="securityRole" th:field="*{securityRole}">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="id" th:field="*{id}">
+                                <input type="hidden" name="user" th:field="*{user}">
+                                <input type="hidden" name="userPassword" th:field="*{userPassword}">
+                                <input type="hidden" name="password" th:field="*{password}">
+
+                                <hr>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Update Employee Data
+                                    </button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+</body>
+</html>
+<script>
+    $(".js-sr").select2({
+        placeholder: "--Superior Role--",
+        allowClear: true
+    });
+</script>

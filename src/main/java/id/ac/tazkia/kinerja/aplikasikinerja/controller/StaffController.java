@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.util.Set;
@@ -129,6 +130,72 @@ public class StaffController {
 
     }
 
+    @GetMapping("/staff/update")
+    public void viewUpdate(@RequestParam Staff staff, Model model) {
+        User user = userDao.findByUsername(staff.getUser().getUsername());
+        UserPassword up = userPasswordDao.findByUser(user);
+
+        InputStaffDto isd = new InputStaffDto();
+        isd.setEmployeeName(staff.getEmployeeName());
+        isd.setEmployeeNumber(staff.getEmployeeNumber());
+        isd.setDepartment(staff.getDepartment());
+        isd.setJobTitle(staff.getJobTitle());
+        isd.setJobLevel(staff.getJobLevel());
+        isd.setArea(staff.getArea());
+        isd.setPassword(up.getPassword());
+        isd.setEmail(user.getEmail());
+        isd.setUsername(user.getUsername());
+        isd.setSecurityRole(user.getRole().getId());
+        isd.setId(staff.getId());
+        isd.setUser(user);
+        isd.setUserPassword(up);
+        isd.setRoles(staff.getRoles());
+
+        model.addAttribute("pilihanRole", staffRoleDao.findByStatus(AktifConstants.Aktif));
+        model.addAttribute("roleSekarang", isd.getRoles());
+        model.addAttribute("staff", isd);
+    }
+
+    @PostMapping("/staff/update")
+    public String prosesUpdate(@ModelAttribute @Valid InputStaffDto isd, BindingResult errors, SessionStatus status) {
+        Role role = roleDao.findById(isd.getSecurityRole()).get();
+        User user = userDao.findById(isd.getUser().getId()).get();
+        user.setId(isd.getUser().getId());
+        user.setUsername(isd.getUsername());
+        user.setRole(role);
+        user.setEmail(isd.getEmail());
+        user.setActive(Boolean.TRUE);
+
+        Staff staff = staffDao.findByUser(user);
+        staff.setId(isd.getId());
+        staff.setArea(isd.getArea());
+        staff.setEmployeeName(isd.getEmployeeName());
+        staff.setEmployeeNumber(isd.getEmployeeNumber());
+        staff.setJobTitle(isd.getJobTitle());
+        staff.setJobLevel(isd.getJobLevel());
+        staff.setUser(user);
+
+        UserPassword userPassword = userPasswordDao.findByUser(user);
+        userPassword.setPassword(isd.getPassword());
+        userPassword.setUser(user);
+        userPassword.setId(isd.getUserPassword().getId());
+
+        Set<StaffRole> roles = isd.getRoles();
+
+        for (StaffRole r : roles) {
+            LOGGER.debug("role name" + r.getRoleName());
+        }
+
+        staff.setRoles(roles);
+
+
+        userDao.save(user);
+        staffDao.save(staff);
+        userPasswordDao.save(userPassword);
+
+        return "redirect:list";
+
+    }
 
 
 }
