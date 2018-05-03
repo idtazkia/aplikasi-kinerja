@@ -90,7 +90,9 @@ public class LihatPenilaianController {
     }
 
     @GetMapping("/lihatpenilaian/comment")
-    public void detailComment(@RequestParam(required = false) Score id, Model m, Authentication currentUser) {
+    public void detailComment(@RequestParam(required = false) Score id, Model m) {
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+
         if (id == null){
             LOGGER.debug("tidak ada data");
         }
@@ -99,24 +101,8 @@ public class LihatPenilaianController {
             m.addAttribute("score", id);
             BigDecimal perkalian = id.getKpi().getWeight().multiply(new BigDecimal(id.getScore()));
             m.addAttribute("total",perkalian);
+            m.addAttribute("periode",periode);
         }
-
-        LOGGER.debug("Authentication class : {}", currentUser.getClass().getName());
-
-        if (currentUser == null) {
-            LOGGER.warn("Current user is null");
-        }
-
-        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
-        User u = userDao.findByUsername(username);
-        LOGGER.debug("User ID : {}", u.getId());
-        if (u == null) {
-            LOGGER.warn("Username {} not found in database ", username);
-        }
-
-        Staff staff = staffDao.findByUser(u);
-
-        m.addAttribute("staff",staff);
 
 
     }
@@ -131,6 +117,7 @@ public class LihatPenilaianController {
     public String proses(@ModelAttribute @Valid ScoreComment scoreComment, @RequestParam String id,
                          MultipartFile[] fileBukti,Authentication currentUser,Model model) throws Exception {
         Score score = scoreDao.findById(id).get();
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
         model.addAttribute("score",score);
 
         for (MultipartFile upload : fileBukti) {
@@ -162,8 +149,6 @@ public class LihatPenilaianController {
             upload.transferTo(tujuan);
             LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
 
-            Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
-
             Evidence evidence = new Evidence();
             evidence.setDescription("Score Comment");
             evidence.setKpi(score.getKpi());
@@ -173,6 +158,7 @@ public class LihatPenilaianController {
             evidenceDao.save(evidence);
 
         }
+        scoreComment.setPeriode(periode);
         scoreCommentDao.save(scoreComment);
 
         return "redirect:/lihatpenilaian/list";
