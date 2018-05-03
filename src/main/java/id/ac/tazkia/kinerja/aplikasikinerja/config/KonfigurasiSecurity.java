@@ -47,9 +47,9 @@ public class KonfigurasiSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/daftarbawahan/list").hasAuthority("VIEW_SUPERIOR")
-                .antMatchers("/daftarbawahan/komen").hasAuthority("VIEW_SUPERIOR")
-                .antMatchers("/daftarbawahan/detail").hasAuthority("VIEW_SUPERIOR")
+                .antMatchers("/daftarbawahan/list").hasAnyAuthority("VIEW_SUPERIOR","VIEW_KABAG")
+                .antMatchers("/daftarbawahan/komen").hasAnyAuthority("VIEW_SUPERIOR","VIEW_KABAG")
+                .antMatchers("/daftarbawahan/detail").hasAnyAuthority("VIEW_SUPERIOR","VIEW_KABAG")
                 .antMatchers("/staff/list").hasAnyAuthority("VIEW_STAFF","VIEW_KABAG")
                 .antMatchers("/staff/form").hasAnyAuthority("VIEW_STAFF","VIEW_KABAG")
                 .antMatchers("/staff/update").hasAnyAuthority("VIEW_STAFF","VIEW_KABAG")
