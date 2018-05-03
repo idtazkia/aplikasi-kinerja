@@ -108,9 +108,11 @@ CREATE TABLE score_comment (
   id VARCHAR(36)not null,
   content VARCHAR(255) NOT NULL ,
   author VARCHAR(36),
-  score VARCHAR(36)  ,
+  score VARCHAR(36),
+  periode VARCHAR(36),
   posting_time TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (author) REFERENCES staff(id),
-  FOREIGN KEY (score) REFERENCES score(id)
+  FOREIGN KEY (score) REFERENCES score(id),
+  FOREIGN KEY (periode) REFERENCES periode(id)
 );

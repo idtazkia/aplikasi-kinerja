@@ -29,6 +29,11 @@ public class ScoreComment {
     @JoinColumn(name = "score")
     private Score score;
 
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name = "periode")
+    private Periode periode;
+
     @NotNull
     private LocalDateTime postingTime = LocalDateTime.now();
 }
