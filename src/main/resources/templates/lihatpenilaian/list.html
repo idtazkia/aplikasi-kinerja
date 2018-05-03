@@ -47,7 +47,7 @@
                                                             <th>Key Result</th>
                                                             <th>Score</th>
                                                             <th>Remark</th>
-                                                            <th><center>Aksi</center></th>
+                                                            <th><center>#</center></th>
                                                             </thead>
                                                             <tbody>
                                                             <tr th:each="sd,row  : ${individual}">
@@ -55,7 +55,7 @@
                                                                 <td th:text="${sd.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
                                                                 <td th:text="${sd.score}">Prodi Bisnis & Manajemen Islam</td>
                                                                 <td th:text="${sd.remark}">Puket I</td>
-                                                                <td><a th:href="@{/lihatpenilaian/comment(id=${sd.id})}" target="output" class="btn btn-info">Submit your comment</a></td>
+                                                                <td><center><a th:href="@{/lihatpenilaian/comment(id=${sd.id})}" target="output" class="btn btn-info">Submit your comment</a></center></td>
                                                             </tr>
 
                                                             </tbody>
