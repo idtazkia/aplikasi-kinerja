@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -138,34 +141,9 @@ public class DaftarBawahanController {
     }
 
     @GetMapping("/daftarbawahan/detail")
-    public String detail(@RequestParam(required = false) String id, Model m, Pageable page, Authentication currentUser) {
-        Optional<Staff> s = staffDao.findById(id);
-        if (s == null) {
-            LOGGER.warn("Staff not found");
-            return "redirect:/404";
-        }
-
-
-        System.out.println("username" + currentUser.getClass().getName());
-
-        if (currentUser == null) {
-            LOGGER.warn("Current user is null");
-            return "redirect:/404";
-        }
-
-        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
-        User u = userDao.findByUsername(username);
-
-        if (u == null) {
-            LOGGER.warn("Username {} not found in database " + username);
-            return "redirect:/404";
-        }
-
-        Staff p = staffDao.findByUser(u);
-        m.addAttribute("detail", p);
-
-        return "/daftarbawahan/detail";
-
+    public ModelMap detail(@RequestParam Staff id){
+        return new ModelMap()
+                .addAttribute("detail",id);
     }
 
     @GetMapping("/daftarbawahan/komen")
@@ -218,7 +196,7 @@ public class DaftarBawahanController {
         Kpi k = kpiDao.findById(kpi).get();
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
 
-        List<Evidence> evidence = evidenceDao.findByKpiAndStaffAndPeriode(k,s,periode); 
+        List<Evidence> evidence = evidenceDao.findByKpiAndStaffAndPeriode(k,s,periode);
         m.addAttribute("detailEvidence",evidence);
         m.addAttribute("kpi",k);
         m.addAttribute("periode",periode);
