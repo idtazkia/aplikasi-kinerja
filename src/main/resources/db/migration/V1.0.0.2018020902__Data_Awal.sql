@@ -28,8 +28,3 @@ INSERT INTO s_role_permission (id_role, id_permission) VALUES
 insert into category (id,name) values
 ('001','individual_score'),
 ('002','tazkia_score');
-
-INSERT INTO periode (id,periode_name,description,start_date,end_date,active,status) VALUES
-('001','Pengisian Kpi I','Pengisian KPI I','01-07-2017','30-06-2020','AKTIF','AKTIF'),
-('002','Pengisian Kpi II','Pengisian KPI II','01-07-2021','30-06-2025','NONAKTIF','AKTIF');
-
