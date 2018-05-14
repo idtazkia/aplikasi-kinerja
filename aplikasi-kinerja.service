@@ -1,0 +1,11 @@
+[Unit]
+Description=Aplikasi KPI
+After=syslog.target
+
+[Service]
+User=root
+ExecStart=/var/lib/aplikasi-kinerja/aplikasi-kinerja.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
