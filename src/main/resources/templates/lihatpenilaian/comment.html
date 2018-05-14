@@ -26,84 +26,86 @@
                         <!-- Tab panes -->
                         <div class="tab-content" th:each="s :${score}">
                             <div role="tabpanel" class="tab-pane fade in active" id="individual">
-                                <form th:action="@{/lihatpenilaian/comment(id = ${s.id})}" method="post"  enctype="multipart/form-data">
-                                <div class="container">
-                                    <!---->
-                                    <div class="row form-group has-danger">
-                                        <div class="col-sm-5">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <tr>
-                                                    <th>Key Result Area</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td><h3>1</h3></td>
-                                                    <td th:text="${s.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
-                                                        mahasiswa S2 STEI Tazkia</td>
-                                                <tr>
-                                                    <td><b>Employee Comments :</b></td>
-                                                    <td>
-                                                        <div class="col-sm-10 ">
+                                <form th:object="${scoreComment}" th:action="@{/lihatpenilaian/comment(id = ${s.id},scoreCom = *{id})}" method="post"  enctype="multipart/form-data">
+                                    <div class="container">
+                                        <!---->
+                                        <div class="row form-group has-danger">
+                                            <div class="col-sm-5">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Key Result Area</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td><h3>1</h3></td>
+                                                        <td th:text="${s.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                            mahasiswa S2 STEI Tazkia</td>
+                                                    <tr>
+                                                        <td><b>Employee Comments :</b></td>
+                                                        <td>
+                                                            <div class="col-sm-10 ">
                                                         <textarea id="content" type="text"
-                                                                  name="content" required
+                                                                  name="content" th:field="*{content}" required
                                                                   placeholder="Silahkan masukan komentar anda." ></textarea>
-                                                            <input type="hidden" name="score" th:value="${s.id}">
-                                                            <input type="hidden" name="periode" th:value="${periode.id}">
-                                                            <input type="hidden" name="author" th:value="${s.staff.id}">
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><b>Upload Bukti</b></td>
-                                                    <td>
-                                                        <input required type="file" multiple name="fileBukti"
-                                                               class="form-control"/><br>
-                                                        <small style="color: red">maximum file uploaded <b>10Mb</b></small>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <br/><br/>
-                                        <div class="col-sm-5">
-                                            <table class="table">
-                                                <tbody>
-                                                <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${s.kpi.weight}">10,00</span></td>
-                                                    <td>Target : <span th:text="${s.kpi.target}">5</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Base line : <span th:text="${s.kpi.baseLine}">4</span></td>
-                                                    <td>Hasil &nbsp;&nbsp;: <span th:text="${s.score}">7</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${total}">79</span></td>
-                                                    <td></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="funkyradio">
-                                        <div class="funkyradio-success">
-                                            <label><b><span th:text="${s.score}">5</span> . <span th:text="${s.remark}">NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</span></b> </label>
-                                        </div>
-                                    </div>
-                                    <br><br>
-                                    <div class="funkyradio">
-                                        <center>
-                                            <div class="funkyradio-success">
-                                                <button type="submit" class="btn btn-success">Submit your comment</button>
-                                                <a th:href="@{/lihatpenilaian/list}" class="btn btn-danger">Back to assessment list</a>
+                                                                <input type="hidden" name="score" th:field="*{score}">
+                                                                <input type="hidden" name="periode" th:field="*{periode}">
+                                                                <input type="hidden" name="author" th:field="*{author}">
+                                                                <input type="hidden" name="id" th:field="*{id}">
+                                                                <input type="hidden" name="postingTime" th:field="*{postingTime}">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Upload Bukti</b></td>
+                                                        <td>
+                                                            <input required type="file" multiple name="fileBukti"
+                                                                   class="form-control"/><br>
+                                                            <small style="color: red">maximum file uploaded <b>10Mb</b></small>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                        </center>
-                                    </div>
+                                            <br/><br/>
+                                            <div class="col-sm-5">
+                                                <table class="table">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${s.kpi.weight}">10,00</span></td>
+                                                        <td>Target : <span th:text="${s.kpi.target}">5</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Base line : <span th:text="${s.kpi.baseLine}">4</span></td>
+                                                        <td>Hasil &nbsp;&nbsp;: <span th:text="${s.score}">7</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${total}">79</span></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="funkyradio">
+                                            <div class="funkyradio-success">
+                                                <label><b><span th:text="${s.score}">5</span> . <span th:text="${s.remark}">NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan</span></b> </label>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="funkyradio">
+                                            <center>
+                                                <div class="funkyradio-success">
+                                                    <button type="submit" class="btn btn-success">Submit your comment</button>
+                                                    <a th:href="@{/lihatpenilaian/list}" class="btn btn-danger">Back to assessment list</a>
+                                                </div>
+                                            </center>
+                                        </div>
 
-                                    <br>
-                                    <!---->
-                                </div>
+                                        <br>
+                                        <!---->
+                                    </div>
                                 </form>
 
                             </div>

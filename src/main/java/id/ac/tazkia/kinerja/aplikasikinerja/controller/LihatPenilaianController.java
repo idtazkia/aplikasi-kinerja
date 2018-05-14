@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,9 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -90,8 +85,36 @@ public class LihatPenilaianController {
     }
 
     @GetMapping("/lihatpenilaian/comment")
-    public void detailComment(@RequestParam(required = false) Score id, Model m) {
+    public void detailComment(@RequestParam(required = false) Score id, Model m,Authentication currentUser) {
+        LOGGER.debug("Authentication class : {}", currentUser.getClass().getName());
+
+        if (currentUser == null) {
+            LOGGER.warn("Current user is null");
+            return;
+        }
+
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
+        User u = userDao.findByUsername(username);
+        LOGGER.debug("User ID : {}", u.getId());
+        if (u == null) {
+            LOGGER.warn("Username {} not found in database ", username);
+            return;
+        }
+
+        Staff p = staffDao.findByUser(u);
+        LOGGER.debug("Nama Pendaftar : " + p.getEmployeeName());
+        if (p == null) {
+            LOGGER.warn("Pendaftar not found for username {} ", username);
+        }
+
+
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+
+        ScoreComment sc = new ScoreComment();
+        sc.setScore(id);
+        sc.setAuthor(p);
+        sc.setPeriode(periode);
+        m.addAttribute("scoreComment", sc);
 
         if (id == null){
             LOGGER.debug("tidak ada data");
@@ -102,6 +125,10 @@ public class LihatPenilaianController {
             BigDecimal perkalian = id.getKpi().getWeight().multiply(new BigDecimal(id.getScore()));
             m.addAttribute("total",perkalian);
             m.addAttribute("periode",periode);
+            ScoreComment scoreComment = scoreCommentDao.findByAuthorAndPeriodeAndScore(p,periode,id);
+            if (scoreComment != null){
+                m.addAttribute("scoreComment",scoreComment);
+            }
         }
 
 
@@ -114,11 +141,14 @@ public class LihatPenilaianController {
 
 
     @PostMapping("/lihatpenilaian/comment")
-    public String proses(@ModelAttribute @Valid ScoreComment scoreComment, @RequestParam String id,
-                         MultipartFile[] fileBukti,Authentication currentUser,Model model) throws Exception {
-        Score score = scoreDao.findById(id).get();
+    public String proses(@ModelAttribute @Valid ScoreComment scoreComment, @RequestParam Score id,
+                         @RequestParam(required = false) String scoreCom, MultipartFile[] fileBukti) throws Exception {
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
-        model.addAttribute("score",score);
+
+        if (scoreCom != null && !scoreCom.isEmpty()){
+            ScoreComment sc = scoreCommentDao.findById(scoreCom).get();
+            scoreCommentDao.delete(sc);
+        }
 
         for (MultipartFile upload : fileBukti) {
             String namaFile = upload.getName();
@@ -142,7 +172,7 @@ public class LihatPenilaianController {
             }
 
             String idFile = UUID.randomUUID().toString();
-            String lokasiUpload = uploadFolder + File.separator + score.getStaff().getId();
+            String lokasiUpload = uploadFolder + File.separator + id.getStaff().getId();
             LOGGER.debug("Lokasi upload : {}", lokasiUpload);
             new File(lokasiUpload).mkdirs();
             File tujuan = new File(lokasiUpload + File.separator + idFile + "." + extension);
@@ -151,15 +181,16 @@ public class LihatPenilaianController {
 
             Evidence evidence = new Evidence();
             evidence.setDescription("Score Comment");
-            evidence.setKpi(score.getKpi());
+            evidence.setKpi(id.getKpi());
             evidence.setFilename(idFile + "." + extension);
-            evidence.setStaff(score.getStaff());
+            evidence.setStaff(id.getStaff());
             evidence.setPeriode(periode);
             evidenceDao.save(evidence);
 
         }
         scoreComment.setPeriode(periode);
         scoreCommentDao.save(scoreComment);
+
 
         return "redirect:/lihatpenilaian/list";
 
