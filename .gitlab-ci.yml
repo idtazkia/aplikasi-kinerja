@@ -1,0 +1,51 @@
+image: maven:3-jdk-8
+
+cache:
+ paths:
+ - /root/.m2/repository
+
+stages:
+ - build
+ - deploy
+
+before_script:
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - '[[ -f /.dockerenv ]] && ssh-keyscan -H "$SSH_HOSTNAME_TESTING" > ~/.ssh/known_hosts'
+  - '[[ -f /.dockerenv ]] && ssh-keyscan -H "$SSH_HOSTNAME_PRODUCTION" > ~/.ssh/known_hosts'
+
+build:
+ stage: build
+ services:
+ - postgres:latest
+ variables:
+   POSTGRES_DB : "kpidb"
+   POSTGRES_USER: "kpidb"
+   POSTGRES_PASSWORD: "kpidb"
+   SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/kpidb
+ script:
+ - mvn clean package
+ artifacts:
+     paths:
+       - target/*.jar
+
+deploy-to-testing:
+  image: debian:latest
+  stage: deploy
+  only:
+    - tags
+  script:
+  - scp target/*.jar root@$SSH_HOSTNAME_TESTING:/var/lib/$CI_PROJECT_NAME/
+  - ssh root@$SSH_HOSTNAME_TESTING /var/lib/$CI_PROJECT_NAME/deploy.sh $CI_PROJECT_NAME-$CI_COMMIT_TAG.jar
+
+deploy-to-production:
+  image: debian:latest
+  stage: deploy
+  only:
+    - /-RELEASE$/
+  script:
+  - scp target/*.jar root@$SSH_HOSTNAME_PRODUCTION:/var/lib/$CI_PROJECT_NAME/
+  - ssh root@$SSH_HOSTNAME_PRODUCTION /var/lib/$CI_PROJECT_NAME/deploy.sh $CI_PROJECT_NAME-$CI_COMMIT_TAG.jar
