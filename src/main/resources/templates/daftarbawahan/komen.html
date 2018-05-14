@@ -48,26 +48,17 @@
                                                 <tbody>
                                                 <tr>
                                                     <td><h3 th:text="${(row.index + 1)}">1</h3></td>
-                                                    <td th:text="${sd.staffKpi.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                    <td th:text="${sd.score.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                         mahasiswa S2 STEI Tazkia</td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>Employee Comments :</b></td>
-                                                    <td><p><h5 th:text="${sd.employeeComment}">"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
+                                                    <td><p><h5 th:text="${sd.content}">"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
 
-                                            <div class="dropdown">
-                                                <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
-                                                <span class="caret"></span></button>
-                                                <ul class="dropdown-menu">
-                                                  <li th:each="img,row : ${sd.staffKpi.evidence}">
-                                                      <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
-                                                         th:text="${'Evidence'+(row.index + 1)}">HTML</a>
-                                                  </li>
-                                                </ul>
-                                              </div>
+                                            <a th:href="@{/daftarbawahan/evidence/detail(staff=${sd.author.id},kpi=${sd.score.kpi.id})}" class="btn btn-primary">View(s) Evidence</a>
 
 
                                         </div>
@@ -76,16 +67,12 @@
                                             <table class="table">
                                                 <tbody>
                                                 <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${sd.staffKpi.kpi.weight}">10,00</span></td>
-                                                    <td>Target : <span th:text="${sd.staffKpi.kpi.target}">4asd</span></td>
+                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${sd.score.kpi.weight}">10,00</span></td>
+                                                    <td>Target : <span th:text="${sd.score.kpi.target}">4asd</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Base line : <span th:text="${sd.staffKpi.kpi.baseLine}">10</span></td>
-                                                    <td>Hasil &nbsp;&nbsp;: <span th:text="${sd.score}"></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${sd.total}"></span></td>
-                                                    <td></td>
+                                                    <td>Base line : <span th:text="${sd.score.kpi.baseLine}">10</span></td>
+                                                    <td>Hasil &nbsp;&nbsp;: <span th:text="${sd.score.score}"></span></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -93,7 +80,7 @@
                                     </div>
                                     <div class="funkyradio">
                                         <div class="funkyradio-success">
-                                            <label><b><span th:text="${sd.score}">5</span> . <span th:text="${sd.remark}">NIRM dari Kemenag sudah didapatkan sebelum</span></b> </label>
+                                            <label><b><span th:text="${sd.score.score}">5</span> . <span th:text="${sd.score.remark}">NIRM dari Kemenag sudah didapatkan sebelum</span></b> </label>
                                         </div>
                                     </div>
                                     <br>
@@ -110,9 +97,8 @@
                             <div role="tabpanel" class="tab-pane fade" id="tazkiavalue">
 
                                 <div class="container">
+                                    <!---->
                                     <span th:each="tv,row  : ${tazkiaValue}">
-                                    <h3>Tauhid</h3>
-                                    <hr/>
                                     <div class="row form-group has-danger">
                                         <div class="col-sm-5">
                                             <table class="table table-striped">
@@ -123,26 +109,19 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td><h3 th:text="${(row.index + 1)}"></h3></td>
-                                                    <td th:text="${tv.staffKpi.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                    <td><h3 th:text="${(row.index + 1)}">1</h3></td>
+                                                    <td th:text="${tv.score.kpi.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                         mahasiswa S2 STEI Tazkia</td>
+                                                </tr>
                                                 <tr>
                                                     <td><b>Employee Comments :</b></td>
-                                                    <td><p><h5 th:text="${tv.employeeComment}">"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
+                                                    <td><p><h5 th:text="${tv.content}">"NIRM dari Kemenag sudah didapatkan sebelum UAS semester berjalan"</h5></p></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
 
-                                            <div class="dropdown">
-                                                <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">View(s) Evidence
-                                                <span class="caret"></span></button>
-                                                <ul class="dropdown-menu">
-                                                  <li th:each="img,row : ${tv.staffKpi.evidence}">
-                                                      <a target="output" th:href="@{/uploaded/{evidence}/bukti/(evidence=${img.id})}"
-                                                         th:text="${'Evidence'+(row.index + 1)}">HTML</a>
-                                                  </li>
-                                                </ul>
-                                              </div>
+                                            <a th:href="@{/daftarbawahan/evidence/detail(staff=${tv.author.id},kpi=${tv.score.kpi.id})}" class="btn btn-primary">View(s) Evidence</a>
+
 
                                         </div>
                                         <br/><br/>
@@ -150,30 +129,23 @@
                                             <table class="table">
                                                 <tbody>
                                                 <tr>
-                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${tv.staffKpi.kpi.weight}">10,00</span></td>
-                                                    <td>Target : <span th:text="${tv.staffKpi.kpi.target}"></span></td>
+                                                    <td>Bobot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${tv.score.kpi.weight}">10,00</span></td>
+                                                    <td>Target : <span th:text="${tv.score.kpi.target}">4asd</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Base line : <span th:text="${tv.staffKpi.kpi.baseLine}">10</span></td>
-                                                    <td>Hasil &nbsp;&nbsp;: <span th:text="${tv.score}"></span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span th:text="${tv.total}"></span></td>
-                                                    <td></td>
+                                                    <td>Base line : <span th:text="${tv.score.kpi.baseLine}">10</span></td>
+                                                    <td>Hasil &nbsp;&nbsp;: <span th:text="${tv.score.score}"></span></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-
-                                    <div class="funkyradio ">
+                                    <div class="funkyradio">
                                         <div class="funkyradio-success">
-                                            <label><b><span th:text="${tv.score}">5</span> . <span th:text="${tv.remark}">NIRM dari Kemenag sudah didapatkan sebelum</span></b> </label>
+                                            <label><b><span th:text="${tv.score.score}">5</span> . <span th:text="${tv.score.remark}">NIRM dari Kemenag sudah didapatkan sebelum</span></b> </label>
                                         </div>
                                     </div>
-                                    <br><br><br>
-                                        <!---->
-
+                                    <br>
                                     </span>
 
                                 </div>
