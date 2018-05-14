@@ -181,12 +181,30 @@ public class DaftarBawahanController {
 
 
     @GetMapping("/daftarbawahan/evidence/list")
-    public void evidence(@RequestParam String role,String evidence, Model model) {
-        StaffRole sr = staffRoleDao.findById(role).get();
+    public ModelMap evidenceList(@RequestParam StaffRole role,Authentication currentUser){
+        LOGGER.debug("Authentication class : {}", currentUser.getClass().getName());
 
-        model.addAttribute("individual",sr.getKpi());
-        model.addAttribute("role",sr);
+        if (currentUser == null) {
+            LOGGER.warn("Current user is null");
+        }
 
+        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
+        User u = userDao.findByUsername(username);
+        LOGGER.debug("User ID : {}", u.getId());
+        if (u == null) {
+            LOGGER.warn("Username {} not found in database ", username);
+        }
+
+        Staff p = staffDao.findByUser(u);
+        LOGGER.debug("Nama Pendaftar : " + p.getEmployeeName());
+        if (p == null) {
+            LOGGER.warn("Pendaftar not found for username {} ", username);
+        }
+
+        return new ModelMap()
+                .addAttribute("individual",role.getKpi())
+                .addAttribute("role",role)
+                .addAttribute("staff",p);
     }
 
     @GetMapping("/daftarbawahan/evidence/detail")
