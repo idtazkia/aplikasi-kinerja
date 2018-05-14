@@ -68,7 +68,7 @@ public class StaffController {
 
         if (StringUtils.hasText(search)) {
             m.addAttribute("search", search);
-            m.addAttribute("daftarStaff", staffDao.findByEmployeeNameContainingIgnoreCaseOrderByEmployeeName(search, page));
+            m.addAttribute("daftarStaff", staffDao.findByStatusAndEmployeeNameContainingIgnoreCaseOrderByEmployeeName(AktifConstants.Aktif, search, page));
         } else {
             m.addAttribute("daftarStaff", staffDao.findAll(page));
 
@@ -80,7 +80,7 @@ public class StaffController {
     public void tampilkanForm(Model model) {
         model.addAttribute("staff", new InputStaffDto());
         model.addAttribute("pilihanRole", staffRoleDao.findByStatus(AktifConstants.Aktif));
-        model.addAttribute("securityRole",roleDao.findAll());
+        model.addAttribute("securityRole", roleDao.findAll());
 
     }
 
@@ -136,7 +136,7 @@ public class StaffController {
     public void viewUpdate(@RequestParam Staff staff, Model model) {
         User user = userDao.findByUsername(staff.getUser().getUsername());
         UserPassword up = userPasswordDao.findByUser(user);
-        model.addAttribute("securityRole",roleDao.findAll());
+        model.addAttribute("securityRole", roleDao.findAll());
 
 
         InputStaffDto isd = new InputStaffDto();
@@ -200,6 +200,7 @@ public class StaffController {
         return "redirect:list";
 
     }
+
 
 
 }
