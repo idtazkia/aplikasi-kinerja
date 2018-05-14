@@ -52,8 +52,8 @@
                                         <div class="form-group">
                                             <label>Employee Name</label>
                                             <input type="text" class="form-control border-input"
-                                                   th:field="*{employeeName}"
-                                                   placeholder="Nama" id="employee_name" name="employeeName">
+                                                   th:field="*{employeeName}" min="3"
+                                                   placeholder="Nama" id="employee_name" required name="employeeName">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -108,7 +108,7 @@
                                         <div class="form-group">
                                             <label>Username</label>
                                             <input type="text" class="form-control border-input"
-                                                   th:field="*{username}" placeholder="Username" id="username"
+                                                   th:field="*{username}" required placeholder="Username" id="username"
                                                    name="username">
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@
                                         <div class="form-group">
                                             <label>Password</label>
                                             <input type="text" class="form-control border-input"
-                                                   th:field="*{password}" placeholder="Password" name="password">
+                                                   th:field="*{password}" required placeholder="Password" name="password">
                                         </div>
                                     </div>
                                 </div>
@@ -126,14 +126,14 @@
                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="email" class="form-control border-input"
-                                                   th:field="*{email}" placeholder="Email" name="email">
+                                                   th:field="*{email}" required placeholder="Email" name="email">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Security Role</label>
                                             <select class="form-control border-input js-sr"
-                                                    name="securityRole" th:field="*{securityRole}">
+                                                    name="securityRole" required th:field="*{securityRole}">
                                                 <option value=""></option>
                                                 <option th:each="ins : ${securityRole}"
                                                         th:value="${ins.id}"
