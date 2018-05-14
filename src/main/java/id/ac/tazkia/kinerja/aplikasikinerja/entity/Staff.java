@@ -41,8 +41,8 @@ public class Staff {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "staff_role_staff",
-               joinColumns=@JoinColumn(name = "id_staff"),
-               inverseJoinColumns = @JoinColumn(name = "id_staff_role"))
+            joinColumns=@JoinColumn(name = "id_staff"),
+            inverseJoinColumns = @JoinColumn(name = "id_staff_role"))
     private Set<StaffRole> roles = new HashSet<>();
 
     @Column
@@ -51,6 +51,7 @@ public class Staff {
     @OneToOne @JoinColumn(name = "id_user")
     private User user;
 
-
+    @NotNull
+    private String status = "AKTIF";
 
 }
