@@ -23,8 +23,8 @@ build:
  - postgres:latest
  variables:
    POSTGRES_DB : "kpidb"
-   POSTGRES_USER: "kpidb"
-   POSTGRES_PASSWORD: "kpidb"
+   POSTGRES_USER: "ittazkia"
+   POSTGRES_PASSWORD: "ittazkia"
    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/kpidb
  script:
  - mvn clean package
