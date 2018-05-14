@@ -79,11 +79,10 @@ public class DaftarBawahanController {
 
 
     @GetMapping("/daftarbawahan/list")
-    public String daftarStaff(Model model, String role, Authentication currentUser) throws Exception {
+    public String daftarStaff(Model model, String role){
         StaffRole staffRole = staffRoleDao.findById(role).get();
 
-        Iterable<Staff> daftarBawahan = staffDao.findByRoles(staffRole);
-        model.addAttribute("subordinate", daftarBawahan);
+        model.addAttribute("subordinate", staffDao.findByRolesAndStatus(staffRole,AktifConstants.Aktif));
         model.addAttribute("roles",staffRole);
         System.out.println(staffRole.getRoleName());
 
