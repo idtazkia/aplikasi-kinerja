@@ -201,6 +201,18 @@ public class StaffController {
 
     }
 
+    @PostMapping("/staff/delete")
+    public String deleteStaff(@RequestParam Staff id) {
+        if (id == null) {
+            return "redirect:/404";
+        }
+
+        id.setStatus(AktifConstants.Nonaktif);
+        id.getUser().setActive(Boolean.FALSE);
+        staffDao.save(id);
+
+        return "redirect:/staff/list";
+    }
 
 
 }
