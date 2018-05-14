@@ -63,7 +63,7 @@ public class PeriodeController {
     }
 
     @GetMapping("/periode/form")
-    public String tampilkanForm(@RequestParam(value = "id", required = false) String id,
+    public void tampilkanForm(@RequestParam(value = "id", required = false) String id,
                                 Model m) {
         //defaultnya, isi dengan object baru
         m.addAttribute("periode", new Periode());
@@ -74,7 +74,6 @@ public class PeriodeController {
                 m.addAttribute("periode", p);
             }
         }
-        return "/periode/form";
     }
 
     @PostMapping("/periode/form")
