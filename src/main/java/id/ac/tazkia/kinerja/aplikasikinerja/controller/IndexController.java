@@ -16,4 +16,10 @@ public class IndexController {
     public void indexPage(Model model){
         model.addAttribute("periode",periodeDao.findByStatusOrderByActiveAsc(StatusKpi.AKTIF));
     }
+
+    @GetMapping("/")
+    public String formAwal(){
+        return "redirect:/login";
+    }
+
 }
