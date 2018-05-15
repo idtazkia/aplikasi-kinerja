@@ -62,6 +62,9 @@ public class DaftarBawahanController {
     @Autowired
     private PeriodeDao periodeDao;
 
+    @Autowired
+    private ScoreCommentDao scoreCommentDao;
+
 
     @Value("${upload.folder}")
     private String uploadFolder;
@@ -146,37 +149,15 @@ public class DaftarBawahanController {
     }
 
     @GetMapping("/daftarbawahan/komen")
-    public String String(@RequestParam(required = true) String id, Model m, Authentication currentUser) throws Exception {
-       /* Optional<Staff> s = staffDao.findById(id);
-
-        if (s == null) {
-            LOGGER.warn("Staff not found");
-            return "redirect:/404";
+    public void String(@RequestParam(required = true) String id, Model m){
+        Staff staff = staffDao.findById(id).get();
+        if (staff == null){
+            LOGGER.debug("staff tidak ada");
         }
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
 
-        System.out.println("username" + currentUser.getClass().getName());
-
-        if (currentUser == null) {
-            LOGGER.warn("Current user is null");
-            return "redirect:/404";
-        }
-
-        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
-        User u = userDao.findByUsername(username);
-
-        if (u == null) {
-            LOGGER.warn("Username {} not found in database " + username);
-            return "redirect:/404";
-        }
-
-        Staff p = staffDao.findByUser(u);
-
-
-        m.addAttribute("individual", scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(id, individualCategory));
-        m.addAttribute("tazkiaValue", scoreDao.findByStaffKpiStaffIdAndStaffKpiKpiCategoryOrderByStaffKpiAsc(id, tazkiaValueCategory));
-*/
-
-        return "/daftarbawahan/komen";
+        m.addAttribute("individual",scoreCommentDao.findByAuthorAndPeriodeAndScoreKpiCategory(staff,periode,individualCategory));
+        m.addAttribute("tazkiaValue",scoreCommentDao.findByAuthorAndPeriodeAndScoreKpiCategory(staff,periode,tazkiaValueCategory));
     }
 
 
