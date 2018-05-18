@@ -37,13 +37,13 @@ public class Kpi {
     @NotNull
     private String keyResult;
 
-    @NotNull @Min(0)
+    @Min(0)
     private BigDecimal weight;
 
-    @NotNull @Min(0)
+    @Min(0)
     private BigDecimal baseLine;
 
-    @NotNull @Min(0)
+    @Min(0)
     private BigDecimal target;
 
     @OneToMany(mappedBy = "kpi")
