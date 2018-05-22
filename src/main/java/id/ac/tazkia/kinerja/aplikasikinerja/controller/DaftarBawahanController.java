@@ -323,7 +323,7 @@ public class DaftarBawahanController {
 
     }
 
-    @GetMapping("daftarbawahan/role")
+    @GetMapping("/daftarbawahan/role")
     public String role(Model model, Authentication currentUser) throws Exception {
         System.out.println("username" + currentUser.getClass().getName());
 
