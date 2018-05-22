@@ -354,7 +354,7 @@ public class DaftarBawahanController {
         model.addAttribute("role", daftarRoleBawahan);
         model.addAttribute("detail", p);
 
-        return "/daftarbawahan/role";
+        return "daftarbawahan/role";
 
 
     }
