@@ -90,7 +90,7 @@ public class DaftarBawahanController {
         System.out.println(staffRole.getRoleName());
 
 
-        return "/daftarbawahan/list";
+        return "daftarbawahan/list";
 
     }
 
@@ -103,7 +103,7 @@ public class DaftarBawahanController {
         m.addAttribute("staff",s);
         m.addAttribute("role",staffRole);
 
-        return "/daftarbawahan/form";
+        return "daftarbawahan/form";
 
     }
 

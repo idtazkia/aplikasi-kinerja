@@ -70,7 +70,7 @@ public class ResetController {
         }
 
         m.addAttribute("code", code);
-        return "/confirm";
+        return "confirm";
     }
 
 
