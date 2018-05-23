@@ -244,7 +244,7 @@ public class DaftarBawahanController {
         m.addAttribute("role", sr);
 
         Evidence evidence = new Evidence();
-        return "/daftarbawahan/evidence/form";
+        return "daftarbawahan/evidence/form";
 
     }
 
