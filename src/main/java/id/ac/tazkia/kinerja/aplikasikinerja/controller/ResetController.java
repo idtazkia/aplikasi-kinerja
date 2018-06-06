@@ -116,6 +116,7 @@ public class ResetController {
 
 
         userPasswordDao.save(up);
+        notifikasiService.resetSuccess(resetPassword);
 
         return "redirect:login";
 
