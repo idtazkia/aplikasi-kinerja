@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashSet;
@@ -23,6 +24,8 @@ public class StaffDaoTests {
     private StaffDao staffDao;
 
     @Autowired private StaffRoleDao staffRoleDao;
+
+    @Autowired private BCryptPasswordEncoder encoder;
 
 
     @Test @Ignore
@@ -42,5 +45,10 @@ public class StaffDaoTests {
         staff.setRoles(roleBaru);
 
         staffDao.save(staff);
+    }
+
+    @Test
+    public void testGeneratePassword() {
+        System.out.println("123 : "+encoder.encode("123"));
     }
 }
