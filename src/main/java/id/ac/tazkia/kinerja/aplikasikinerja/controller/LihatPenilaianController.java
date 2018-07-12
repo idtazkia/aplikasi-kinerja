@@ -180,7 +180,7 @@ public class LihatPenilaianController {
             LOGGER.debug("File sudah dicopy ke : {}", tujuan.getAbsolutePath());
 
             Evidence evidence = new Evidence();
-            evidence.setDescription("Score Comment");
+            evidence.setDescription(scoreComment.getContent());
             evidence.setKpi(id.getKpi());
             evidence.setFilename(idFile + "." + extension);
             evidence.setStaff(id.getStaff());
