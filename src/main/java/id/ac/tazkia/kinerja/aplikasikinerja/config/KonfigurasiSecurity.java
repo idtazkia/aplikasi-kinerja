@@ -47,9 +47,9 @@ public class KonfigurasiSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/daftarbawahan/list").hasAnyAuthority("VIEW_SUPERIOR","VIEW_KABAG")
-                .antMatchers("/daftarbawahan/komen").hasAnyAuthority("VIEW_SUPERIOR","VIEW_KABAG")
-                .antMatchers("/daftarbawahan/detail").hasAnyAuthority("VIEW_SUPERIOR","VIEW_KABAG")
+                .antMatchers("/daftarbawahan/list").hasAnyAuthority("VIEW_SUPERIOR","VIEW_KABAG","VIEW_CHECKER")
+                .antMatchers("/daftarbawahan/komen").hasAnyAuthority("VIEW_SUPERIOR","VIEW_KABAG","VIEW_CHECKER")
+                .antMatchers("/daftarbawahan/detail").hasAnyAuthority("VIEW_SUPERIOR","VIEW_KABAG","VIEW_CHECKER")
                 .antMatchers("/staff/list").hasAnyAuthority("VIEW_STAFF","VIEW_KABAG")
                 .antMatchers("/staff/form").hasAnyAuthority("VIEW_STAFF","VIEW_KABAG")
                 .antMatchers("/staff/update").hasAnyAuthority("VIEW_STAFF","VIEW_KABAG")
@@ -63,6 +63,7 @@ public class KonfigurasiSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/kpi/hasil").hasAnyAuthority("VIEW_STAFF","VIEW_KABAG")
                 .antMatchers("/kpi/list").hasAnyAuthority("VIEW_STAFF","VIEW_KABAG")
                 .antMatchers("/kpi/update").hasAnyAuthority("VIEW_STAFF","VIEW_KABAG")
+                .antMatchers("/pengecek/list").hasAnyAuthority("VIEW_CHECKER")
                 .anyRequest().authenticated()
                 .and().logout().permitAll()
                 .and().formLogin().defaultSuccessUrl("/index")

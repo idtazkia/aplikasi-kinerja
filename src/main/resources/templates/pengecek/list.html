@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Daftar Karyawan</title>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">List of Staff</h4>
+                            <p class="category">Daftar Staff</p>
+                        </div>
+                        <div class="content table-responsive table-full-width">
+                            <table class="table" border="0">
+                                <form method="get">
+                                    <tr>
+                                        <td>Search by :
+                                            <input type="text" id="search" autocomplete="off"
+                                                   placeholder="Search Name Here" name="search"
+                                                   th:value="${search}">
+                                            <input type="submit" value="Search" class="btn btn-success"> |
+
+                                        </td>
+
+                                    </tr>
+                                </form>
+                            </table>
+                            <div class="container-fluid">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <th>No.</th>
+                                    <th>Role</th>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr th:each="r,row : ${role}"  >
+                                        <td th:text="${(row.index + 1)}"></td>
+                                        <td>
+                                            <a class="btn btn-info" target="output" th:href="@{/daftarbawahan/list(role=${r.id})}" th:text="${r.roleName}"></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

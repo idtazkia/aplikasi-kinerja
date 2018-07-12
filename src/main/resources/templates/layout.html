@@ -55,7 +55,7 @@
             </div>
 
             <ul class="nav" >
-                <li class="active">
+                <li>
                     <a th:href="@{/index}">
                         <i class="ti-panel"></i>
                         <p>Dashboard</p>
@@ -95,6 +95,12 @@
                     <a th:href="@{/periode/list}">
                         <i class="ti-calendar"></i>
                         <p>period</p>
+                    </a>
+                </li>
+                <li sec:authorize="hasAnyAuthority('VIEW_CHECKER')">
+                    <a th:href="@{/pengecek/list}">
+                        <i class="ti-check-box"></i>
+                        <p>Cek Penilaian</p>
                     </a>
                 </li>
             </ul>
