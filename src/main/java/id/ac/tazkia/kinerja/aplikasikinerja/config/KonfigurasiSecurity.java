@@ -1,6 +1,7 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -32,6 +33,8 @@ public class KonfigurasiSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource ds;
+
+    @Value("${security.bcrypt.strength}") private Integer bcryptStrength;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
@@ -92,7 +95,7 @@ public class KonfigurasiSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(17);
+        return new BCryptPasswordEncoder(bcryptStrength);
     }
 
 }

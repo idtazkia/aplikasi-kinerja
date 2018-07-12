@@ -2,7 +2,9 @@ package id.ac.tazkia.kinerja.aplikasikinerja.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.DataResetPassword;
+import id.ac.tazkia.kinerja.aplikasikinerja.dto.DataSuksesPassword;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.NotifikasiResetPassword;
+import id.ac.tazkia.kinerja.aplikasikinerja.dto.NotifikasiResetSukses;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.ResetPassword;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.User;
 import org.slf4j.Logger;
@@ -20,6 +22,7 @@ public class NotifikasiService {
 
     @Value("${kafka.topic.notifikasi}") private String topicNotifikasi;
     @Value("${notifikasi.registrasi.konfigurasi.it-reset-password}") private String getKonfigurasiNotifikasiResetPassword;
+    @Value("${notifikasi.registrasi.konfigurasi.it-reset-password-success}") private String getResetSuccess;
 
     @Autowired private KafkaTemplate<String, String> kafkaTemplate;
     @Autowired private ObjectMapper objectMapper;
@@ -36,6 +39,24 @@ public class NotifikasiService {
                 .data(DataResetPassword.builder()
                         .code(p.getCode())
                         .nama(p.getUser().getUsername())
+                        .build())
+                .build();
+
+        try {
+            kafkaTemplate.send(topicNotifikasi, objectMapper.writeValueAsString(notif));
+        } catch (Exception err) {
+            LOGGER.warn(err.getMessage(), err);
+        }
+    }
+
+    @Async
+    public void resetSuccess(ResetPassword p){
+        User user = p.getUser();
+        NotifikasiResetSukses notif = NotifikasiResetSukses.builder().build().builder().build().builder()
+                .konfigurasi(getResetSuccess)
+                .email(user.getEmail())
+                .data(DataSuksesPassword.builder()
+                        .nama(user.getUsername())
                         .build())
                 .build();
 

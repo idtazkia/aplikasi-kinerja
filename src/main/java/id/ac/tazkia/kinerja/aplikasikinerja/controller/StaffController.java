@@ -178,6 +178,7 @@ public class StaffController {
         staff.setJobTitle(isd.getJobTitle());
         staff.setJobLevel(isd.getJobLevel());
         staff.setUser(user);
+        staff.setDepartment(isd.getDepartment());
 
         UserPassword userPassword = userPasswordDao.findByUser(user);
         userPassword.setPassword(isd.getPassword());
