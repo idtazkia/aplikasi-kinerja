@@ -18,10 +18,10 @@
                             <h4 class="title">Your Profile</h4><br>
                             <p class="category">
                             <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Input Evidence
+                                <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Input Evidence
                                     <span class="caret"></span></button>
-                                <ul class="dropdown-menu" th:each="role : ${detail.roles}">
-                                    <li>
+                                <ul class="dropdown-menu" >
+                                    <li th:each="role : ${detail.roles}">
                                         <a target="output" th:href="@{/daftarbawahan/evidence/list(role=${role.id})}" th:text="${role.roleName}">HTML</a>
                                     </li>
                                 </ul>
