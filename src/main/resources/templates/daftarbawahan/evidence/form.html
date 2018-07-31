@@ -51,14 +51,14 @@
                                                         <td>
                                                             <input required id="file" type="file" name="file"
                                                                    class="form-control" multiple/><br>
-                                                            <small style="color: red">maximum file uploaded <b>10000Kb</b></small>
+                                                            <small style="color: red">maximum file uploaded <b>10000KB/10MB</b></small>
                                                             <br>
                                                             <small><p id="demo"></p></small>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><b>Description</b></td>
-                                                        <td><textarea name="description" class="form-control border-input" placeholder="Description"></textarea></td>
+                                                        <td><textarea name="description" id="limitinput" required class="form-control border-input" placeholder="Maximum words for Description is 255 words"></textarea></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -133,5 +133,12 @@
         })
     })
 
+/*
+    //limit banyaknya kata//
+    $( "#limitinput" ).on('input', function() {
+        if ($(this).val().length>255) {
+            alert('Sorry, You have reached a limit of text : 255 words');
+        }
+    });*/
 
 </script>

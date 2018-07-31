@@ -37,6 +37,7 @@ public class StaffRole {
     @JoinTable(name = "staff_role_kpi",
                joinColumns=@JoinColumn(name = "id_staff_role"),
                inverseJoinColumns = @JoinColumn(name = "id_kpi"))
+    @OrderBy
     private Set<Kpi> kpi = new HashSet<>();
 
     @ManyToOne
