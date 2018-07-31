@@ -9,10 +9,13 @@ import id.ac.tazkia.kinerja.aplikasikinerja.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Set;
@@ -31,7 +34,7 @@ public class PengecekController {
     private UserDao userDao;
 
     @GetMapping("/pengecek/list")
-    public String role(Model model, Authentication currentUser) throws Exception {
+    public String role(Model model, @PageableDefault(size = 10) Pageable page,  Authentication currentUser, String search) throws Exception {
 
         if (currentUser == null) {
             LOGGER.warn("Current user is null");
@@ -54,7 +57,12 @@ public class PengecekController {
             return "redirect:/404";
         }
 
-        Iterable<StaffRole> daftarRoleBawahan = staffRoleDao.findAll();
+
+        /*StringUtils.hasText(search);
+        model.addAttribute("search", search);
+        model.addAttribute("role", staffRoleDao.findById(search, page));*/
+
+        Iterable<StaffRole> daftarRoleBawahan = staffRoleDao.findAll(page);
         model.addAttribute("role", daftarRoleBawahan);
 
 
