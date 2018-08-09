@@ -90,6 +90,10 @@ public class StaffController {
         if (errors.hasErrors()) {
             return "/staff/form";
         }
+        User u = userDao.findByUsername(inputStaffDto.getUsername());
+        if (u.getUsername() != null){
+            return "/404";
+        }
         Staff staff = new Staff();
         User user = new User();
         UserPassword userPassword = new UserPassword();

@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8"/>
-    <title>Penilaian Kinerja Staf</title>
+    <title>Upload Evidence</title>
 </head>
 
 
@@ -98,7 +98,7 @@
                                             <div class="funkyradio-success">
                                                 <button type="submit" class="btn btn-success">Submit your evidence
                                                 </button>
-                                                <a th:href="@{/daftarbawahan/evidence/list}" class="btn btn-danger">Back
+                                                <a th:href="@{/daftarbawahan/evidence/list(role=${role.id})}" class="btn btn-danger">Back
                                                     to evidence list</a>
                                             </div>
                                         </center>
