@@ -4,7 +4,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Role</title>
+    <title>Daftar Role</title>
 </head>
 <body>
 <section layout:fragment="content">
@@ -26,8 +26,8 @@
                                             <input type="text" id="role" autocomplete="off"
                                                    placeholder="Role Name" name="role"
                                                    th:value="${role}">
-                                            <input type="submit" value="Search" class="btn btn-success">
-                                            <a th:href="@{/role/form}" class="btn btn-info col-sm-offset-6">Create New Role</a>
+                                            <input type="submit" value="Search" class="btn btn-success"> |
+                                            <a th:href="@{/role/form}" class="btn btn-info">Create New Role</a>
                                         </td>
                                     </tr>
                                     <tr style="border-bottom-color: whitesmoke">
