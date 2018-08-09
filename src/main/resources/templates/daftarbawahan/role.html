@@ -5,7 +5,7 @@
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Input Staff Kpi</title>
+    <title>User Profile</title>
 </head>
 <body>
 <section layout:fragment="content">
@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12" sec:authorize="hasAnyAuthority('VIEW_SUPERIOR', 'VIEW_KABAG')">
+                                <div class="col-md-12" sec:authorize="hasAnyAuthority('VIEW_SUPERIOR', 'VIEW_KABAG','VIEW_CHECKER','VIEW_SUPERADMIN')">
                                     <div class="panel-group">
                                         <div class="panel panel-default">
                                             <div class="panel-heading" data-toggle="collapse" href="#collapse1">

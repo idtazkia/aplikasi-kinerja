@@ -73,31 +73,31 @@
                         <p>See Ratings</p>
                     </a>
                 </li>
-                <li sec:authorize="hasAnyAuthority('VIEW_STAFF', 'VIEW_KABAG')">
+                <li sec:authorize="hasAnyAuthority('VIEW_STAFF', 'VIEW_KABAG','VIEW_SUPERADMIN')">
                     <a th:href="@{/kpi/list}">
                         <i class="ti-pencil"></i>
                         <p>Input Kpi</p>
                     </a>
                 </li>
-                <li sec:authorize="hasAnyAuthority('VIEW_STAFF', 'VIEW_KABAG')">
+                <li sec:authorize="hasAnyAuthority('VIEW_STAFF', 'VIEW_KABAG','VIEW_SUPERADMIN')">
                     <a th:href="@{/role/list}">
                         <i class="ti-pencil"></i>
                         <p>Input Role</p>
                     </a>
                 </li>
-                <li sec:authorize="hasAnyAuthority('VIEW_STAFF', 'VIEW_KABAG')">
+                <li sec:authorize="hasAnyAuthority('VIEW_STAFF', 'VIEW_KABAG','VIEW_SUPERADMIN')">
                     <a th:href="@{/staff/list}">
                         <i class="ti-user"></i>
                         <p>Staff List</p>
                     </a>
                 </li>
-                <li sec:authorize="hasAnyAuthority('VIEW_STAFF', 'VIEW_KABAG')">
+                <li sec:authorize="hasAnyAuthority('VIEW_STAFF', 'VIEW_KABAG','VIEW_SUPERADMIN')">
                     <a th:href="@{/periode/list}">
                         <i class="ti-calendar"></i>
                         <p>period</p>
                     </a>
                 </li>
-                <li sec:authorize="hasAnyAuthority('VIEW_CHECKER')">
+                <li sec:authorize="hasAnyAuthority('VIEW_CHECKER','VIEW_SUPERADMIN')">
                     <a th:href="@{/pengecek/list}">
                         <i class="ti-check-box"></i>
                         <p>Cek Penilaian</p>
@@ -164,12 +164,12 @@
                     <ul>
 
                         <li>
-                            <a href="#">
+                            <a href="https://tazkia.ac.id/kontak-kami/">
                                 Tazkia Team
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="https://tazkia.ac.id/">
                                 Website
                             </a>
                         </li>
@@ -181,7 +181,7 @@
                     </ul>
                 </nav>
                 <div class="copyright pull-right">
-                    STEI Tazkia &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>
+                    STEI Tazkia &copy; <script>document.write(new Date().getFullYear())</script>
                 </div>
             </div>
         </footer>
