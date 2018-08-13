@@ -90,6 +90,13 @@ public class DaftarBawahanController {
         System.out.println(staffRole.getRoleName());
 
 
+        Integer jumlahKpi = staffRole.getKpi().size();
+
+        model.addAttribute("jmlKpi",jumlahKpi);
+
+        /*model.addAttribute("findJmlKpi",staffRoleDao.findJmlKpi(staffRole));*/
+
+
         return "daftarbawahan/list";
 
     }
@@ -143,9 +150,10 @@ public class DaftarBawahanController {
     }
 
     @GetMapping("/daftarbawahan/detail")
-    public ModelMap detail(@RequestParam Staff id){
-        return new ModelMap()
-                .addAttribute("detail",id);
+    public void detail(@RequestParam Staff id,Model model){
+       model.addAttribute("detail",id);
+
+
     }
 
     @GetMapping("/daftarbawahan/komen")
