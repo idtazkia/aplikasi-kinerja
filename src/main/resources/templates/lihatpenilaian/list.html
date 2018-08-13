@@ -18,7 +18,9 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h2 class="title">Penilaian Kinerja</h2>
+                            <h2 class="title">Penilaian Kinerja
+                                <a target="output" th:href="@{/lihatpenilaian/total(staff=${staff.id})}" style="margin-left: 60%;" class="btn btn-warning">See Total Score</a>
+                            </h2>
                             <p class="category"></p>
                         </div>
                         <hr/>
@@ -29,7 +31,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#tazkiavalue" role="tab" data-toggle="tab">Tazkia Value Score</a>
                             </li>
+                            <li style="margin-left: 50%;">
+
+                            </li>
                         </ul>
+
 
                         <!-- Tab panes -->
                         <div class="tab-content">
