@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Daftar Penilaian</title>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="title" th:text="${'Detail Score   ' + staff.employeeName}">Detail Nilai
+                            </h2>
+                            <p class="category"></p>
+                        </div>
+                        <hr/>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#individual" role="tab" data-toggle="tab">Invidiual Achievment Score</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tazkiavalue" role="tab" data-toggle="tab">Tazkia Value Score</a>
+                            </li>
+                            <li style="margin-left: 50%;">
+
+                            </li>
+                        </ul>
+
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="individual">
+                                <div class="container">
+                                    <!---->
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="content table-responsive table-full-width">
+                                                        <table class="table table-bordered">
+                                                            <thead >
+                                                            <th>No.</th>
+                                                            <th>Key Result</th>
+                                                            <th>Score</th>
+                                                            <th>Remark</th>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr th:each="data,row : ${individual}">
+                                                                <td th:text="${(row.index + 1)}">1</td>
+                                                                <td th:text="${data.kpi.keyResult}">Menjadikan nilai-nilai Islam sebagai landasan dalam mengambil keputusan.</td>
+                                                                <td th:text="${data.score}">4</td>
+                                                                <td th:text="${data.remark}">Senantiasa bersandar pada syariah Islam pada saat mengambil keputusan.</td>
+                                                            </tr>
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!---->
+                                </div>
+                            </div>
+
+                            <!--TAZKI VALUE PANEL-->
+                            <div role="tabpanel" class="tab-pane fade" id="tazkiavalue">
+
+                                <div class="container">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="content table-responsive table-full-width">
+                                                        <table class="table table-bordered">
+                                                            <thead >
+                                                            <th>No.</th>
+                                                            <th>Key Result</th>
+                                                            <th>Score</th>
+                                                            <th>Remark</th>
+                                                            </thead>
+                                                            <tbody>
+                                                            <span></span>
+                                                            <tr th:each="data,row : ${tazkia}">
+                                                                <td th:text="${(row.index + 1)}">1</td>
+                                                                <td th:text="${data.kpi.keyResult}">Menjadikan nilai-nilai Islam sebagai landasan dalam mengambil keputusan.</td>
+                                                                <td th:text="${data.score}">4</td>
+                                                                <td th:text="${data.remark}">Senantiasa bersandar pada syariah Islam pada saat mengambil keputusan.</td>
+                                                            </tr>
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!---->
+                                </div>
+                            </div>
+                            <!--ENDTAZKIAVALUE-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

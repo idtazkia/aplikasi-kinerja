@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -145,7 +143,7 @@ public class DaftarBawahanController {
             }
 
         }
-        return "redirect:/daftarbawahan/list?role=" +roles.getId();
+        return "redirect:/daftarbawahan/nilai?staff=" +s.getId();
 
     }
 
@@ -365,6 +363,14 @@ public class DaftarBawahanController {
         return "daftarbawahan/role";
 
 
+    }
+
+    @GetMapping("/daftarbawahan/nilai")
+    public void nilai(Model model,@RequestParam Staff staff){
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+        model.addAttribute("staff",staff);
+        model.addAttribute("individual",scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,individualCategory,periode));
+        model.addAttribute("tazkia",scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,tazkiaValueCategory,periode));
     }
 }
 
