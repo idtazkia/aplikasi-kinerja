@@ -3,7 +3,10 @@ package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.constants.CategoryConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.*;
+import id.ac.tazkia.kinerja.aplikasikinerja.dto.KpiTerisi;
+import id.ac.tazkia.kinerja.aplikasikinerja.dto.RekapPengisianKpi;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
+import id.ac.tazkia.kinerja.aplikasikinerja.helper.RekapKpiHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,10 +33,8 @@ import javax.validation.Valid;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
 
 @Controller
 public class DaftarBawahanController {
@@ -91,12 +93,25 @@ public class DaftarBawahanController {
 
 
         Integer jumlahKpi = staffRole.getKpi().size();
-
         model.addAttribute("jmlKpi",jumlahKpi);
 
-        /*model.addAttribute("findJmlKpi",staffRoleDao.findJmlKpi(staffRole));*/
+        Periode p = periodeDao.getCurrentPeriod(StatusKpi.AKTIF, LocalDate.now());
+        List<KpiTerisi> hasil = evidenceDao.findKpiTerisi(p);
+        Map<Staff, Long> jumlahKpiTerisi = RekapKpiHelper.hitungJumlahKpiTerisi(hasil);
+
+        List<RekapPengisianKpi> rekap = new ArrayList<>();
+        staffDao.findByRolesAndStatus(staffRole,AktifConstants.Aktif).forEach(staff -> {
+            RekapPengisianKpi r = new RekapPengisianKpi();
+            r.setNama(staff.getEmployeeName());
+            r.setArea(staff.getArea());
+            r.setDepartment(staff.getDepartment());
+            r.setJumlahKpi(jumlahKpi.longValue());
+            r.setJumlahKpiTerisi(jumlahKpiTerisi.get(staff));
+            rekap.add(r);
+        });
 
 
+        model.addAttribute("jmlTerisi",rekap);
         return "daftarbawahan/list";
 
     }
