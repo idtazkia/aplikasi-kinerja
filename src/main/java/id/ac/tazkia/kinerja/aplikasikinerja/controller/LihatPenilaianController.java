@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -79,6 +81,7 @@ public class LihatPenilaianController {
 
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
 
+        model.addAttribute("staff",p);
         model.addAttribute("individual", scoreDao.findByStaffAndKpiCategoryAndPeriode(p, individualCategory,periode));
         model.addAttribute("tazkiaValue", scoreDao.findByStaffAndKpiCategoryAndPeriode(p, tazkiaValueCategory,periode));
 
@@ -135,8 +138,30 @@ public class LihatPenilaianController {
     }
 
     @RequestMapping(value = "/lihatpenilaian/total", method = RequestMethod.GET)
-    public void tampilkanFormTotal(Model model){
+    public void tampilkanFormTotal(@RequestParam Staff staff, Model model){
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+        List<Score> individualScore = scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,individualCategory,periode);
+        List<Score> tazkiaScore = scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,tazkiaValueCategory,periode);
+        List<Score> totalAkhir = scoreDao.findByStaffAndPeriode(staff,periode);
 
+        BigDecimal totalIndividual = BigDecimal.ZERO;
+        BigDecimal totalTazkia = BigDecimal.ZERO;
+        BigDecimal scoreAkhir = BigDecimal.ZERO;
+        for (Score s : individualScore){
+            totalIndividual = totalIndividual.add(s.getKpi().getWeight().multiply(new BigDecimal(s.getScore())));
+        }
+
+        for (Score s : tazkiaScore){
+            totalTazkia = totalTazkia.add(s.getKpi().getWeight().multiply(new BigDecimal(s.getScore())));
+        }
+
+        for (Score s : totalAkhir){
+            scoreAkhir = scoreAkhir.add(s.getKpi().getWeight().multiply(new BigDecimal(s.getScore())));
+        }
+
+        model.addAttribute("individual",Integer.valueOf(totalIndividual.intValue()));
+        model.addAttribute("tazkia",Integer.valueOf(totalTazkia.intValue()));
+        model.addAttribute("total",Integer.valueOf(scoreAkhir.intValue()));
     }
 
 

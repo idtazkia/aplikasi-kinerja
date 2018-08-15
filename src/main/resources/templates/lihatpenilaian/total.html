@@ -29,12 +29,16 @@
                                 </thead>
 
                                 <tbody>
-                                <tr >
-                                    <td ></td>
-                                    <td ></td>
-                                    <td ></td>
-                                    <td ></td>
-                                    <td ></td>
+                                <tr>
+                                    <td >1</td>
+                                    <td th:text="${individual}"></td>
+                                    <td th:text="${tazkia}"></td>
+                                    <td th:text="${total}"></td>
+                                    <td th:if="${total} > 450">A</td>
+                                    <td th:if="${total > 375 && total < 451}">B</td>
+                                    <td th:if="${total > 299 && total < 376}">C</td>
+                                    <td th:if="${total > 225 && total < 300}">D</td>
+                                    <td th:if="${total < 226}">E</td>
                                 </tr>
                                 </tbody>
                             </table>

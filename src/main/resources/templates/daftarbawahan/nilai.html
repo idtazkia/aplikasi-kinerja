@@ -18,8 +18,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h2 class="title">Penilaian Kinerja
-                                <a target="output" th:href="@{/lihatpenilaian/total(staff=${staff.id})}" style="margin-left: 60%;" class="btn btn-warning">See Total Score</a>
+                            <h2 class="title" th:text="${'Detail Score   ' + staff.employeeName}">Detail Nilai
                             </h2>
                             <p class="category"></p>
                         </div>
@@ -53,15 +52,13 @@
                                                             <th>Key Result</th>
                                                             <th>Score</th>
                                                             <th>Remark</th>
-                                                            <th><center>#</center></th>
                                                             </thead>
                                                             <tbody>
-                                                            <tr th:each="sd,row  : ${individual}">
-                                                                <td th:text="${(row.index + 1)}"></td>
-                                                                <td th:text="${sd.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
-                                                                <td th:text="${sd.score}">Prodi Bisnis & Manajemen Islam</td>
-                                                                <td th:text="${sd.remark}">Puket I</td>
-                                                                <td><center><a th:href="@{/lihatpenilaian/comment(id=${sd.id})}" target="output" class="btn btn-info">Submit your comment</a></center></td>
+                                                            <tr th:each="data,row : ${individual}">
+                                                                <td th:text="${(row.index + 1)}">1</td>
+                                                                <td th:text="${data.kpi.keyResult}">Menjadikan nilai-nilai Islam sebagai landasan dalam mengambil keputusan.</td>
+                                                                <td th:text="${data.score}">4</td>
+                                                                <td th:text="${data.remark}">Senantiasa bersandar pada syariah Islam pada saat mengambil keputusan.</td>
                                                             </tr>
 
                                                             </tbody>
@@ -91,16 +88,14 @@
                                                             <th>Key Result</th>
                                                             <th>Score</th>
                                                             <th>Remark</th>
-                                                            <th><center>#</center></th>
                                                             </thead>
                                                             <tbody>
                                                             <span></span>
-                                                            <tr th:each="tv,row  : ${tazkiaValue}">
-                                                                <td th:text="${(row.index + 1)}"></td>
-                                                                <td th:text="${tv.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
-                                                                <td th:text="${tv.score}">Prodi Bisnis & Manajemen Islam</td>
-                                                                <td th:text="${tv.remark}">Puket I</td>
-                                                                <td><center><a th:href="@{/lihatpenilaian/comment(id=${tv.id})}" target="_blank" class="btn btn-info">Submit your comment</a></center></td>
+                                                            <tr th:each="data,row : ${tazkia}">
+                                                                <td th:text="${(row.index + 1)}">1</td>
+                                                                <td th:text="${data.kpi.keyResult}">Menjadikan nilai-nilai Islam sebagai landasan dalam mengambil keputusan.</td>
+                                                                <td th:text="${data.score}">4</td>
+                                                                <td th:text="${data.remark}">Senantiasa bersandar pada syariah Islam pada saat mengambil keputusan.</td>
                                                             </tr>
 
                                                             </tbody>

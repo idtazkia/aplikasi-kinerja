@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,6 +25,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -136,31 +135,43 @@ public class DaftarBawahanController {
 
 
     @PostMapping(value = "/daftarbawahan/form")
-    public String prosesForm(@RequestParam String id, String staff, HttpServletRequest request) {
+    public String prosesForm(@RequestParam String id, String staff, HttpServletRequest request, RedirectAttributes attributes) {
         Staff s = staffDao.findById(staff).get();
         StaffRole roles = staffRoleDao.findById(id).get();
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
 
+        Map<Kpi, String> errorMessage = new HashMap<>();
+        List<String> indikatorYangDipilih = new ArrayList<>();
 
         Set<Kpi> getKpi = roles.getKpi();
         for (Kpi kpi : getKpi) {
             LOGGER.info("kpinya :" + kpi.getKeyResult());
             String pilihan = request.getParameter(kpi.getId() + "-score");
-            LOGGER.info("Pilihan : " + pilihan);
-            Optional<Indicators> indicators = indicatorsDao.findById(pilihan);
-            if (indicators != null) {
+
+            if (pilihan == null) {
+                errorMessage.put(kpi, "harus diisi");
+            } else {
+                LOGGER.info("Pilihan : " + pilihan);
+                Indicators indicators = indicatorsDao.findById(pilihan).get();
                 Score score = new Score();
                 score.setKpi(kpi);
-                score.setScore(indicators.get().getScore());
-                score.setRemark(indicators.get().getContent());
+                score.setScore(indicators.getScore());
+                score.setRemark(indicators.getContent());
                 score.setPeriode(periode);
                 score.setStaff(s);
                 scoreDao.save(score);
-
+                indikatorYangDipilih.add(indicators.getId());
             }
 
         }
-        return "redirect:/daftarbawahan/list?role=" +roles.getId();
+
+        if(errorMessage.isEmpty()) {
+            return "redirect:/daftarbawahan/nilai?staff=" +s.getId();
+        } else {
+            attributes.addFlashAttribute("selectedIndicators", indikatorYangDipilih);
+            attributes.addFlashAttribute("errorMessage", errorMessage);
+            return "redirect:/daftarbawahan/form?id="+roles.getId()+"&staff="+s.getId();
+        }
 
     }
 
@@ -380,6 +391,14 @@ public class DaftarBawahanController {
         return "daftarbawahan/role";
 
 
+    }
+
+    @GetMapping("/daftarbawahan/nilai")
+    public void nilai(Model model,@RequestParam Staff staff){
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+        model.addAttribute("staff",staff);
+        model.addAttribute("individual",scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,individualCategory,periode));
+        model.addAttribute("tazkia",scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,tazkiaValueCategory,periode));
     }
 }
 
