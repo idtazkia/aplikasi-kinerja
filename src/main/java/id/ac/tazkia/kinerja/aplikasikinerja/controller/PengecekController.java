@@ -34,15 +34,7 @@ public class PengecekController {
     private UserDao userDao;
 
 
-
     @GetMapping("/pengecek/list")
-    public void pengecekList(Model model){
-
-
-
-    }
-
-    @GetMapping("/pengecek/role")
     public String role(Model model, @PageableDefault(size = 10) Pageable page,  Authentication currentUser, String search) throws Exception {
 
         if (currentUser == null) {
@@ -75,7 +67,7 @@ public class PengecekController {
         model.addAttribute("role", daftarRoleBawahan);
 
 
-        return "pengecek/role";
+        return "pengecek/list";
 
 
     }

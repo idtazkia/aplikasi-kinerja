@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8"/>
-    <title>Info Perkembangan KPI</title>
+    <title>Daftar Role Karyawan</title>
 </head>
 
 
@@ -22,29 +22,51 @@
                             <p class="category">Daftar Staff</p>
                         </div>
                         <div class="content table-responsive table-full-width">
-                            &nbsp;&nbsp;&nbsp;&nbsp;<a th:href="@{/pengecek/role}" class="btn btn-primary">By Role</a>
-                            <hr>
+                            <table class="table" border="0">
+                                <form method="get">
+
+                                    <tr style="border-bottom-color: whitesmoke">
+                                        <td>Show <span sd:page-size-selector="javascript"></span> entries</td>
+                                    </tr>
+                                </form>
+                            </table>
                             <div class="container-fluid">
                                 <table class="table table-bordered">
                                     <thead>
                                     <th>No.</th>
-                                    <th>Karyawan</th>
-                                    <th>Jumlah KPI</th>
-                                    <th>Jumlah Terisi</th>
+                                    <th>Role</th>
                                     </thead>
 
                                     <tbody>
-                                    <tr >
-                                        <td ></td>
-                                        <td ></td>
-                                        <td ></td>
-                                        <td ></td>
+                                    <tr th:each="r,row : ${role}"  >
+                                        <td th:text="${(row.index + 1)}"></td>
+                                        <td>
+                                            <a class="btn btn-info" target="output" th:href="@{/daftarbawahan/list(role=${r.id})}" th:text="${r.roleName}"></a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
 
-
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <div sd:pagination-summary="" style="font-size: small">info</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <nav class="pull-right">
+                                    <ul class="pagination" sd:pagination="full">
+                                        <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
+                                        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                                        </li>
+                                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
 
 
