@@ -41,7 +41,11 @@
                                     <td th:text="${sd.department}">Prodi Bisnis & Manajemen Islam</td>
                                     <td th:text="${sd.area}">Puket I</td>
                                     <td th:text="${jmlKpi}" style="font-weight:bold"></td>
-                                    <td style="font-weight:bold"></td>
+                                    <td style="font-weight:bold">
+                                        <span th:each="jml : ${jmlTerisi}">
+                                            <span th:text="${jml.jumlahKpiTerisi}"></span>
+                                        </span>
+                                    </td>
 
                                     <td><a th:href="@{/daftarbawahan/detail(id=${sd.id})}" target="output"
                                            class="btn btn-primary">See Details</a></td>
