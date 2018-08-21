@@ -1,5 +1,6 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 
+import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.UserDao;
@@ -63,9 +64,16 @@ public class PengecekController {
         model.addAttribute("search", search);
         model.addAttribute("role", staffRoleDao.findById(search, page));*/
 
-        Iterable<StaffRole> daftarRoleBawahan = staffRoleDao.findAll(page);
-        model.addAttribute("role", daftarRoleBawahan);
+        /*Iterable<StaffRole> daftarRoleBawahan = staffRoleDao.findAll(page);
+        model.addAttribute("role", daftarRoleBawahan);*/
 
+        if (StringUtils.hasText(search)) {
+            model.addAttribute("search", search);
+            model.addAttribute("role", staffRoleDao.findByStatusAndAndRoleNameContainingIgnoreCaseOrderByRoleName(AktifConstants.Aktif,search,page));
+        } else {
+            model.addAttribute("role", staffRoleDao.findAll(page));
+
+        }
 
         return "pengecek/list";
 

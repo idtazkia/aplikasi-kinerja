@@ -18,13 +18,21 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">List of Staff</h4>
-                            <p class="category">Daftar Staff</p>
+                            <h4 class="title">List of Role Staff</h4>
+                            <p class="category">Daftar Jabatan Staff</p>
                         </div>
                         <div class="content table-responsive table-full-width">
                             <table class="table" border="0">
                                 <form method="get">
+                                    <tr>
+                                        <td>Search by :
+                                            <input type="text" id="search" autocomplete="off"
+                                                   placeholder="Search Role Name Here" name="search"
+                                                   th:value="${search}">
+                                            <input type="submit" value="Search" class="btn btn-success">
+                                        </td>
 
+                                    </tr>
                                     <tr style="border-bottom-color: whitesmoke">
                                         <td>Show <span sd:page-size-selector="javascript"></span> entries</td>
                                     </tr>
