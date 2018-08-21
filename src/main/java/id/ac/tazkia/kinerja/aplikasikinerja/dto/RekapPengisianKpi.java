@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class RekapPengisianKpi {
+    private String id;
     private String nama;
     private String department;
     private String area;

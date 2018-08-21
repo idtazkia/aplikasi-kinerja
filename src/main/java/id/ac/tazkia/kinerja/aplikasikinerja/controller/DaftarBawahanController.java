@@ -86,9 +86,9 @@ public class DaftarBawahanController {
     public String daftarStaff(Model model, String role){
         StaffRole staffRole = staffRoleDao.findById(role).get();
 
-        model.addAttribute("subordinate", staffDao.findByRolesAndStatus(staffRole,AktifConstants.Aktif));
+       /* model.addAttribute("subordinate", staffDao.findByRolesAndStatus(staffRole,AktifConstants.Aktif));
         model.addAttribute("roles",staffRole);
-        System.out.println(staffRole.getRoleName());
+        System.out.println(staffRole.getRoleName());*/
 
 
         Integer jumlahKpi = staffRole.getKpi().size();
@@ -101,6 +101,7 @@ public class DaftarBawahanController {
         List<RekapPengisianKpi> rekap = new ArrayList<>();
         staffDao.findByRolesAndStatus(staffRole,AktifConstants.Aktif).forEach(staff -> {
             RekapPengisianKpi r = new RekapPengisianKpi();
+            r.setId(staff.getId());
             r.setNama(staff.getEmployeeName());
             r.setArea(staff.getArea());
             r.setDepartment(staff.getDepartment());
@@ -108,6 +109,8 @@ public class DaftarBawahanController {
             r.setJumlahKpiTerisi(jumlahKpiTerisi.get(staff));
             rekap.add(r);
         });
+        model.addAttribute("roles",staffRole);
+
 
 
         model.addAttribute("jmlTerisi",rekap);
