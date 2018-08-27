@@ -19,10 +19,14 @@
                     <div class="card">
                         <div class="header">
                             <h2 class="title">Penilaian Kinerja
-                                <a target="output" th:href="@{/lihatpenilaian/total(staff=${staff.id})}" style="margin-left: 60%;" class="btn btn-warning">See Total Score</a>
+
                             </h2>
                             <p class="category"></p>
                         </div>
+                        <hr>
+                        <td>
+                           &nbsp;&nbsp; <a target="output" th:href="@{/lihatpenilaian/total(staff=${staff.id})}" class="btn btn-warning">See Total Score</a>
+                        </td>
                         <hr/>
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
