@@ -2746,20 +2746,20 @@ textarea.form-control {
   .footer .copyright {
     padding: 0px 15px;
     width: 100%; } }
-@media (min-width: 992px) {
+@media (min-width: 100%) {
   .table-full-width {
     margin-left: -15px;
     margin-right: -15px; }
 
   .table-responsive {
     overflow: visible; } }
-@media (max-width: 991px) {
+@media (max-width: 100%) {
   .table-responsive {
     width: 100%;
     margin-bottom: 15px;
     border: 1px solid #dddddd;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-x: auto;
+    overflow-y: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     -webkit-overflow-scrolling: touch; } }
 
