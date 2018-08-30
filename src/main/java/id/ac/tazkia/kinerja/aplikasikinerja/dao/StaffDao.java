@@ -12,6 +12,7 @@ public interface StaffDao extends PagingAndSortingRepository<Staff, String> {
     Staff findByUser(User u);
 
     Page<Staff> findByStatusAndEmployeeNameContainingIgnoreCaseOrderByEmployeeName(String status, String search, Pageable page);
+    Page<Staff> findByStatus(String s,Pageable page);
 
     Iterable<Staff> findByRolesAndStatus(StaffRole staffRole, String s);
     Iterable<Staff> countStaffByStatus(String a);

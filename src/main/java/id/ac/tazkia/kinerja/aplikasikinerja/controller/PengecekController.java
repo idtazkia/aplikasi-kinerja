@@ -1,12 +1,11 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 
 import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.dao.UserDao;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Staff;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.StaffRole;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.User;
+import id.ac.tazkia.kinerja.aplikasikinerja.dao.*;
+import id.ac.tazkia.kinerja.aplikasikinerja.dto.KpiTerisi;
+import id.ac.tazkia.kinerja.aplikasikinerja.dto.RekapPengisianKpi;
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
+import id.ac.tazkia.kinerja.aplikasikinerja.helper.RekapKpiHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.thymeleaf.dialect.springdata.exception.InvalidObjectParameterException;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -34,8 +38,61 @@ public class PengecekController {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private PeriodeDao periodeDao;
+
+    @Autowired
+    private EvidenceDao evidenceDao;
+
 
     @GetMapping("/pengecek/list")
+    public void staffList(Model model, @PageableDefault(size = 200) Pageable page, String search) throws Exception {
+
+            List<RekapPengisianKpi> rekap = new ArrayList<>();
+
+                if (StringUtils.hasText(search)) {
+                    model.addAttribute("search", search);
+                    staffDao.findByStatusAndEmployeeNameContainingIgnoreCaseOrderByEmployeeName(AktifConstants.Aktif, search, page).forEach(staff -> {
+                        for (StaffRole staffRole : staff.getRoles()) {
+                            Integer jumlah = staffRole.getKpi().size();
+                            RekapPengisianKpi r = new RekapPengisianKpi();
+                            r.setId(staff.getId());
+                            r.setNama(staff.getEmployeeName());
+                            r.setArea(staff.getArea());
+                            r.setDepartment(staff.getDepartment());
+                            r.setNamaRole(staffRole.getRoleName());
+                            r.setJumlahKpi(jumlah.longValue());
+                            rekap.add(r);
+                            model.addAttribute("roles", staffRole);
+                        }
+                        model.addAttribute("jmlTerisi", rekap);
+
+                    });
+                } else {
+                    staffDao.findByStatus(AktifConstants.Aktif, page).forEach(staff -> {
+                                for (StaffRole staffRole : staff.getRoles()) {
+                                    Integer jumlah = staffRole.getKpi().size();
+                                    RekapPengisianKpi r = new RekapPengisianKpi();
+                                    r.setId(staff.getId());
+                                    r.setNama(staff.getEmployeeName());
+                                    r.setArea(staff.getArea());
+                                    r.setDepartment(staff.getDepartment());
+                                    r.setNamaRole(staffRole.getRoleName());
+                                    r.setJumlahKpi(jumlah.longValue());
+                                    rekap.add(r);
+                                    model.addAttribute("roles", staffRole);
+                                }
+                                model.addAttribute("jmlTerisi", rekap);
+                });
+
+                }
+
+
+    }
+
+
+
+    @GetMapping("/pengecek/role")
     public String role(Model model, @PageableDefault(size = 10) Pageable page,  Authentication currentUser, String search) throws Exception {
 
         if (currentUser == null) {
@@ -60,13 +117,6 @@ public class PengecekController {
         }
 
 
-        /*StringUtils.hasText(search);
-        model.addAttribute("search", search);
-        model.addAttribute("role", staffRoleDao.findById(search, page));*/
-
-        /*Iterable<StaffRole> daftarRoleBawahan = staffRoleDao.findAll(page);
-        model.addAttribute("role", daftarRoleBawahan);*/
-
         if (StringUtils.hasText(search)) {
             model.addAttribute("search", search);
             model.addAttribute("role", staffRoleDao.findByStatusAndAndRoleNameContainingIgnoreCaseOrderByRoleName(AktifConstants.Aktif,search,page));
@@ -75,7 +125,7 @@ public class PengecekController {
 
         }
 
-        return "pengecek/list";
+        return "pengecek/role";
 
 
     }
