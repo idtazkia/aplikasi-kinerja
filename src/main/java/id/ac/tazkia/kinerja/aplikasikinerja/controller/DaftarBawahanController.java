@@ -104,13 +104,14 @@ public class DaftarBawahanController {
             r.setId(staff.getId());
             r.setNama(staff.getEmployeeName());
             r.setArea(staff.getArea());
+            r.setNamaRole(staffRole.getRoleName());
             r.setDepartment(staff.getDepartment());
             r.setJumlahKpi(jumlahKpi.longValue());
             r.setJumlahKpiTerisi(jumlahKpiTerisi.get(staff));
             rekap.add(r);
         });
         model.addAttribute("roles",staffRole);
-
+        System.out.println(jumlahKpiTerisi.size());
 
 
         model.addAttribute("jmlTerisi",rekap);

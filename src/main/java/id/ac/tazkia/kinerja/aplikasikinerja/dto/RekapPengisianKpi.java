@@ -8,6 +8,7 @@ public class RekapPengisianKpi {
     private String nama;
     private String department;
     private String area;
+    private String namaRole;
     private Long jumlahKpi;
     private Long jumlahKpiTerisi;
 }
