@@ -21,7 +21,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.File;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -123,10 +123,20 @@ public class DaftarBawahanController {
     public String daftarKpi(@RequestParam  String id,String staff, Model m, Pageable page, Authentication currentUser) {
         StaffRole staffRole = staffRoleDao.findById(id).get();
         Staff s = staffDao.findById(staff).get();
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+        Iterable<Score> existingScore = scoreDao.findByStaffAndPeriode(s, periodeDao.findByStatus(StatusKpi.AKTIF));
+
+        Map<String, BigInteger> kpiScore = new HashMap<>();
+        for(Score score : existingScore){
+            kpiScore.put(score.getKpi().getId(), score.getScore());
+        }
+
+        m.addAttribute("kpiScore",kpiScore);
 
         m.addAttribute("kpi",staffRole.getKpi());
         m.addAttribute("staff",s);
         m.addAttribute("role",staffRole);
+
 
         return "daftarbawahan/form";
 
@@ -143,31 +153,51 @@ public class DaftarBawahanController {
         Staff s = staffDao.findById(staff).get();
         StaffRole roles = staffRoleDao.findById(id).get();
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+        List<Score> sd = scoreDao.findByStaffAndPeriode(s,periode);
 
         Map<Kpi, String> errorMessage = new HashMap<>();
         List<String> indikatorYangDipilih = new ArrayList<>();
+        Set<Kpi> daftarKpiKaryawan = roles.getKpi();
 
-        Set<Kpi> getKpi = roles.getKpi();
-        for (Kpi kpi : getKpi) {
-            LOGGER.info("kpinya :" + kpi.getKeyResult());
+
+        Map<String, BigInteger> mapNilaiKpi = new HashMap<>();
+        for(Kpi kpi : daftarKpiKaryawan) {
             String pilihan = request.getParameter(kpi.getId() + "-score");
-
             if (pilihan == null) {
                 errorMessage.put(kpi, "harus diisi");
-            } else {
-                LOGGER.info("Pilihan : " + pilihan);
+            }else {
                 Indicators indicators = indicatorsDao.findById(pilihan).get();
-                Score score = new Score();
-                score.setKpi(kpi);
-                score.setScore(indicators.getScore());
-                score.setRemark(indicators.getContent());
-                score.setPeriode(periode);
-                score.setStaff(s);
-                scoreDao.save(score);
-                indikatorYangDipilih.add(indicators.getId());
+                mapNilaiKpi.put(kpi.getId(), indicators.getScore());
+                if (scoreDao.findByStaffAndPeriodeAndKpi(s,periode,indicators.getKpi()).isEmpty()){
+                    Score score = new Score();
+                    score.setKpi(kpi);
+                    score.setScore(indicators.getScore());
+                    score.setRemark(indicators.getContent());
+                    score.setPeriode(periode);
+                    score.setStaff(s);
+                    scoreDao.save(score);
+                }
             }
 
+
         }
+
+        List<Score> daftarScoreYangDiinputSebelumnya = sd;
+        for(Score scorenya : daftarScoreYangDiinputSebelumnya){
+            String pilihan = request.getParameter(scorenya.getKpi().getId() + "-score");
+            if (pilihan != null) {
+                    Indicators indicators = indicatorsDao.findById(pilihan).get();
+                    scorenya.setScore(mapNilaiKpi.get(scorenya.getKpi().getId()));
+                    scorenya.setStaff(s);
+                    scorenya.setPeriode(periode);
+                    scorenya.setRemark(indicators.getContent());
+                    scorenya.setKpi(scorenya.getKpi());
+                    scorenya.setId(scorenya.getId());
+                    scoreDao.save(scorenya);
+            }
+        }
+
+
 
         if(errorMessage.isEmpty()) {
             return "redirect:/daftarbawahan/nilai?staff=" +s.getId();
@@ -200,7 +230,8 @@ public class DaftarBawahanController {
 
 
     @GetMapping("/daftarbawahan/evidence/list")
-    public ModelMap evidenceList(@RequestParam StaffRole role,Authentication currentUser){
+    public void evidenceList(@RequestParam StaffRole role, Model m, Authentication currentUser){
+
         LOGGER.debug("Authentication class : {}", currentUser.getClass().getName());
 
         if (currentUser == null) {
@@ -220,10 +251,9 @@ public class DaftarBawahanController {
             LOGGER.warn("Pendaftar not found for username {} ", username);
         }
 
-        return new ModelMap()
-                .addAttribute("individual",role.getKpi())
-                .addAttribute("role",role)
-                .addAttribute("staff",p);
+                m.addAttribute("individual",role.getKpi());
+                m.addAttribute("role",role);
+                m.addAttribute("staff",p);
     }
 
     @GetMapping("/daftarbawahan/evidence/detail")

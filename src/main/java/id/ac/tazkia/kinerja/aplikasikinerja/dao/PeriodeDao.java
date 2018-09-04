@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface PeriodeDao extends PagingAndSortingRepository<Periode,String> {
     Periode findByActive (String active);
+    Periode findByStatus (StatusKpi statusKpi);
     List<Periode> findByStatusOrderByActiveAsc(StatusKpi s);
 
     @Query("select p from Periode p where p.status = :status and p.endDate > :tanggal and p.startDate < :tanggal ")
