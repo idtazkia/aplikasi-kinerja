@@ -60,7 +60,10 @@
                                         <td th:text="${sd.area}">Puket I</td>
                                         <td th:text="${sd.namaRole}">Puket I</td>
                                         <td th:text="${sd.jumlahKpi}" style="font-weight:bold"></td>
-                                        <td th:text="${sd.jumlahKpiTerisi}" style="font-weight:bold">
+                                        <span th:each="statuspengisian : ${statuspengisian}">
+                                            <td th:if="${statuspengisian == sd.id}" style="color: green">SUDAH</td>
+                                            <td th:if="${statuspengisian != sd.id}" style="color:red;">BELUM</td>
+                                        </span>
 
                                         <td><a target="output" th:href="@{/lihatpenilaian/total(staff=${sd.id})}"
                                                class="btn btn-warning">See Total Score</a></td>

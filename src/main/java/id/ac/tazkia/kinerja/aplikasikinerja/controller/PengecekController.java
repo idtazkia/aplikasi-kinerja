@@ -9,6 +9,7 @@ import id.ac.tazkia.kinerja.aplikasikinerja.helper.RekapKpiHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
@@ -46,9 +47,9 @@ public class PengecekController {
 
 
     @GetMapping("/pengecek/list")
-    public void staffList(Model model, @PageableDefault(size = 200) Pageable page, String search) throws Exception {
+    public void staffList(Model model, @PageableDefault(size = 200) Pageable page,String search) throws Exception {
 
-            List<RekapPengisianKpi> rekap = new ArrayList<>();
+        List<RekapPengisianKpi> rekap = new ArrayList<>();
 
                 if (StringUtils.hasText(search)) {
                     model.addAttribute("search", search);
@@ -86,6 +87,27 @@ public class PengecekController {
                 });
 
                 }
+
+
+    Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+
+
+        List<Staff> staff = staffDao.findByStatus(AktifConstants.Aktif);
+        for (Staff s : staff){
+            for (StaffRole staffRole : s.getRoles()){
+                System.out.println("nama role : " +staffRole.getRoleName() + "jumlah kpi :" + staffRole.getKpi().size());
+                for (Kpi kpi : staffRole.getKpi()){
+//                    System.out.println("role staff : " + staffRole.getRoleName() + " | nama staff : " + s.getEmployeeName() + " | kpi staff : " + kpi.getKeyResult());
+                      List<Evidence> evidence = evidenceDao.findByKpiAndStaffAndPeriode(kpi, s, periode);
+                      for (Evidence evinya : evidence) {
+                        model.addAttribute("statuspengisian", evinya.getStaff().getId());
+//                          System.out.println("Staff : " + evinya.getStaff().getId() + " | Kpi : " + evinya.getKpi().getId());
+
+                      }
+                }
+            }
+        }
+
 
 
     }
