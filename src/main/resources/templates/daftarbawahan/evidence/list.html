@@ -37,6 +37,7 @@
                                                             <th>No.</th>
                                                             <th>Key Result</th>
                                                             <th>Category</th>
+                                                            <th>Fillment Status</th>
                                                             <th colspan="2">
                                                                 <center>Aksi</center>
                                                             </th>
@@ -47,6 +48,10 @@
                                                                 <td th:text="${sd.keyResult}">Aku pulang</td>
                                                                 <td th:if="${sd.category.id == '001'}"><b>Individual Score</b></td>
                                                                 <td th:if="${sd.category.id == '002'}"><b>Tazkia Value Score</b></td>
+                                                                <span th:each="status : ${status}">
+                                                                    <td th:if="${status == sd.id}" style="color: green">SUDAH</td>
+                                                                    <td th:if="${status != sd.id}" style="color:red;">BELUM</td>
+                                                                </span>
                                                                 <td>
                                                                     <center><a
                                                                             th:href="@{/daftarbawahan/evidence/form(role=${role.id},id=${sd.id})}"

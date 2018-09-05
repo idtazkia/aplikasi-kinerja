@@ -231,6 +231,7 @@ public class DaftarBawahanController {
 
     @GetMapping("/daftarbawahan/evidence/list")
     public void evidenceList(@RequestParam StaffRole role, Model m, Authentication currentUser){
+        Periode periode = periodeDao.findByStatus(StatusKpi.AKTIF);
 
         LOGGER.debug("Authentication class : {}", currentUser.getClass().getName());
 
@@ -251,9 +252,19 @@ public class DaftarBawahanController {
             LOGGER.warn("Pendaftar not found for username {} ", username);
         }
 
-                m.addAttribute("individual",role.getKpi());
-                m.addAttribute("role",role);
-                m.addAttribute("staff",p);
+        m.addAttribute("individual",role.getKpi());
+        m.addAttribute("role",role);
+        m.addAttribute("staff",p);
+
+        for (Kpi kpi : role.getKpi()){
+            List<Evidence> evidence = evidenceDao.findByKpiAndStaffAndPeriode(kpi,p,periode);
+            for (Evidence ev : evidence){
+                m.addAttribute("status",ev.getKpi().getId());
+                System.out.println(ev.getKpi().getId());
+            }
+
+        }
+
     }
 
     @GetMapping("/daftarbawahan/evidence/detail")
