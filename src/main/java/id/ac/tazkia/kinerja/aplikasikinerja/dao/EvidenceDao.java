@@ -15,6 +15,7 @@ import java.util.Set;
 public interface EvidenceDao extends PagingAndSortingRepository<Evidence,String> {
     List<Evidence> findByKpiAndStaffAndPeriode(Kpi kpi, Staff staff, Periode periode);
     List<Evidence> findByKpiAndStaffAndPeriode(Set<Kpi> kpis, Staff staff, Periode periode);
+    List<Evidence> findByStaffAndPeriode(Staff staff, Periode periode);
 
     @Query("select new id.ac.tazkia.kinerja.aplikasikinerja.dto.KpiTerisi(e.staff, e.kpi, count(e.kpi)) " +
             "from Evidence e " +
