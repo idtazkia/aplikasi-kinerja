@@ -5,6 +5,7 @@ import id.ac.tazkia.kinerja.aplikasikinerja.constants.CategoryConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.*;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.KpiTerisi;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.RekapPengisianKpi;
+import id.ac.tazkia.kinerja.aplikasikinerja.dto.StatusPengisian;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
 import id.ac.tazkia.kinerja.aplikasikinerja.helper.RekapKpiHelper;
 import org.slf4j.Logger;
@@ -256,13 +257,19 @@ public class DaftarBawahanController {
         m.addAttribute("role",role);
         m.addAttribute("staff",p);
 
+        List<StatusPengisian> rekap = new ArrayList<>();
         for (Kpi kpi : role.getKpi()){
             List<Evidence> evidence = evidenceDao.findByKpiAndStaffAndPeriode(kpi,p,periode);
+            StatusPengisian statusPengisian = new StatusPengisian();
+            statusPengisian.setKpi(kpi);
             for (Evidence ev : evidence){
-                m.addAttribute("status",ev.getKpi().getId());
-                System.out.println(ev.getKpi().getId());
-            }
+                if (ev.getKpi() == statusPengisian.getKpi()){
+                    statusPengisian.setStatus("SUDAH");
+                }
 
+            }
+            rekap.add(statusPengisian);
+            m.addAttribute("status",rekap);
         }
 
     }

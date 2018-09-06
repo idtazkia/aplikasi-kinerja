@@ -43,29 +43,30 @@
                                                             </th>
                                                             </thead>
                                                             <tbody>
-                                                            <tr th:each="sd,row  : ${individual}">
+                                                            <tr th:each="sd,row  : ${status}">
                                                                 <td th:text="${(row.index + 1)}">1</td>
-                                                                <td th:text="${sd.keyResult}">Aku pulang</td>
-                                                                <td th:if="${sd.category.id == '001'}"><b>Individual Score</b></td>
-                                                                <td th:if="${sd.category.id == '002'}"><b>Tazkia Value Score</b></td>
-                                                                <span th:each="status : ${status}">
-                                                                    <td th:if="${status == sd.id}" style="color: green">SUDAH</td>
-                                                                    <td th:if="${status != sd.id}" style="color:red;">BELUM</td>
-                                                                </span>
+                                                                <td th:text="${sd.kpi.keyResult}">Aku pulang</td>
+                                                                <td th:text="${sd.kpi.category.name}"><b>Individual Score</b></td>
+                                                                <td th:if="${sd.status != null}"  th:text="${sd.status}" style="color: green"></td>
+                                                                <td th:if="${sd.status == null}" style="color: red">BELUM</td>
                                                                 <td>
                                                                     <center><a
-                                                                            th:href="@{/daftarbawahan/evidence/form(role=${role.id},id=${sd.id})}"
+                                                                            th:href="@{/daftarbawahan/evidence/form(role=${role.id},id=${sd.kpi.id})}"
                                                                             target="output" class="btn btn-success">Upload
                                                                         Evidence</a></center>
                                                                 </td>
                                                                 <td>
                                                                     <center>
                                                                         <div class="dropdown">
-                                                                            <a th:href="@{/daftarbawahan/evidence/detail(staff=${staff.id},kpi=${sd.id})}" class="btn btn-primary">View(s) Evidence</a>
+                                                                            <a th:href="@{/daftarbawahan/evidence/detail(staff=${staff.id},kpi=${sd.kpi.id})}" class="btn btn-primary">View(s) Evidence</a>
                                                                         </div>
                                                                     </center>
                                                                 </td>
                                                             </tr>
+                                                            <!--<tr th:each="data : ${status}">-->
+                                                                <!--<td th:text="${data.kpi}"></td>-->
+                                                            <!--</tr>-->
+
 
                                                             </tbody>
                                                         </table>
