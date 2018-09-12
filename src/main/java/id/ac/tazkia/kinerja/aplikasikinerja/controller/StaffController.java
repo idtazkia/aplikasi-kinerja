@@ -70,7 +70,7 @@ public class StaffController {
             m.addAttribute("search", search);
             m.addAttribute("daftarStaff", staffDao.findByStatusAndEmployeeNameContainingIgnoreCaseOrderByEmployeeName(AktifConstants.Aktif, search, page));
         } else {
-            m.addAttribute("daftarStaff", staffDao.findAll(page));
+            m.addAttribute("daftarStaff", staffDao.findByStatus(AktifConstants.Aktif,page));
 
         }
 

@@ -26,7 +26,6 @@ public class Staff {
     @Size(min = 3, max = 150)
     private String employeeName;
 
-    @NotNull
     @Column(name = "employee_number")
     private String employeeNumber;
 

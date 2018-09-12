@@ -44,10 +44,8 @@
                                     </div>
                                 </div>
                                 <center>
-                                    <div class="funkyradio-success">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                        <a th:href="@{/lihatpenilaian/list}" class="btn btn-info">Cancel</a>
-                                    </div>
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this?')">Delete</button>
+                                        <a th:href="@{/kpi/list}" class="btn btn-info">Cancel</a>
                                 </center>
                                 </form>
                             </div>
