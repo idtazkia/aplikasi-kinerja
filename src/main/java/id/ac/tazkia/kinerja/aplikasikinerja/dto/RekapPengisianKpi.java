@@ -13,7 +13,8 @@ public class RekapPengisianKpi {
     private String namaRole;
     private Long jumlahKpi;
     private Long jumlahKpiTerisi;
-    private String status;
+    private String statusPengisian;
+    private String statusPenilaian;
     private Kpi kpi;
     private Staff staff;
 

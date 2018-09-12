@@ -115,7 +115,7 @@ public class DaftarBawahanController {
         System.out.println(jumlahKpiTerisi.size());
 
 
-        model.addAttribute("jmlTerisi",rekap);
+        model.addAttribute("listSubordinate",rekap);
         return "daftarbawahan/list";
 
     }

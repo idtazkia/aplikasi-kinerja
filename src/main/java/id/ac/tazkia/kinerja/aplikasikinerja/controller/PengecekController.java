@@ -46,6 +46,9 @@ public class PengecekController {
     @Autowired
     private EvidenceDao evidenceDao;
 
+    @Autowired
+    private ScoreDao scoreDao;
+
 
     @GetMapping("/pengecek/list")
     public void staffList(Model model, @PageableDefault(size = 300) Pageable page,String search) throws Exception {
@@ -63,7 +66,10 @@ public class PengecekController {
                             for (StaffRole staffRole : staff.getRoles()) {
 
                                     List<Evidence> evidence = evidenceDao.findByStaffAndPeriode(staff,periode);
-                                    Integer jumlah = staffRole.getKpi().size();
+                                    List<Score> score = scoreDao.findByStaffAndPeriode(staff,periode);
+
+
+                                Integer jumlah = staffRole.getKpi().size();
                                     RekapPengisianKpi r = new RekapPengisianKpi();
                                     r.setStaff(staff);
                                     r.setId(staff.getId());
@@ -75,8 +81,13 @@ public class PengecekController {
 
                                     for (Evidence evinya : evidence) {
                                         if (evinya.getStaff() == r.getStaff()) {
-                                            r.setStatus("SUDAH");
-//                                            System.out.println("Staff : " + evinya.getStaff().getId() + " | Kpi : " + evinya.getKpi().getId());
+                                            r.setStatusPengisian("SUDAH");
+//                                                    System.out.println("Staff : " + evinya.getStaff().getId() + " | Kpi : " + evinya.getKpi().getId());
+                                        }
+                                    }
+                                    for (Score scorenya : score){
+                                        if (scorenya.getStaff() == r.getStaff()) {
+                                            r.setStatusPenilaian("SUDAH");
                                         }
                                     }
 
@@ -94,6 +105,8 @@ public class PengecekController {
                                 for (StaffRole staffRole : staff.getRoles()) {
 
                                         List<Evidence> evidence = evidenceDao.findByStaffAndPeriode(staff,periode);
+                                        List<Score> score = scoreDao.findByStaffAndPeriode(staff,periode);
+
                                         Integer jumlah = staffRole.getKpi().size();
                                         RekapPengisianKpi r = new RekapPengisianKpi();
                                         r.setStaff(staff);
@@ -106,8 +119,13 @@ public class PengecekController {
                                         System.out.println("Staff : " + r.getNama());
                                         for (Evidence evinya : evidence) {
                                             if (evinya.getStaff() == r.getStaff()) {
-                                                r.setStatus("SUDAH");
+                                                r.setStatusPengisian("DONE");
 //                                                System.out.println("Staff : " + evinya.getStaff().getId() + " | Kpi : " + evinya.getKpi().getId());
+                                            }
+                                        }
+                                        for (Score scorenya : score){
+                                            if (scorenya.getStaff() == r.getStaff()) {
+                                                r.setStatusPenilaian("DONE");
                                             }
                                         }
 
@@ -122,28 +140,6 @@ public class PengecekController {
 
                 }
 
-
-
-
-   /*     for (Staff s : staff){
-            for (StaffRole staffRole : s.getRoles()){
-//                System.out.println("nama role : " +staffRole.getRoleName() + "jumlah kpi :" + staffRole.getKpi().size());
-                for (Kpi kpi : staffRole.getKpi()){
-//                    System.out.println("role staff : " + staffRole.getRoleName() + " | nama staff : " + s.getEmployeeName() + " | kpi staff : " + kpi.getKeyResult());
-                      List<Evidence> evidence = evidenceDao.findByKpiAndStaffAndPeriode(kpi, s, periode);
-                        RekapPengisianKpi statusPengisian = new RekapPengisianKpi();
-                        statusPengisian.setStaff(s);
-                          for (Evidence evinya : evidence) {
-                              if (evinya.getStaff() == statusPengisian.getStaff()) {
-                                statusPengisian.setStatus("SUDAH");
-                              System.out.println("Staff : " + evinya.getStaff().getId() + " | Kpi : " + evinya.getKpi().getId());
-                              }
-                          }
-
-
-                }
-            }
-        }*/
 
 
 
