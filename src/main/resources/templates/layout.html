@@ -122,8 +122,11 @@
 
 
                 <div class="collapse navbar-collapse dropdown">
+
                     <ul class="nav navbar-nav navbar-right">
+
                         <li class="dropdown">
+
                             <a class="btn btn-secondary dropdown-toggle"
                                type="button" id="dropdownMenu1" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
@@ -131,22 +134,36 @@
                                 <p>Settings</p>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><center>
-                                    <a th:href="@{/user/data}">
-                                    <button class="btn btn-info btn-lg">
-                                        <span class="ti-user"></span>
-                                        Edit Profile</button></a>
-                                </center></li>
+                                <hr>
+                                    <li>
+                                        <center>
+                                        <a th:href="@{/user/data}">
+                                        <button class="btn btn-info btn-lg">
+                                            <span class="ti-user"></span>
+                                            &nbsp;Profile
+                                        </button>
+                                        </a>
+                                        </center>
+                                    </li>
                                 <form name="f" th:action="@{/logout}" method="post">
-                                    <li><center><button class="btn btn-danger btn-lg">
-                                        <span class="ti-layout-tab-v"></span>
-                                        Logout</button>
-                                    </center></li>
+                                    <li>
+                                        <center>
+                                        <button class="btn btn-danger btn-lg">
+                                            <span class="ti-new-window"></span>
+                                            Logout
+                                        </button>
+                                        </center>
+                                    </li>
                                 </form>
+                                <hr>
                             </ul>
+
                         </li>
+
                     </ul>
+
                 </div>
+
 
             </div>
         </nav>

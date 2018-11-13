@@ -17,6 +17,9 @@ public interface StaffRoleDao extends PagingAndSortingRepository <StaffRole, Str
     Page<StaffRole> findByStatusAndAndRoleNameContainingIgnoreCaseOrderByRoleName(String s, String role, Pageable page);
     Page<StaffRole> findByStatus(String s,Pageable page);
     List<StaffRole> findByStatus(String s);
+    List<StaffRole> findByKpi(String kpi);
+
+    Long countStaffRoleByStatus(String status);
 
 
     /*@Query( "select count (k) from StaffRole k where k.kpi in :kpi")

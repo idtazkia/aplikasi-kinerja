@@ -8,8 +8,28 @@
     <title>Dashboard KPI</title>
 </head>
 
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('timeLive').innerHTML =
+                h + ":" + m + ":" + s;
+            var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+            return i;
+        }
 
-<body>
+    </script>
+</th:block>
+
+<body onload="startTime()">
 <section layout:fragment="content">
     <br/>
     <div class="content">
@@ -56,98 +76,66 @@
 
 
                 <div class="col-md-6">
-                    <div class="card">
-
+                    <div class="card " style="height: 160px">
                         <div class="header">
-                            <h4 class="title">Next Feature</h4>
-                            <p class="category">Under Construction</p>
+                            <center>
+                                <h4 class="title">Current Date Time</h4>
+                            </center>
                         </div>
-                        <div class="content">
+                        <hr>
+                        <div class="body">
+                            <div >
+                            <center>
+                                <h4><span th:text="${waktuSekarang}"></span>&nbsp;|&nbsp;
+                                    <span id="timeLive"></span>
+                                    <span th:text="${zoneSekarang}"></span>
+                                </h4>
+                            </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
+
+                <div class="col-md-3">
+                    <div class="card " style="height: 160px">
+                        <div class="header">
+                            <center>
+                            <h4 class="title">Staff Total</h4>
+                            </center>
+                        </div>
+                        <hr>
+                        <div class="body">
+                        <center>
+                           <h4><span th:text="${jmlStaff}"></span></h4>
+                        </center>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card " style="height: 160px">
+                        <div class="header">
+                            <center>
+                                <h4 class="title">Role Total</h4>
+                            </center>
+                        </div>
+                            <hr>
                             <div class="body">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td></td>
-                                        <td ></td>
-                                        <td></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-
+                                <center>
+                                    <h4><span th:text="${jmlRole}"></span></h4>
+                                </center>
                             </div>
-
-
-                            <div class="footer">
-                                <hr>
-                                <div class="stats">
-                                    <i class="ti-timer"></i> Updated
-                                </div>
-                            </div>
-
-
-                        </div>
-
                     </div>
                 </div>
 
 
-
-                <div class="col-md-6">
-                    <div class="card ">
-                        <div class="header">
-                            <h4 class="title">Next Feature</h4>
-                            <p class="category">Under Construction</p>
-                        </div>
-                        <div class="content">
-                                <div class="body">
-
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td th:text="${jumlahKaryawan}"></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            <div class="footer">
-
-                                <hr>
-                                <div class="stats">
-                                    <i class="ti-check"></i> Data information certified
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </section>
 
 </body>
-
 
 </html>

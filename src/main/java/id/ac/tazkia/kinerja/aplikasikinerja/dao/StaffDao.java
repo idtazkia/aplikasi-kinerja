@@ -1,5 +1,6 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.dao;
 
+import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.Staff;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.StaffRole;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.User;
@@ -18,5 +19,5 @@ public interface StaffDao extends PagingAndSortingRepository<Staff, String> {
 
 
     Iterable<Staff> findByRolesAndStatus(StaffRole staffRole, String s);
-    Iterable<Staff> countStaffByStatus(String a);
+    Long countStaffByStatus (String status);
 }
