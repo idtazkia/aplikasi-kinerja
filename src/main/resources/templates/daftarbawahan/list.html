@@ -29,7 +29,7 @@
                                 <th>Departement</th>
                                 <th>Area</th>
                                 <th><b>Total KPI</b></th>
-                                <th th:colspan="4">
+                                <th th:colspan="5">
                                     <center>Action</center>
                                 </th>
                                 </thead>
@@ -43,13 +43,16 @@
                                     </td>
 
                                     <td><a target="output" th:href="@{/lihatpenilaian/total(staff=${sd.id})}"
-                                           class="btn btn-warning">See Total Score</a></td>
+                                           class="btn btn-success">See Total Score</a></td>
 
                                     <td><a th:href="@{/daftarbawahan/form(id=${roles.id},staff=${sd.id})}"
                                            class="btn btn-info">Input Kpi Value</a></td>
 
                                     <td><a th:href="@{/daftarbawahan/komen(id=${sd.id})}" target="output"
                                            class="btn btn-primary">see comments</a></td>
+
+                                    <td><a th:href="@{/role/form(role=${roles.id})}"
+                                           class="btn btn-warning">Edit KPI</a></td>
 
                                     <td><a th:href="@{/daftarbawahan/detail(id=${sd.id})}" target="output"
                                            class="btn">See Details</a></td>
@@ -60,11 +63,11 @@
 
 
                         </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 

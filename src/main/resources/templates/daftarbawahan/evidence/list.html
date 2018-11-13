@@ -48,7 +48,7 @@
                                                                 <td th:text="${sd.kpi.keyResult}">Aku pulang</td>
                                                                 <td th:text="${sd.kpi.category.name}"><b>Individual Score</b></td>
                                                                 <td th:if="${sd.status != null}"  th:text="${sd.status}" style="color: green"></td>
-                                                                <td th:if="${sd.status == null}" style="color: red">BELUM</td>
+                                                                <td th:if="${sd.status == null}" style="color: red">UNDONE</td>
                                                                 <td>
                                                                     <center><a
                                                                             th:href="@{/daftarbawahan/evidence/form(role=${role.id},id=${sd.kpi.id})}"
@@ -64,7 +64,7 @@
                                                                 </td>
                                                             </tr>
                                                             <!--<tr th:each="data : ${status}">-->
-                                                                <!--<td th:text="${data.kpi}"></td>-->
+                                                            <!--<td th:text="${data.kpi}"></td>-->
                                                             <!--</tr>-->
 
 

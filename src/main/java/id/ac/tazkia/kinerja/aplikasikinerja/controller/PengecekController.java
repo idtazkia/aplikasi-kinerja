@@ -60,85 +60,85 @@ public class PengecekController {
 
 
         if (StringUtils.hasText(search)) {
-                    model.addAttribute("search", search);
-                    staffDao.findByStatusAndEmployeeNameContainingIgnoreCaseOrderByEmployeeName(AktifConstants.Aktif, search, page)
+            model.addAttribute("search", search);
+            staffDao.findByStatusAndEmployeeNameContainingIgnoreCaseOrderByEmployeeName(AktifConstants.Aktif, search, page)
                     .forEach(staff -> {
-                            for (StaffRole staffRole : staff.getRoles()) {
+                        for (StaffRole staffRole : staff.getRoles()) {
 
-                                    List<Evidence> evidence = evidenceDao.findByStaffAndPeriode(staff,periode);
-                                    List<Score> score = scoreDao.findByStaffAndPeriode(staff,periode);
+                            List<Evidence> evidence = evidenceDao.findByStaffAndPeriode(staff,periode);
+                            List<Score> score = scoreDao.findByStaffAndPeriode(staff,periode);
 
 
-                                Integer jumlah = staffRole.getKpi().size();
-                                    RekapPengisianKpi r = new RekapPengisianKpi();
-                                    r.setStaff(staff);
-                                    r.setId(staff.getId());
-                                    r.setNama(staff.getEmployeeName());
-                                    r.setArea(staff.getArea());
-                                    r.setDepartment(staff.getDepartment());
-                                    r.setNamaRole(staffRole.getRoleName());
-                                    r.setJumlahKpi(jumlah.longValue());
+                            Integer jumlah = staffRole.getKpi().size();
+                            RekapPengisianKpi r = new RekapPengisianKpi();
+                            r.setStaff(staff);
+                            r.setId(staff.getId());
+                            r.setNama(staff.getEmployeeName());
+                            r.setArea(staff.getArea());
+                            r.setDepartment(staff.getDepartment());
+                            r.setNamaRole(staffRole.getRoleName());
+                            r.setJumlahKpi(jumlah.longValue());
 
-                                    for (Evidence evinya : evidence) {
-                                        if (evinya.getStaff() == r.getStaff()) {
-                                            r.setStatusPengisian("SUDAH");
+                            for (Evidence evinya : evidence) {
+                                if (evinya.getStaff() == r.getStaff()) {
+                                    r.setStatusPengisian("DONE");
 //                                                    System.out.println("Staff : " + evinya.getStaff().getId() + " | Kpi : " + evinya.getKpi().getId());
-                                        }
-                                    }
-                                    for (Score scorenya : score){
-                                        if (scorenya.getStaff() == r.getStaff()) {
-                                            r.setStatusPenilaian("SUDAH");
-                                        }
-                                    }
+                                }
+                            }
+                            for (Score scorenya : score){
+                                if (scorenya.getStaff() == r.getStaff()) {
+                                    r.setStatusPenilaian("DONE");
+                                }
+                            }
 
-                                    rekap.add(r);
-                                    model.addAttribute("roles", staffRole);
+                            rekap.add(r);
+                            model.addAttribute("roles", staffRole);
+
+
+
+                        }
+                        model.addAttribute("viewall", rekap);
+
+                    });
+        } else {
+            staffDao.findByStatus(AktifConstants.Aktif, page).forEach(staff -> {
+                for (StaffRole staffRole : staff.getRoles()) {
+
+                    List<Evidence> evidence = evidenceDao.findByStaffAndPeriode(staff,periode);
+                    List<Score> score = scoreDao.findByStaffAndPeriode(staff,periode);
+
+                    Integer jumlah = staffRole.getKpi().size();
+                    RekapPengisianKpi r = new RekapPengisianKpi();
+                    r.setStaff(staff);
+                    r.setId(staff.getId());
+                    r.setNama(staff.getEmployeeName());
+                    r.setArea(staff.getArea());
+                    r.setDepartment(staff.getDepartment());
+                    r.setNamaRole(staffRole.getRoleName());
+                    r.setJumlahKpi(jumlah.longValue());
+                    System.out.println("Staff : " + r.getNama());
+                    for (Evidence evinya : evidence) {
+                        if (evinya.getStaff() == r.getStaff()) {
+                            r.setStatusPengisian("DONE");
+//                                                System.out.println("Staff : " + evinya.getStaff().getId() + " | Kpi : " + evinya.getKpi().getId());
+                        }
+                    }
+                    for (Score scorenya : score){
+                        if (scorenya.getStaff() == r.getStaff()) {
+                            r.setStatusPenilaian("DONE");
+                        }
+                    }
+
+                    rekap.add(r);
+                    model.addAttribute("roles", staffRole);
 
 
 
                 }
                 model.addAttribute("viewall", rekap);
+            });
 
-                    });
-                } else {
-                    staffDao.findByStatus(AktifConstants.Aktif, page).forEach(staff -> {
-                                for (StaffRole staffRole : staff.getRoles()) {
-
-                                        List<Evidence> evidence = evidenceDao.findByStaffAndPeriode(staff,periode);
-                                        List<Score> score = scoreDao.findByStaffAndPeriode(staff,periode);
-
-                                        Integer jumlah = staffRole.getKpi().size();
-                                        RekapPengisianKpi r = new RekapPengisianKpi();
-                                        r.setStaff(staff);
-                                        r.setId(staff.getId());
-                                        r.setNama(staff.getEmployeeName());
-                                        r.setArea(staff.getArea());
-                                        r.setDepartment(staff.getDepartment());
-                                        r.setNamaRole(staffRole.getRoleName());
-                                        r.setJumlahKpi(jumlah.longValue());
-                                        System.out.println("Staff : " + r.getNama());
-                                        for (Evidence evinya : evidence) {
-                                            if (evinya.getStaff() == r.getStaff()) {
-                                                r.setStatusPengisian("DONE");
-//                                                System.out.println("Staff : " + evinya.getStaff().getId() + " | Kpi : " + evinya.getKpi().getId());
-                                            }
-                                        }
-                                        for (Score scorenya : score){
-                                            if (scorenya.getStaff() == r.getStaff()) {
-                                                r.setStatusPenilaian("DONE");
-                                            }
-                                        }
-
-                                        rekap.add(r);
-                                        model.addAttribute("roles", staffRole);
-
-
-
-                                }
-                                model.addAttribute("viewall", rekap);
-                });
-
-                }
+        }
 
 
 

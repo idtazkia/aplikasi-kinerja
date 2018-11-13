@@ -264,7 +264,7 @@ public class DaftarBawahanController {
             statusPengisian.setKpi(kpi);
             for (Evidence ev : evidence){
                 if (ev.getKpi() == statusPengisian.getKpi()){
-                    statusPengisian.setStatus("SUDAH");
+                    statusPengisian.setStatus("DONE");
                 }
 
             }
@@ -427,6 +427,7 @@ public class DaftarBawahanController {
         }
 
         Staff p = staffDao.findByUser(u);
+        u.getRole().getId();
 
 
         if (p == null) {

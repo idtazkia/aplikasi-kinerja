@@ -62,9 +62,9 @@
                                                             <br>
                                                         <!--Link View Evidence-->
                                                         <hr>
-                                                        <div class="list-group" th:each="ev : ${detailEvidence}">
-                                                            <a th:href="@{/uploaded/{evidence}/bukti/(evidence=${ev.id})}"
-                                                               th:text="${ev.description}" class="list-group-item list-group-item-action">Dapibus ac facilisis in
+                                                        <div class="list-group" th:each="ev : ${detailEvidence}" >
+                                                            <a th:href="@{/uploaded/{evidence}/bukti/(evidence=${ev.id})}" target="_blank"
+                                                               th:text="${ev.description}" class="list-group-item list-group-item-action">
                                                             </a>
                                                         </div>
                                                         <hr>
