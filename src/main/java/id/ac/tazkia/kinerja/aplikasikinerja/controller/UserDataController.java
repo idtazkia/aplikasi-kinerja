@@ -124,7 +124,7 @@ public class UserDataController {
         staffDao.save(staff);
         userPasswordDao.save(userPassword);
 
-        return "redirect:/index";
+        return "redirect:/user/data";
 
     }
 }
