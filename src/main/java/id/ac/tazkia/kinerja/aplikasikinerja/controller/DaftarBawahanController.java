@@ -449,7 +449,7 @@ public class DaftarBawahanController {
     @GetMapping("/daftarbawahan/nilai")
     public void nilai(Model model,@RequestParam Staff staff){
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
-        model.addAttribute("staff",staff);
+        model.addAttribute("s",staff);
         model.addAttribute("individual",scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,individualCategory,periode));
         model.addAttribute("tazkia",scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,tazkiaValueCategory,periode));
     }
