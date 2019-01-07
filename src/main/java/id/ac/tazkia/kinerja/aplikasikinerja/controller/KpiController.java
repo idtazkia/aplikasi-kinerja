@@ -1,14 +1,13 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 
+import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.CategoryDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.IndicatorsDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.KpiDao;
+import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.InputKpiDto;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.UploadError;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Category;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Indicators;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.Kpi;
-import id.ac.tazkia.kinerja.aplikasikinerja.entity.StatusKpi;
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -35,12 +34,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class KpiController {
+
+    @Value("${upload.delimiter}")
+    private String delimiter;
+
     @Autowired
     private KpiDao kpiDao;
 
@@ -50,7 +51,10 @@ public class KpiController {
     @Autowired
     private IndicatorsDao indicatorsDao;
 
-    @Value("classpath:sample/Example.csv")
+    @Autowired
+    private StaffRoleDao staffRoleDao;
+
+    @Value("classpath:sample/Contoh-Upload-KPI.csv")
     private Resource example;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KpiController.class);
@@ -79,6 +83,9 @@ public class KpiController {
         } else {
             model.addAttribute("data", kpiDao.findByStatus(StatusKpi.AKTIF,page));
         }
+
+        model.addAttribute("staffRole",staffRoleDao.findByStatus(AktifConstants.Aktif));
+
     }
 
     @GetMapping("/kpi/form")
@@ -201,12 +208,13 @@ public class KpiController {
     @PostMapping("/upload/kpi")
     public String processFormUpload(@RequestParam(required = false) Boolean pakaiHeader,
                                     MultipartFile kpiFile,
-                                    RedirectAttributes redirectAttrs) {
+                                    RedirectAttributes redirectAttrs, @RequestParam StaffRole staffRole) {
         LOGGER.debug("Pakai Header : {}",pakaiHeader);
         LOGGER.debug("Nama File : {}",kpiFile.getName());
         LOGGER.debug("Ukuran File : {}",kpiFile.getSize());
 
         List<UploadError> errors = new ArrayList<>();
+        Set<Kpi> kpis = new HashSet<>();
         Integer baris = 0;
 
 
@@ -220,7 +228,7 @@ public class KpiController {
 
             while ((content = reader.readLine()) != null) {
                 baris++;
-                String[] data = content.split(",");
+                String[] data = content.split(delimiter);
                 if (data.length != 10) {
                     errors.add(new UploadError(baris, "Format data salah", content));
                     continue;
@@ -270,6 +278,10 @@ public class KpiController {
                 indicatorsDao.save(indicators4);
                 indicatorsDao.save(indicators5);
 
+                    kpis.add(kpi);
+                    staffRole.setKpi(kpis);
+                    staffRole.setStatus(AktifConstants.Aktif);
+                    staffRoleDao.save(staffRole);
 
 
             }
@@ -284,6 +296,10 @@ public class KpiController {
                 .addFlashAttribute("jumlahError", errors.size())
                 .addFlashAttribute("errors", errors);
 
+
+
+
+
         return "redirect:/kpi/hasil";
     }
 
@@ -295,7 +311,7 @@ public class KpiController {
     @GetMapping("/contoh/kpi")
     public void downloadContohFileTagihan(HttpServletResponse response) throws Exception {
         response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment; filename=example.csv");
+        response.setHeader("Content-Disposition", "attachment; filename=Contoh-Upload-KPI.csv");
         FileCopyUtils.copy(example.getInputStream(), response.getOutputStream());
         response.getOutputStream().flush();
     }
