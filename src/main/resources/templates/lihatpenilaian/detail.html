@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Daftar Penilaian</title>
+</head>
+
+
+<body>
+<section layout:fragment="content">
+    <br/>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2 class="title">Result
+                            </h2>
+                            <p class="category"></p>
+                        </div>
+                        <hr>
+                        <td>
+                            <!--&nbsp;&nbsp; <a target="output" th:href="@{/lihatpenilaian/total(staff=${staff.id},periode=${idPeriode.id},role=${staffRole.id})}" class="btn btn-warning">See Total Score</a>-->
+                        </td>
+                        <td>
+                            <!--&nbsp;&nbsp; <a target="output" th:href="@{/lihatpenilaian/csv(periode=${idPeriode.id})}" class="btn btn-success">Download Data Result</a>-->
+                        </td>
+                        <hr/>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#individual" role="tab" data-toggle="tab">Invidiual Achievment Score</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tazkiavalue" role="tab" data-toggle="tab">Tazkia Value Score</a>
+                            </li>
+                            <li style="margin-left: 50%;">
+
+                            </li>
+                        </ul>
+
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="individual">
+                                    <!---->
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="content table-responsive table-full-width">
+                                                        <table class="table table-bordered">
+                                                            <thead >
+                                                            <th>No.</th>
+                                                            <th>Key Result</th>
+                                                            <th>Score</th>
+                                                            <th>Remark</th>
+                                                            <th ><center>#</center></th>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr th:each="sd,row  : ${individual}">
+                                                                <td th:text="${(row.index + 1)}"></td>
+                                                                <td th:text="${sd.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
+                                                                <td th:text="${sd.score}">Prodi Bisnis & Manajemen Islam</td>
+                                                                <td th:text="${sd.remark}">Puket I</td>
+                                                                <td th:each="pe : ${sd.periode}">
+                                                                    <span th:if="${pe.active == 'AKTIF'}" ><center><a th:href="@{/lihatpenilaian/comment(id=${sd.id})}" target="output" class="btn btn-info">Submit your comment</a></center></span>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!---->
+                            </div>
+
+                            <!--&lt;!&ndash;TAZKI VALUE PANEL&ndash;&gt;-->
+                            <!--<div role="tabpanel" class="tab-pane fade" id="tazkiavalue">-->
+
+                                    <!--<div class="container-fluid">-->
+                                        <!--<div class="row">-->
+                                            <!--<div class="col-md-12">-->
+                                                <!--<div class="card">-->
+                                                    <!--<div class="content table-responsive table-full-width">-->
+                                                        <!--<table class="table table-bordered">-->
+                                                            <!--<thead >-->
+                                                            <!--<th>No.</th>-->
+                                                            <!--<th>Key Result</th>-->
+                                                            <!--<th>Score</th>-->
+                                                            <!--<th>Remark</th>-->
+                                                            <!--<th><center>#</center></th>-->
+                                                            <!--</thead>-->
+                                                            <!--<tbody>-->
+                                                            <!--<span></span>-->
+                                                            <!--<tr th:each="tv,row  : ${tazkiaValue}">-->
+                                                                <!--<td th:text="${(row.index + 1)}"></td>-->
+                                                                <!--<td th:text="${tv.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>-->
+                                                                <!--<td th:text="${tv.score}">Prodi Bisnis & Manajemen Islam</td>-->
+                                                                <!--<td th:text="${tv.remark}">Puket I</td>-->
+                                                                <!--<td th:each="pe : ${tv.periode}">-->
+                                                                    <!--<span th:if="${pe.active == 'AKTIF'}" ><center><a th:href="@{/lihatpenilaian/comment(id=${pe.id})}" target="output" class="btn btn-info">Submit your comment</a></center></span>-->
+                                                                <!--</td>-->
+                                                            <!--</tr>-->
+
+                                                            <!--</tbody>-->
+                                                        <!--</table>-->
+
+                                                    <!--</div>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--&lt;!&ndash;&ndash;&gt;-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash;ENDTAZKIAVALUE&ndash;&gt;-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
