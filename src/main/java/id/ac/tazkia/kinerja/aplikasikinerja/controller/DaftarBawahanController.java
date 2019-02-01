@@ -232,7 +232,7 @@ public class DaftarBawahanController {
 
     @GetMapping("/daftarbawahan/evidence/list")
     public void evidenceList(@RequestParam StaffRole role, Model m, Authentication currentUser){
-        Periode periode = periodeDao.findByStatus(StatusKpi.AKTIF);
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
 
         LOGGER.debug("Authentication class : {}", currentUser.getClass().getName());
 
