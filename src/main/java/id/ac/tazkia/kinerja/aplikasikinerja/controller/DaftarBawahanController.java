@@ -125,7 +125,7 @@ public class DaftarBawahanController {
         StaffRole staffRole = staffRoleDao.findById(id).get();
         Staff s = staffDao.findById(staff).get();
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
-        Iterable<Score> existingScore = scoreDao.findByStaffAndPeriode(s, periodeDao.findByStatus(StatusKpi.AKTIF));
+        Iterable<Score> existingScore = scoreDao.findByStaffAndPeriode(s, periodeDao.findByActive(AktifConstants.Aktif));
 
         Map<String, BigInteger> kpiScore = new HashMap<>();
         for(Score score : existingScore){
