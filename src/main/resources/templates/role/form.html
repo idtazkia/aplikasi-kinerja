@@ -88,13 +88,84 @@
 
                                 <div class="clearfix">
                                     <center>
-                                        <button type="submit" class="btn btn-success">Save</button>
+                                        <button type="submit" class="btn btn-success">Save</button> |
+
+                                         <form method="get">
+                                             <button type="button" class="btn btn-primary" id="myBtn">
+                                                 Upload Kpi
+                                             </button>
+                                         </form>
                                     </center>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+
+
+                <!--MODAL UPLOAD-->
+                <div class="container">
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <form th:action="@{/upload/kpi}" method="post" enctype="multipart/form-data">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Upload Kpi
+                                            <a th:href="@{/contoh/kpi}"
+                                               class="btn btn-info" style="margin-left: 45%" type="submit">Example File Upload</a>
+                                        </h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Upload File :</label>
+                                                    <input type="file" name="kpiFile" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Role :</label><br>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <select class="js-example-placeholder-single form-control border-input"
+                                                            name="staffRole">
+                                                        <option value=""></option>
+                                                        <option th:each="sr :${staffRole}"
+                                                                th:text="${sr.roleName}"
+                                                                th:value="${sr.id}">Ketua
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <input type="checkbox" id="pakaiHeader" name="pakaiHeader" checked value="true" class="filled-in">
+                                        <label for="pakaiHeader">Use Column Headings</label><br>
+
+                                        <br>
+                                        <p>
+                                            <b>Note :</b><br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. 001 for Individual Score <br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. 002 for Tazkia Score
+                                        </p>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-success">Upload File</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!---->
 
 
             </div>
@@ -108,5 +179,11 @@
     $(".js-example-placeholder-single").select2({
         placeholder: "--Superior Role--",
         allowClear: true
+    });
+
+    $(document).ready(function(){
+        $("#myBtn").click(function(){
+            $("#myModal").modal();
+        });
     });
 </script>
