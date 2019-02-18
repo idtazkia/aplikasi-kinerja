@@ -86,10 +86,11 @@
                                     </div>
                                 </div>
 
+
                                 <div class="clearfix">
                                     <center>
+                                        <a th:href="@{/daftarbawahan/list(role=${role.id})}" class="btn btn-danger">Back</a> |
                                         <button type="submit" class="btn btn-success">Save</button> |
-
                                          <form method="get">
                                              <button type="button" class="btn btn-primary" id="myBtn">
                                                  Upload Kpi
@@ -114,13 +115,13 @@
                                     <div class="modal-header">
                                         <h4>Upload Kpi
                                             <a th:href="@{/contoh/kpi}"
-                                               class="btn btn-info" style="margin-left: 45%" type="submit">Example File Upload</a>
+                                               class="btn btn-info" style="margin-left: 45%" type="submit">Tutorial Upload KPI</a>
                                         </h4>
                                     </div>
 
                                     <div class="modal-body">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-lg-8">
                                                 <div class="form-group">
                                                     <label>Upload File :</label>
                                                     <input type="file" name="kpiFile" class="form-control">
@@ -129,17 +130,11 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-lg-8">
                                                 <div class="form-group">
-                                                    <label>Role :</label><br>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <select class="js-example-placeholder-single form-control border-input"
-                                                            name="staffRole">
-                                                        <option value=""></option>
-                                                        <option th:each="sr :${staffRole}"
-                                                                th:text="${sr.roleName}"
-                                                                th:value="${sr.id}">Ketua
-                                                        </option>
-                                                    </select>
+                                                    <input type="hidden" name="staffRole" th:value="${role.id}">
+                                                    <label>Role :</label><br>
+                                                    <input type="text" th:field="${role.roleName}" readonly class="form-control border-input">
                                                 </div>
                                             </div>
                                         </div>
@@ -150,8 +145,11 @@
                                         <br>
                                         <p>
                                             <b>Note :</b><br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. 001 for Individual Score <br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. 002 for Tazkia Score
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1. 001 for Individual Score &nbsp;|&nbsp; 002 for Tazkia Score <br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. The only upload format that allowed is CSV<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. Column Headings Option's for using a title at top of the upload CSV <br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4. More info about how to upload KPI is on '<b>Tutorial Upload KPI</b>'
+
                                         </p>
                                     </div>
 
