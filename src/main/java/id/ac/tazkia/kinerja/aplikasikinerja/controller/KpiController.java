@@ -54,7 +54,7 @@ public class KpiController {
     @Autowired
     private StaffRoleDao staffRoleDao;
 
-    @Value("classpath:sample/Contoh-Upload-KPI.csv")
+    @Value("classpath:sample/Tutorial-Upload-KPI.pdf")
     private Resource example;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KpiController.class);
@@ -76,7 +76,7 @@ public class KpiController {
     }
 
     @GetMapping("/kpi/list")
-    public void list(Model model, Pageable page, String keyresult) {
+    public void list(Model model, Pageable page, String keyresult,String role, Kpi kpi) {
         if (StringUtils.hasText(keyresult)) {
             model.addAttribute("keyresult", keyresult);
             model.addAttribute("data", kpiDao.findByStatusAndKeyResultContainingIgnoreCaseOrderByKeyResult(StatusKpi.AKTIF,keyresult, page));
@@ -309,9 +309,9 @@ public class KpiController {
     }
 
     @GetMapping("/contoh/kpi")
-    public void downloadContohFileTagihan(HttpServletResponse response) throws Exception {
-        response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment; filename=Contoh-Upload-KPI.csv");
+    public void downloadContohFileUpload(HttpServletResponse response) throws Exception {
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=Tutorial-Upload-KPI.pdf");
         FileCopyUtils.copy(example.getInputStream(), response.getOutputStream());
         response.getOutputStream().flush();
     }
