@@ -22,16 +22,33 @@
                             <table class="table" border="0">
                                 <form method="get">
                                     <tr>
-                                        <td>Search by :
-                                                <input type="text" id="keyresult" autocomplete="off"
-                                                       placeholder="key result" name="keyresult"
-                                                       th:value="${keyresult}">
-                                                <input type="submit" value="Search" class="btn btn-success">  |
-                                                    <button type="button" class="btn btn-primary" id="myBtn">
-                                                        Upload Kpi
-                                                    </button>  |
-                                                    <a th:href="@{/kpi/form}" class="btn btn-info"> New Kpi</a>
-                                        </td>
+                                      <div class="col-md-4">
+                                         <div class="form-group">
+                                          <select class="js-example-placeholder-single js-states form-control border-input"
+                                                name="staffRole">
+                                            <option value=""></option>
+                                            <option th:each="sr :${staffRole}"
+                                                    th:text="${sr.roleName}"
+                                                    th:value="${sr.id}">Ketua
+                                            </option>
+                                          </select>
+                                         </div>
+                                      </div>
+
+                                     <div class="col-md-8">
+                                       <div class="form-group">
+                                            <input type="text" id="keyresult" autocomplete="off"
+                                                   placeholder="key result" name="keyresult"
+                                                   th:value="${keyresult}">
+                                            <input type="submit" value="Search" class="btn btn-success">  |
+                                            <button type="button" class="btn btn-primary" id="myBtn">
+                                                    Upload Kpi
+                                            </button>  |
+                                            <a th:href="@{/kpi/form}" class="btn btn-info"> New Kpi</a>
+                                       </div>
+                                     </div>
+
+
                                     </tr>
                                     <tr style="border-bottom-color: whitesmoke">
                                         <td>Show <span sd:page-size-selector="javascript"></span> entries</td>

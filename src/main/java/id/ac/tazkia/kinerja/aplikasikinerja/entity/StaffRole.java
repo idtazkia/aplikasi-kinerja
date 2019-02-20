@@ -1,6 +1,7 @@
 package id.ac.tazkia.kinerja.aplikasikinerja.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,6 +34,7 @@ public class StaffRole {
     @Column
     private String description;
 
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(name = "staff_role_kpi",
                joinColumns=@JoinColumn(name = "id_staff_role"),

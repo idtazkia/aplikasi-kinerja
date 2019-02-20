@@ -8,12 +8,15 @@ import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.InputKpiDto;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.UploadError;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +38,7 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.List;
 
 @Controller
 public class KpiController {
@@ -76,15 +80,19 @@ public class KpiController {
     }
 
     @GetMapping("/kpi/list")
-    public void list(Model model, Pageable page, String keyresult,String role, Kpi kpi) {
+    public void list(Model model, Pageable page, String keyresult,@RequestParam StaffRole staffRole) {
+
+        model.addAttribute("staffRole",staffRoleDao.findByStatus(AktifConstants.Aktif));
+
         if (StringUtils.hasText(keyresult)) {
             model.addAttribute("keyresult", keyresult);
             model.addAttribute("data", kpiDao.findByStatusAndKeyResultContainingIgnoreCaseOrderByKeyResult(StatusKpi.AKTIF,keyresult, page));
+        } else if (staffRole != null) {
+            model.addAttribute("data",kpiDao.findByStaffRole(staffRole,page));
         } else {
             model.addAttribute("data", kpiDao.findByStatus(StatusKpi.AKTIF,page));
         }
 
-        model.addAttribute("staffRole",staffRoleDao.findByStatus(AktifConstants.Aktif));
 
     }
 
@@ -201,7 +209,7 @@ public class KpiController {
         indicatorsDao.save(i3);
         indicatorsDao.save(i4);
         indicatorsDao.save(i5);
-        return "redirect:list";
+        return "redirect:/kpi/list?staffRole";
 
     }
 
@@ -314,5 +322,61 @@ public class KpiController {
         response.setHeader("Content-Disposition", "attachment; filename=Tutorial-Upload-KPI.pdf");
         FileCopyUtils.copy(example.getInputStream(), response.getOutputStream());
         response.getOutputStream().flush();
+    }
+
+    @GetMapping("/data/kpi")
+    public void dataKpi(HttpServletResponse response,@RequestParam StaffRole staffRole) throws Exception {
+
+        String[] columns = {"Key Result","Category","Weight","Base Line","Target","Content 1","Content 2","Content 3","Content 4","Content 5"};
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Data KPI");
+
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short) 12);
+        headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+
+        Row headerRow = sheet.createRow(0);
+
+        for (int i = 0; i < columns.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(columns[i]);
+            cell.setCellStyle(headerCellStyle);
+        }
+
+
+        Iterable<Kpi> dataKpi = kpiDao.findByStaffRole(staffRole);
+        int rowNum = 1 ;
+        for (Kpi p : dataKpi) {
+            if (p.getKeyResult() != null) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(p.getKeyResult());
+                row.createCell(1).setCellValue(p.getCategory().getId());
+                row.createCell(2).setCellValue(String.valueOf(p.getWeight()));
+                row.createCell(3).setCellValue(String.valueOf(p.getBaseLine()));
+                row.createCell(4).setCellValue(String.valueOf(p.getTarget()));
+
+                Iterable<Indicators> indie = indicatorsDao.findByKpi(p);
+                int cell = 5;
+                for (Indicators i : indie){
+                    row.createCell(cell++).setCellValue(i.getContent());
+                }
+            }
+        }
+
+        for (int i = 0; i < columns.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename=Detail_Kpi.xlsx");
+        workbook.write(response.getOutputStream());
+        workbook.close();
+
     }
 }
