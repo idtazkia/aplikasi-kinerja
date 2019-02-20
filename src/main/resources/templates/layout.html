@@ -75,7 +75,7 @@
                     </a>
                 </li>
                 <li sec:authorize="hasAnyAuthority('VIEW_STAFF', 'VIEW_KABAG','VIEW_SUPERADMIN')">
-                    <a th:href="@{/kpi/list}">
+                    <a th:href="@{/kpi/list(staffRole=)}">
                         <i class="ti-pencil"></i>
                         <p>Input Kpi</p>
                     </a>
