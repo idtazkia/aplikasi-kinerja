@@ -88,15 +88,16 @@
 
 
                                 <div class="clearfix">
-                                    <center>
-                                        <a th:href="@{/daftarbawahan/list(role=${role.id})}" class="btn btn-danger">Back</a> |
-                                        <button type="submit" class="btn btn-success">Save</button> |
-                                         <form method="get">
-                                             <button type="button" class="btn btn-primary" id="myBtn">
-                                                 Upload Kpi
-                                             </button>
-                                         </form>
-                                    </center>
+                                  <center>
+                                      <a th:href="@{/daftarbawahan/list(role=${role.id})}" class="btn btn-danger">Back</a> |
+                                      <button type="submit" class="btn btn-success">Save</button> |
+                                      <a th:href="@{/data/kpi(staffRole=${role.id})}" class="btn btn-info" type="submit">Download KPI</a> |
+                                       <form method="get">
+                                           <button type="button" class="btn btn-primary" id="myBtn">
+                                               Upload Kpi
+                                           </button>
+                                       </form>
+                                  </center>
                                 </div>
                             </form>
                         </div>

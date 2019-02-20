@@ -8,4 +8,5 @@ import java.math.BigInteger;
 
 public interface IndicatorsDao extends PagingAndSortingRepository<Indicators, String> {
     Indicators findByKpiAndScore(Kpi kpi,BigInteger s);
+    Iterable<Indicators> findByKpi(Kpi kpi);
 }
