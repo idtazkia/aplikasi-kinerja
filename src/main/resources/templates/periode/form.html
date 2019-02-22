@@ -56,7 +56,7 @@
 
                                 <hr>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Input Periode</button>
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd saveConfirm" onclick="return confirm('Are you sure?')">Input Periode</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </form>
@@ -74,3 +74,22 @@
 </section>
 </body>
 </html>
+<script>
+
+    $(".js-sr").select2({
+        placeholder: "--Superior Role--",
+        allowClear: true
+    });
+
+    $('.saveConfirm').click(function () {
+        swal({
+            position: 'middle',
+            type: 'success',
+            title: 'Successful',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    });
+
+</script>
+
