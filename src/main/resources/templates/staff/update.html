@@ -154,7 +154,7 @@
 
                                 <hr>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Update Employee Data
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd updateConfirm" onclick="return confirm('Are you sure?')">Update Employee Data
                                     </button>
                                 </div>
                                 <div class="clearfix"></div>
@@ -177,8 +177,19 @@
 </body>
 </html>
 <script>
+
     $(".js-sr").select2({
         placeholder: "--Superior Role--",
         allowClear: true
+    });
+
+    $('.updateConfirm').click(function () {
+        swal({
+            position: 'middle',
+            type: 'success',
+            title: 'Updated',
+            showConfirmButton: false,
+            timer: 1500
+        })
     });
 </script>

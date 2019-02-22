@@ -160,7 +160,7 @@
 
                                 <hr>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Save Employee Data
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd saveConfirm" onclick="return confirm('Are you sure?')">Save Employee Data
                                     </button>
                                 </div>
                                 <div class="clearfix"></div>
@@ -183,8 +183,20 @@
 </body>
 </html>
 <script>
+
     $(".js-sr").select2({
         placeholder: "--Superior Role--",
         allowClear: true
     });
+
+    $('.saveConfirm').click(function () {
+        swal({
+            position: 'middle',
+            type: 'success',
+            title: 'Successful',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    });
+
 </script>
