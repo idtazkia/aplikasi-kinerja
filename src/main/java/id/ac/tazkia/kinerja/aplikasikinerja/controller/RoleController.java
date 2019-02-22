@@ -3,6 +3,7 @@ package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.KpiDao;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.StaffRoleDao;
+import id.ac.tazkia.kinerja.aplikasikinerja.entity.Role;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.StaffRole;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.StatusKpi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,18 @@ public class RoleController {
     @PostMapping("/role/form")
     public String proses(@ModelAttribute @Valid StaffRole staffRole, BindingResult error){
         staffRole.setStatus(AktifConstants.Aktif);
+        staffRoleDao.save(staffRole);
+
+        return "redirect:list";
+    }
+
+    @PostMapping("/role/delete")
+    public String deleteStaff(@RequestParam StaffRole staffRole) {
+        if (staffRole == null) {
+            return "redirect:/404";
+        }
+
+        staffRole.setStatus(AktifConstants.Nonaktif);
         staffRoleDao.save(staffRole);
 
         return "redirect:list";

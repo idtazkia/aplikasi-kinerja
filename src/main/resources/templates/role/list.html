@@ -15,8 +15,8 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">List of Kpi</h4>
-                            <p class="category">Daftar Kpi</p>
+                            <h4 class="title">List of Role</h4>
+                            <p class="category">Daftar Role</p>
                         </div>
                         <div class="content table-responsive table-full-width">
                             <table class="table" border="0">
@@ -40,7 +40,7 @@
                                 <th>No.</th>
                                 <th>Role Name</th>
                                 <th>Description</th>
-                                <th >
+                                <th colspan="2">
                                     <center>Aksi</center>
                                 </th>
                                 </thead>
@@ -50,6 +50,16 @@
                                     <td th:text="${l.roleName}">Staff</td>
                                     <td th:text="${l.description}">asaa</td>
                                     <td><center><a target="output" th:href="@{/role/form(role=${l.id})}" class="btn btn-info">Edit</a></center></td>
+                                    <td>
+                                        <center>
+                                            <form th:action="@{/role/delete(staffRole=${l.id})}" method="post">
+                                                <button type="submit" class="btn btn-danger deleteConfirm"
+                                                        onclick="return confirm('Are you sure want too delete this?')">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </center>
+                                    </td>
                                 </tr>
 
                                 </tbody>
@@ -85,3 +95,17 @@
 </section>
 </body>
 </html>
+
+<script>
+
+    $('.deleteConfirm').click(function () {
+        swal({
+            position: 'middle',
+            type: 'success',
+            title: 'Deleted',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    });
+
+</script>

@@ -90,7 +90,7 @@
                                 <div class="clearfix">
                                   <center>
                                       <a th:href="@{/daftarbawahan/list(role=${role.id})}" class="btn btn-danger">Back</a> |
-                                      <button type="submit" class="btn btn-success">Save</button> |
+                                      <button type="submit" class="btn btn-success saveConfirm" onclick="return confirm('Are you sure?')">Save</button> |
                                       <a th:href="@{/data/kpi(staffRole=${role.id})}" class="btn btn-info" type="submit">Download KPI</a> |
                                        <form method="get">
                                            <button type="button" class="btn btn-primary" id="myBtn">
@@ -175,6 +175,7 @@
 </body>
 </html>
 <script>
+
     $(".js-example-placeholder-single").select2({
         placeholder: "--Superior Role--",
         allowClear: true
@@ -185,4 +186,15 @@
             $("#myModal").modal();
         });
     });
+
+    $('.saveConfirm').click(function () {
+        swal({
+            position: 'middle',
+            type: 'success',
+            title: 'Successful',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    });
+
 </script>
