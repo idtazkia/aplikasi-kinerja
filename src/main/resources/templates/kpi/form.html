@@ -138,8 +138,8 @@
                             <div class="row">
                                 <center>
                                     <div class="funkyradio-success">
-                                        <button type="submit" class="btn btn-success">Submit new Kpi</button>
-                                        <a class="btn btn-danger">Back to Kpi list</a>
+                                        <button type="submit" class="btn btn-success saveConfirm" onclick="return confirm('Are you sure?')">Submit new Kpi</button>
+                                        <a th:href="@{/kpi/list(staffRole=)}" class="btn btn-danger">Back to kpi list</a>
                                     </div>
                                 </center>
                             </div>
@@ -153,3 +153,17 @@
 </section>
 </body>
 </html>
+
+<script>
+
+    $('.saveConfirm').click(function () {
+        swal({
+            position: 'middle',
+            type: 'success',
+            title: 'Successful',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    });
+
+</script>

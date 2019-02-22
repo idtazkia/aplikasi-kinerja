@@ -139,7 +139,7 @@ public class KpiController {
         indicatorsDao.save(i3);
         indicatorsDao.save(i4);
         indicatorsDao.save(i5);
-        return "redirect:list";
+        return "redirect:/kpi/list?staffRole";
     }
 
     @GetMapping("/kpi/hapus")
@@ -152,11 +152,11 @@ public class KpiController {
     @PostMapping("/kpi/hapus")
     public String processHapusForm(@RequestParam Kpi kpi) {
         if (kpi == null) {
-            return "redirect:list";
+            return "redirect:/kpi/list?staffRole";
         }
         kpi.setStatus(StatusKpi.NONAKTIF);
         kpiDao.save(kpi);
-        return "redirect:list";
+        return "redirect:/kpi/list?staffRole";
     }
 
     @GetMapping("kpi/update")

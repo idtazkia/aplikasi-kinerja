@@ -75,8 +75,7 @@
                                     <td th:text="${key.weight}">2</td>
                                     <td th:text="${key.baseLine}">4</td>
                                     <td th:text="${key.target}">3</td>
-                                    <td><a th:href="@{/kpi/update(id=${key.id})}" target="_blank"
-                                           class="btn btn-warning"> Edit</a></td>
+                                    <td><a th:href="@{/kpi/update(id=${key.id})}" class="btn btn-warning"> Edit</a></td>
                                     <td><a th:href="@{/kpi/hapus(kpi=${key.id})}" class="btn btn-danger"> Delete</a></td>
                                 </tr>
 

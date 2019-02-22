@@ -44,8 +44,8 @@
                                     </div>
                                 </div>
                                 <center>
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this?')">Delete</button>
-                                        <a th:href="@{/kpi/list}" class="btn btn-info">Cancel</a>
+                                        <button type="submit" class="btn btn-danger deleteConfirm" onclick="return confirm('Are you sure want to delete this?')">Delete</button>
+                                        <a th:href="@{/kpi/list(staffRole=)}" class="btn btn-info">Cancel</a>
                                 </center>
                                 </form>
                             </div>
@@ -57,3 +57,17 @@
 </section>
 </body>
 </html>
+
+<script>
+
+    $('.deleteConfirm').click(function () {
+        swal({
+            position: 'middle',
+            type: 'success',
+            title: 'Deleted',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    });
+
+</script>
