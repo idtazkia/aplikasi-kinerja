@@ -46,13 +46,15 @@ public class RoleController {
         m.addAttribute("staffRole",staffRoleDao.findByStatus(AktifConstants.Aktif));
         m.addAttribute("pilihanKpi", kpiDao.findByStatus(StatusKpi.AKTIF));/*mengambil data kpi*/
 
-        if (role != null && !role.isEmpty()) {
-            StaffRole staffRole = staffRoleDao.findById(role).get();
-            if (staffRole != null) {
-                m.addAttribute("role",staffRole);
-                m.addAttribute("kpiSekarang", staffRole.getKpi());
+            if (role != null && !role.isEmpty()) {
+                StaffRole staffRole = staffRoleDao.findById(role).get();
+                if (staffRole != null) {
+                    m.addAttribute("role", staffRole);
+                    m.addAttribute("kpiSekarang", staffRole.getKpi());
+                    m.addAttribute("kpiSekarang2", staffRole.getKpi());
+                }
             }
-        }
+
     }
 
     @PostMapping("/role/form")
@@ -60,7 +62,7 @@ public class RoleController {
         staffRole.setStatus(AktifConstants.Aktif);
         staffRoleDao.save(staffRole);
 
-        return "redirect:list";
+        return "redirect:/daftarbawahan/role";
     }
 
     @PostMapping("/role/delete")

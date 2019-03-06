@@ -13,7 +13,9 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
 
-        var kpiSekarang = /*[[${kpiSekarang}]]*/ ["001", "002"];
+        var kpiSekarang = /*[[${kpiSekarang}]]*/ ["001"];
+        var kpiSekarang2 = /*[[${kpiSekarang2}]]*/ ["002"];
+
         $(document).ready(function () {
             $('#pilihanKpi').select2();
             console.log("Kpi sekarang : " + kpiSekarang);
@@ -27,7 +29,24 @@
 
             $('#pilihanKpi').val(kpiSekarangId);
             $('#pilihanKpi').trigger("change");
+
+      //----------------------------------------------------//
+
+            $('#pilihanKpi2').select2();
+            console.log("Kpi sekarang 2 : " + kpiSekarang2);
+
+            var kpiSekarang2Id = [];
+            for (var i2 = 0; i2 < kpiSekarang2.length; i2++) {
+                kpiSekarang2Id.push(kpiSekarang2[i2].id);
+            }
+
+            console.log("ID Kpi sekarang 2 : " + kpiSekarang2Id);
+
+            $('#pilihanKpi2').val(kpiSekarang2Id);
+            $('#pilihanKpi2').trigger("change");
+
         });
+
 
     </script>
 </th:block>
@@ -75,11 +94,26 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Please Select the Kpi</label>
+                                            <label>Individual Score</label>
                                             <select name="kpi" id="pilihanKpi" class="form-control" multiple="multiple">
                                                 <option th:each="rl: ${pilihanKpi}"
                                                         th:text="${rl.keyResult + '&nbsp&nbsp&nbsp&nbsp' +'('+rl.category.name+')'}"
-                                                        th:value="${rl.id}">Lektor
+                                                        th:value="${rl.id}"
+                                                        th:if="${rl.category.id == '001'}">Lektor
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Tazkia Score</label>
+                                            <select name="kpi" id="pilihanKpi2" class="form-control" multiple="multiple">
+                                                <option th:each="rl2: ${pilihanKpi}"
+                                                        th:text="${rl2.keyResult + '&nbsp&nbsp&nbsp&nbsp' +'('+rl2.category.name+')'}"
+                                                        th:value="${rl2.id}"
+                                                        th:if="${rl2.category.id == '002'}">Lektor2
                                                 </option>
                                             </select>
                                         </div>
