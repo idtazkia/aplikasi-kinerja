@@ -48,10 +48,10 @@
                                     <td><a  th:href="@{/daftarbawahan/nilai(role=${roles.id},staff=${sd.id})}"
                                        class="btn btn-info">Ratings Penilaian</a></td>
 
-                                    <td><a th:href="@{/daftarbawahan/form(id=${roles.id},staff=${sd.id})}"
+                                    <td><a th:href="@{/daftarbawahan/form(role=${roles.id},staff=${sd.id})}"
                                            class="btn btn-warning">Input Kpi Value</a></td>
 
-                                    <td><a th:href="@{/daftarbawahan/komen(id=${sd.id})}"
+                                    <td><a th:href="@{/daftarbawahan/komen(role=${roles.id},staff=${sd.id})}"
                                            class="btn btn-primary">See Comments</a></td>
 
                                     <td><a th:href="@{/role/form(role=${roles.id})}"

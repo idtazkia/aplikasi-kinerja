@@ -58,7 +58,14 @@
                                                 </tbody>
                                             </table>
 
-                                            <a th:href="@{/daftarbawahan/evidence/detail(staff=${sd.author.id},kpi=${sd.score.kpi.id})}" class="btn btn-primary">View(s) Evidence</a>
+                                                        <a th:href="@{/daftarbawahan/evidence/detail(staff=${sd.author.id},kpi=${sd.score.kpi.id})}" class="btn btn-primary">View(s) Evidence</a>
+
+
+                                                        <td>
+                                                            <span th:each="rs : ${roles}">
+                                                                <a th:href="@{'/daftarbawahan/form#' + ${sd.score.kpi.id}(role=${rs.id},staff=${sd.author.id})}" class="btn btn-info">Revision</a>
+                                                            </span>
+                                                         </td>
 
 
                                         </div>

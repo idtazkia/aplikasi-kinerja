@@ -121,8 +121,8 @@ public class DaftarBawahanController {
     }
 
     @GetMapping("/daftarbawahan/form")
-    public String daftarKpi(@RequestParam  String id,String staff, Model m, Pageable page, Authentication currentUser) {
-        StaffRole staffRole = staffRoleDao.findById(id).get();
+    public String daftarKpi(@RequestParam  String role,String staff, Model m, Pageable page, Authentication currentUser) {
+        StaffRole staffRole = staffRoleDao.findById(role).get();
         Staff s = staffDao.findById(staff).get();
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
         Iterable<Score> existingScore = scoreDao.findByStaffAndPeriode(s, periodeDao.findByActive(AktifConstants.Aktif));
@@ -150,9 +150,9 @@ public class DaftarBawahanController {
 
 
     @PostMapping(value = "/daftarbawahan/form")
-    public String prosesForm(@RequestParam String id, String staff, HttpServletRequest request, RedirectAttributes attributes) {
+    public String prosesForm(@RequestParam String role, String staff, HttpServletRequest request, RedirectAttributes attributes) {
         Staff s = staffDao.findById(staff).get();
-        StaffRole roles = staffRoleDao.findById(id).get();
+        StaffRole roles = staffRoleDao.findById(role).get();
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
         List<Score> sd = scoreDao.findByStaffAndPeriode(s,periode);
 
@@ -205,7 +205,7 @@ public class DaftarBawahanController {
         } else {
             attributes.addFlashAttribute("selectedIndicators", indikatorYangDipilih);
             attributes.addFlashAttribute("errorMessage", errorMessage);
-            return "redirect:/daftarbawahan/form?id="+roles.getId()+"&staff="+s.getId();
+            return "redirect:/daftarbawahan/form?role="+roles.getId()+"&staff="+s.getId();
         }
 
     }
@@ -218,15 +218,21 @@ public class DaftarBawahanController {
     }
 
     @GetMapping("/daftarbawahan/komen")
-    public void String(@RequestParam(required = true) String id, Model m){
-        Staff staff = staffDao.findById(id).get();
-        if (staff == null){
-            LOGGER.debug("staff tidak ada");
-        }
+    public void String(@RequestParam(required = true) String staff, String role,Model m){
+        Staff staff1 = staffDao.findById(staff).get();
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
 
-        m.addAttribute("individual",scoreCommentDao.findByAuthorAndPeriodeAndScoreKpiCategory(staff,periode,individualCategory));
-        m.addAttribute("tazkiaValue",scoreCommentDao.findByAuthorAndPeriodeAndScoreKpiCategory(staff,periode,tazkiaValueCategory));
+
+        if (staff1 == null){
+            LOGGER.debug("staff tidak ada");
+        }
+
+
+        StaffRole staffRole = staffRoleDao.findById(role).get();
+
+        m.addAttribute("roles", staffRole);
+        m.addAttribute("individual",scoreCommentDao.findByAuthorAndPeriodeAndScoreKpiCategory(staff1,periode,individualCategory));
+        m.addAttribute("tazkiaValue",scoreCommentDao.findByAuthorAndPeriodeAndScoreKpiCategory(staff1,periode,tazkiaValueCategory));
     }
 
 

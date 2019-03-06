@@ -37,7 +37,23 @@
                                             <ul class="list-group">
                                                 <ol style="color: red">
                                                     <h3>Lengkapi Penilaian KPI ini :</h3>
-                                                    <li th:each="kpi : ${errorMessage.keySet()}" th:text="${kpi.keyResult}" />
+                                                    <hr>
+                                                    <h4>Individual Score</h4>
+                                                    <a th:href="@{'/daftarbawahan/form#' + ${kpi.id}(role=${role.id},staff=${staff.id})}"
+                                                       th:each="kpi : ${errorMessage.keySet()}"
+                                                       th:text="${kpi.keyResult}"
+                                                       th:if="${kpi.category.id == '001'}" class="btn btn-danger" /><br><br>
+                                                    <span><small>*Silahkan klik tab <b>'Individual Achievement Score'</b> terlebih dahulu</small></span>
+                                                    <br>
+                                                    <hr>
+                                                    <h4>Tazkia Score</h4>
+                                                    <a th:href="@{'/daftarbawahan/form#' + ${kpi.id}(role=${role.id},staff=${staff.id})}"
+                                                       th:each="kpi : ${errorMessage.keySet()}"
+                                                       th:text="${kpi.keyResult}"
+                                                       th:if="${kpi.category.id == '002'}" class="btn btn-danger" /><br><br>
+                                                    <span><small>*Silahkan klik tab <b>'Tazkia Value Score'</b> terlebih dahulu</small></span>
+                                                    <br>
+                                                    <hr>
                                                 </ol>
                                             </ul>
                                         </div>
@@ -59,7 +75,7 @@
                         </ul>
 
                         <!-- Tab panes -->
-                        <form th:action="@{/daftarbawahan/form(id=${role.id},staff=${staff.id})}" method="post">
+                        <form th:action="@{/daftarbawahan/form(role=${role.id},staff=${staff.id})}" method="post">
 
                         <span class="tab-content">
 
@@ -80,7 +96,7 @@
                                             <tbody>
                                             <tr>
                                                 <td><h3>*</h3></td>
-                                                <td th:text="${k.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                <td th:id="${k.id}" th:text="${k.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                     mahasiswa S2 STEI Tazkia</td>
                                             </tr>
                                             </tbody>
@@ -144,7 +160,7 @@
                             <!--TAZKIA VALUE PANEL-->
                             <div role="tabpanel" class="tab-pane fade" id="tazkiavalue">
                                 <div class="container">
-                                    <span th:each="kv : ${kpi}" th:if="${kv.category.id=='002'}">
+                                    <span  th:each="kv : ${kpi}" th:if="${kv.category.id=='002'}">
 
                                     <div class="row form-group has-danger">
                                         <div class="col-sm-5">
@@ -157,7 +173,7 @@
                                                 <tbody>
                                                 <tr>
                                                     <td><h3>*</h3></td>
-                                                    <td th:text="${kv.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
+                                                    <td th:id="${kv.id}" th:text="${kv.keyResult}">Bekerja sama dengan pihak HUMAS dalam administrasi PMB calon
                                                         mahasiswa S2 STEI Tazkia</td>
                                                 </tr>
                                                 </tbody>
