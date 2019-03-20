@@ -57,7 +57,7 @@
                                     <td><a th:href="@{/role/form(role=${roles.id})}"
                                            class="btn btn-danger">Edit KPI</a></td>
 
-                                    <td><a th:href="@{/daftarbawahan/detail(id=${sd.id})}"
+                                    <td><a th:href="@{/daftarbawahan/detail(role=${roles.id},staff=${sd.id})}"
                                            class="btn">See Details</a></td>
                                 </tr>
 

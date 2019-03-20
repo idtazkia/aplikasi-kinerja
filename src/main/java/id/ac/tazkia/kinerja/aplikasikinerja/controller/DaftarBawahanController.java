@@ -8,6 +8,8 @@ import id.ac.tazkia.kinerja.aplikasikinerja.dto.RekapPengisianKpi;
 import id.ac.tazkia.kinerja.aplikasikinerja.dto.StatusPengisian;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
 import id.ac.tazkia.kinerja.aplikasikinerja.helper.RekapKpiHelper;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -211,8 +215,12 @@ public class DaftarBawahanController {
     }
 
     @GetMapping("/daftarbawahan/detail")
-    public void detail(@RequestParam Staff id,Model model){
-       model.addAttribute("detail",id);
+    public void detail(@RequestParam Staff staff,String role, Model model){
+        StaffRole staffRole = staffRoleDao.findById(role).get();
+
+
+        model.addAttribute("detail",staff);
+        model.addAttribute("roles",staffRole);
 
 
     }
@@ -459,5 +467,98 @@ public class DaftarBawahanController {
         model.addAttribute("individual",scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,individualCategory,periode));
         model.addAttribute("tazkia",scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,tazkiaValueCategory,periode));
     }
+
+    @GetMapping("/data/report")
+    public void dataKpi(HttpServletResponse response,@RequestParam String staff,String user,String role,
+                        @RequestParam StaffRole staffRole) throws Exception {
+
+        Staff dataStaff = staffDao.findById(staff).get();
+        User dataUser = userDao.findById(user).get();
+        StaffRole dataStaffRole = staffRoleDao.findById(role).get();
+        Periode dataPeriode = periodeDao.findByActive(AktifConstants.Aktif);
+        Iterable<Kpi> dataKpi = kpiDao.findByStaffRole(staffRole);
+
+
+
+
+        String[] columns = {"Employee Name","Employee Number","Job Title","Department","Area","Username","Email","Role","Periode"};
+        String[] columns2 = {"Key Result","Category","Base Line","Target","Weight","Nilai","Total",
+                             "Content 5","Content 4","Content 3","Content 2","Content 1"};
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Data Report");
+
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short) 12);
+        headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+
+
+        Row headerRow = sheet.createRow(0);
+        for (int h = 0; h < columns.length; h++) {
+            Cell cell = headerRow.createCell(h);
+            cell.setCellValue(columns[h]);
+            cell.setCellStyle(headerCellStyle);
+        }
+        int rowNum = 1 ;
+        Row row = sheet.createRow(rowNum++);
+        row.createCell(0).setCellValue(dataStaff.getEmployeeName());
+        row.createCell(1).setCellValue(dataStaff.getEmployeeNumber());
+        row.createCell(2).setCellValue(dataStaff.getJobTitle());
+        row.createCell(3).setCellValue(dataStaff.getDepartment());
+        row.createCell(4).setCellValue(dataStaff.getArea());
+        row.createCell(5).setCellValue(dataUser.getUsername());
+        row.createCell(6).setCellValue(dataUser.getEmail());
+        row.createCell(7).setCellValue(dataStaffRole.getRoleName());
+        row.createCell(8).setCellValue(dataPeriode.getPeriodeName());
+
+
+
+        Row headerRow2 = sheet.createRow(3);
+        for (int h2 = 0; h2 < columns2.length; h2++) {
+            Cell cell = headerRow2.createCell(h2);
+            cell.setCellValue(columns2[h2]);
+            cell.setCellStyle(headerCellStyle);
+        }
+
+        int rowNum2 = 4 ;
+        Iterable<Score> dataScoreInd = scoreDao.findByStaffAndPeriode(dataStaff,dataPeriode);
+        for (Score sco : dataScoreInd) {
+            BigDecimal perkalian = sco.getKpi().getWeight().multiply(new BigDecimal(sco.getScore()));
+            Row row2 = sheet.createRow(rowNum2++);
+            row2.createCell(0).setCellValue(sco.getKpi().getKeyResult());
+            row2.createCell(1).setCellValue(sco.getKpi().getCategory().getId());
+            row2.createCell(2).setCellValue(String.valueOf(sco.getKpi().getBaseLine()));
+            row2.createCell(3).setCellValue(String.valueOf(sco.getKpi().getTarget()));
+            row2.createCell(4).setCellValue(String.valueOf(sco.getKpi().getWeight()));
+            row2.createCell(5).setCellValue(String.valueOf(sco.getScore()));
+            row2.createCell(6).setCellValue(String.valueOf(perkalian));
+            int cell = 7;
+            for (Indicators in2 : sco.getKpi().getIndicatorsList()){
+                row2.createCell(cell++).setCellValue(in2.getContent());
+            }
+
+        }
+
+
+        for (int as = 0; as < columns.length; as++) {
+            sheet.autoSizeColumn(as);
+        }
+
+        for (int as2 = 0; as2 < columns2.length; as2++) {
+            sheet.autoSizeColumn(as2);
+        }
+
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename=Detail_Report.xlsx");
+        workbook.write(response.getOutputStream());
+        workbook.close();
+
+    }
+
 }
 
