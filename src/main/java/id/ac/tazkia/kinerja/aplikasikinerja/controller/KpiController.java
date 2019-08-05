@@ -243,7 +243,7 @@ public class KpiController {
                 }
 
 
-                // bikin dan save pendaftar
+                // buat dan save kpi
                 Kpi kpi = new Kpi();
                 kpi.setKeyResult(data[0]);
                 Category category = categoryDao.findById(data[1]).get();
@@ -254,15 +254,15 @@ public class KpiController {
                 kpi.setStatus(StatusKpi.AKTIF);
                 kpiDao.save(kpi);
 
-                // bikin dan save hasil test
+                // buat dan save indicators
                 Indicators indicators1= new Indicators();
                 indicators1.setContent(data[5]);
-                indicators1.setScore(new BigInteger(String.valueOf(1)));
+                indicators1.setScore(new BigInteger(String.valueOf(5)));
                 indicators1.setKpi(kpi);
 
                 Indicators indicators2= new Indicators();
                 indicators2.setContent(data[6]);
-                indicators2.setScore(new BigInteger(String.valueOf(2)));
+                indicators2.setScore(new BigInteger(String.valueOf(4)));
                 indicators2.setKpi(kpi);
 
                 Indicators indicators3= new Indicators();
@@ -272,12 +272,12 @@ public class KpiController {
 
                 Indicators indicators4= new Indicators();
                 indicators4.setContent(data[8]);
-                indicators4.setScore(new BigInteger(String.valueOf(4)));
+                indicators4.setScore(new BigInteger(String.valueOf(2)));
                 indicators4.setKpi(kpi);
 
                 Indicators indicators5= new Indicators();
                 indicators5.setContent(data[9]);
-                indicators5.setScore(new BigInteger(String.valueOf(5)));
+                indicators5.setScore(new BigInteger(String.valueOf(1)));
                 indicators5.setKpi(kpi);
 
                 indicatorsDao.save(indicators1);
@@ -327,7 +327,7 @@ public class KpiController {
     @GetMapping("/data/kpi")
     public void dataKpi(HttpServletResponse response,@RequestParam StaffRole staffRole) throws Exception {
 
-        String[] columns = {"Key Result","Category","Weight","Base Line","Target","Content 1","Content 2","Content 3","Content 4","Content 5"};
+        String[] columns = {"Key Result","Category","Weight","Base Line","Target","Content 5","Content 4","Content 3","Content 2","Content 1"};
 
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Data KPI");
