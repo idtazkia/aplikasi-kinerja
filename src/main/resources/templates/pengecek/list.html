@@ -69,13 +69,13 @@
 
                                         <td><a target="output" th:href="@{/lihatpenilaian/total(staff=${sd.id})}"
                                                class="btn btn-warning">See Total Score</a></td>
-                                        <span th:each="rl : ${roles}">
-                                            <td><a th:href="@{/daftarbawahan/form(role=${rl.id},staff=${sd.id})}"
+                                        <span>
+                                            <td><a th:href="@{/daftarbawahan/form(role=${sd.idRole},staff=${sd.id})}"
                                                    class="btn btn-success">Input Kpi Value</a></td>
                                         </span>
-                                        <td><a th:href="@{/daftarbawahan/detail(id=${sd.id})}" target="output"
+                                        <td><a th:href="@{/daftarbawahan/detail(staff=${sd.id})}" target="output"
                                                class="btn">See Details</a></td>
-                                    <!--</tr>-->
+                                    </tr>
                                     <!--<tr th:each="sd: ${status}">-->
                                         <!--<td th:text="${sd.status}" ></td>-->
                                     <!--</tr>-->

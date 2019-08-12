@@ -17,5 +17,6 @@ public class RekapPengisianKpi {
     private String statusPenilaian;
     private Kpi kpi;
     private Staff staff;
+    private String idRole;
 
 }

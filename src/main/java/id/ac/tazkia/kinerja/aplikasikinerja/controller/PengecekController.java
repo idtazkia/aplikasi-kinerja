@@ -76,6 +76,7 @@ public class PengecekController {
                             r.setNama(staff.getEmployeeName());
                             r.setArea(staff.getArea());
                             r.setDepartment(staff.getDepartment());
+                            r.setIdRole(staffRole.getId());
                             r.setNamaRole(staffRole.getRoleName());
                             r.setJumlahKpi(jumlah.longValue());
 
@@ -92,7 +93,6 @@ public class PengecekController {
                             }
 
                             rekap.add(r);
-                            model.addAttribute("roles", staffRole);
 
 
 
@@ -114,6 +114,7 @@ public class PengecekController {
                     r.setNama(staff.getEmployeeName());
                     r.setArea(staff.getArea());
                     r.setDepartment(staff.getDepartment());
+                    r.setIdRole(staffRole.getId());
                     r.setNamaRole(staffRole.getRoleName());
                     r.setJumlahKpi(jumlah.longValue());
                     System.out.println("Staff : " + r.getNama());
@@ -130,7 +131,6 @@ public class PengecekController {
                     }
 
                     rekap.add(r);
-                    model.addAttribute("roles", staffRole);
 
 
 
