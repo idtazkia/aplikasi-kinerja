@@ -44,7 +44,7 @@
                                     <th>No.</th>
                                     <th>Name</th>
                                     <th>Departement</th>
-                                    <th>Area</th>
+                                    <!--<th>Area</th>-->
                                     <th>Role Name</th>
                                     <th><b>Total KPI</b></th>
                                     <th><b>Fillment Status</b></th>
@@ -58,7 +58,7 @@
                                         <td th:text="${(row.index + 1)}"></td>
                                         <td th:text="${sd.nama}">Thuba Jazil, M.Sc., (Fin)</td>
                                         <td th:text="${sd.department}">Prodi Bisnis & Manajemen Islam</td>
-                                        <td th:text="${sd.area}">Puket I</td>
+                                        <!--<td th:text="${sd.area}">Puket I</td>-->
                                         <td th:text="${sd.namaRole}">Puket I</td>
                                         <td th:text="${sd.jumlahKpi}" style="font-weight:bold"></td>
                                         <td th:if="${sd.statusPengisian != null}"  th:text="${sd.statusPengisian}" style="color: green">DONE</td>
@@ -73,7 +73,7 @@
                                             <td><a th:href="@{/daftarbawahan/form(role=${sd.idRole},staff=${sd.id})}"
                                                    class="btn btn-success">Input Kpi Value</a></td>
                                         </span>
-                                        <td><a th:href="@{/daftarbawahan/detail(staff=${sd.id})}" target="output"
+                                        <td><a th:href="@{/daftarbawahan/detail(role=${sd.idRole},staff=${sd.id})}" target="output"
                                                class="btn">See Details</a></td>
                                     </tr>
                                     <!--<tr th:each="sd: ${status}">-->
