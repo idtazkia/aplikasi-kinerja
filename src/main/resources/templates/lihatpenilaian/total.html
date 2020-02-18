@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
                                 <thead>
                                     <th>No. </th>
                                     <th>Score </th>
-                                    <th>Bobot </th>
+                                    <th sec:authorize="hasAnyAuthority('VIEW_CHECKER','VIEW_SUPERADMIN')" >Bobot </th>
                                     <th>Category </th>
                                     <th>Role</th>
                                 </thead>
@@ -32,7 +32,7 @@
                                 <tr th:each="score, row : ${score}">
                                     <td th:text="${(row.index + 1)}">1</td>
                                     <td th:text="${score.scr}"></td>
-                                    <td th:text="${score.weight}"></td>
+                                    <td th:text="${score.weight}" sec:authorize="hasAnyAuthority('VIEW_CHECKER','VIEW_SUPERADMIN')"></td>
                                     <td th:text="${score.cname}"></td>
                                     <td th:text="${score.rname}"></td>
                                 </tr>
@@ -42,13 +42,13 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <th>Role</th>
+                                    <th sec:authorize="hasAnyAuthority('VIEW_CHECKER','VIEW_SUPERADMIN')" >Bobot</th>
                                     <th>Total Akhir </th>
                                     <th>Predikat</th>
-                                    <th>Bobot</th>
                                 </thead>
                                 <tr th:each="scoreA, row : ${scoreAkhir}">
                                     <td th:text="${scoreA.rname}"></td>
-                                    <td th:text="${scoreA.weight}"></td>
+                                    <td th:text="${scoreA.weight}" sec:authorize="hasAnyAuthority('VIEW_CHECKER','VIEW_SUPERADMIN')"></td>
                                     <td th:text="${scoreA.scr}"></td>
                                     <td th:if="${scoreA.scr} > 450">A</td>
                                     <td th:if="${scoreA.scr > 375 && scoreA.scr < 451}">B</td>
