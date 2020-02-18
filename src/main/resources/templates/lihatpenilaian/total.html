@@ -22,25 +22,40 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <th>No. </th>
-                                    <th>Individual Score </th>
-                                    <th>Tazkia Score </th>
-                                    <th>Total Score</th>
-                                    <th>Predikat</th>
+                                    <th>Score </th>
+                                    <th>Bobot </th>
+                                    <th>Category </th>
+                                    <th>Role</th>
                                 </thead>
 
                                 <tbody>
-                                <tr>
-                                    <td >1</td>
-                                    <td th:text="${individual}"></td>
-                                    <td th:text="${tazkia}"></td>
-                                    <td th:text="${total}"></td>
-                                    <td th:if="${total} > 450">A</td>
-                                    <td th:if="${total > 375 && total < 451}">B</td>
-                                    <td th:if="${total > 299 && total < 376}">C</td>
-                                    <td th:if="${total > 225 && total < 300}">D</td>
-                                    <td th:if="${total < 226}">E</td>
+                                <tr th:each="score, row : ${score}">
+                                    <td th:text="${(row.index + 1)}">1</td>
+                                    <td th:text="${score.scr}"></td>
+                                    <td th:text="${score.weight}"></td>
+                                    <td th:text="${score.cname}"></td>
+                                    <td th:text="${score.rname}"></td>
                                 </tr>
                                 </tbody>
+                            </table>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <th>Role</th>
+                                    <th>Total Akhir </th>
+                                    <th>Predikat</th>
+                                    <th>Bobot</th>
+                                </thead>
+                                <tr th:each="scoreA, row : ${scoreAkhir}">
+                                    <td th:text="${scoreA.rname}"></td>
+                                    <td th:text="${scoreA.weight}"></td>
+                                    <td th:text="${scoreA.scr}"></td>
+                                    <td th:if="${scoreA.scr} > 450">A</td>
+                                    <td th:if="${scoreA.scr > 375 && scoreA.scr < 451}">B</td>
+                                    <td th:if="${scoreA.scr > 299 && scoreA.scr < 376}">C</td>
+                                    <td th:if="${scoreA.scr > 225 && scoreA.scr < 300}">D</td>
+                                    <td th:if="${scoreA.scr < 226}">E</td>
+                                </tr>
                             </table>
 
                             <hr>
@@ -84,7 +99,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-
 
                         </div>
                     </div>

@@ -3,6 +3,7 @@ package id.ac.tazkia.kinerja.aplikasikinerja.controller;
 import id.ac.tazkia.kinerja.aplikasikinerja.constants.AktifConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.constants.CategoryConstants;
 import id.ac.tazkia.kinerja.aplikasikinerja.dao.*;
+import id.ac.tazkia.kinerja.aplikasikinerja.dto.LihatScoreDto;
 import id.ac.tazkia.kinerja.aplikasikinerja.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,8 @@ public class LihatPenilaianController {
     private EvidenceDao evidenceDao;
     @Autowired
     private ScoreCommentDao scoreCommentDao;
+    @Autowired
+    private StaffRoleDao staffRoleDao;
     @Value("${upload.folder}")
     private String uploadFolder;
 
@@ -138,30 +141,53 @@ public class LihatPenilaianController {
     }
 
     @RequestMapping(value = "/lihatpenilaian/total", method = RequestMethod.GET)
+
     public void tampilkanFormTotal(@RequestParam Staff staff, Model model){
-        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
-        List<Score> individualScore = scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,individualCategory,periode);
-        List<Score> tazkiaScore = scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,tazkiaValueCategory,periode);
-        List<Score> totalAkhir = scoreDao.findByStaffAndPeriode(staff,periode);
+        List<LihatScoreDto> score = scoreDao.pisahkanScore(staff);
+        List<LihatScoreDto> scoreAkhir = scoreDao.totalAkhir(staff);
 
-        BigDecimal totalIndividual = BigDecimal.ZERO;
-        BigDecimal totalTazkia = BigDecimal.ZERO;
-        BigDecimal scoreAkhir = BigDecimal.ZERO;
-        for (Score s : individualScore){
-            totalIndividual = totalIndividual.add(s.getKpi().getWeight().multiply(new BigDecimal(s.getScore())));
-        }
 
-        for (Score s : tazkiaScore){
-            totalTazkia = totalTazkia.add(s.getKpi().getWeight().multiply(new BigDecimal(s.getScore())));
-        }
+        model.addAttribute("score", score);
+        model.addAttribute("scoreAkhir",scoreAkhir);
 
-        for (Score s : totalAkhir){
-            scoreAkhir = scoreAkhir.add(s.getKpi().getWeight().multiply(new BigDecimal(s.getScore())));
-        }
 
-        model.addAttribute("individual",Integer.valueOf(totalIndividual.intValue()));
-        model.addAttribute("tazkia",Integer.valueOf(totalTazkia.intValue()));
-        model.addAttribute("total",Integer.valueOf(scoreAkhir.intValue()));
+//        String username = ((UserDetails) currentUser.getPrincipal()).getUsername();
+//        User u = userDao.findByUsername(username);
+//        u.getRole().getId();
+//        Staff p = staffDao.findByUser(u);
+//        List<Staff> cariRole = staffDao.findByStatusAndRoles(AktifConstants.Aktif,p.getRoles());
+//        System.out.println("ROLENYA "  + cariRole  );
+//        model.addAttribute("detail", p.getRoles());
+
+
+
+
+
+//        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+//        List<Score> individualScore = scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,individualCategory,periode);
+//        List<Score> tazkiaScore = scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,tazkiaValueCategory,periode);
+//        List<Score> totalAkhir = scoreDao.findByStaffAndPeriode(staff,periode);
+//
+//        BigDecimal totalIndividual = BigDecimal.ZERO;
+//        BigDecimal totalTazkia = BigDecimal.ZERO;
+//        BigDecimal scoreAkhir = BigDecimal.ZERO;
+//        for (Score s : individualScore){
+//            totalIndividual = totalIndividual.add(s.getKpi().getWeight().multiply(new BigDecimal(s.getScore())));
+//        }
+//
+//        for (Score s : tazkiaScore){
+//            totalTazkia = totalTazkia.add(s.getKpi().getWeight().multiply(new BigDecimal(s.getScore())));
+//        }
+//
+//        for (Score s : totalAkhir){
+//            scoreAkhir = scoreAkhir.add(s.getKpi().getWeight().multiply(new BigDecimal(s.getScore())));
+//        }
+
+
+
+//        model.addAttribute("individual",Integer.valueOf(totalIndividual.intValue()));
+//        model.addAttribute("tazkia",Integer.valueOf(totalTazkia.intValue()));
+//        model.addAttribute("total",Integer.valueOf(scoreAkhir.intValue()));
     }
 
 

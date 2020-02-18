@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
+import java.util.Set;
 
 
 public interface StaffDao extends PagingAndSortingRepository<Staff, String> {
@@ -19,5 +20,10 @@ public interface StaffDao extends PagingAndSortingRepository<Staff, String> {
 
 
     Iterable<Staff> findByRolesAndStatus(StaffRole staffRole, String s);
+    List<Staff> findByStatusAndRoles(String s, Set<StaffRole> staffRole);
+
     Long countStaffByStatus (String status);
+
+    List<Staff> findByRoles(String dosen);
+
 }
