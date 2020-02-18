@@ -119,6 +119,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <th>Individual Bobot</th>
+                                    <th>Tazkia Value Bobot</th>
+                                    </thead>
+                                    <tr >
+                                        <span th:each="bbt, row : ${bobot}" >
+                                        <td th:text="${bbt.weight}" th:if="${bbt.cname == '001'}"></td>
+                                        </span>
+                                        <span th:each="bbt, row : ${bobot}" >
+                                        <td th:text="${bbt.weight}" th:if="${bbt.cname == '002'}">a</td>
+                                        </span>
+                                    </tr>
+                                </table>
+                                <hr>
 
 
                                 <div class="clearfix">

@@ -54,6 +54,9 @@ public class RoleController {
                     m.addAttribute("kpiSekarang2", staffRole.getKpi());
                 }
             }
+        StaffRole staffRole2 = staffRoleDao.findById(role).get();
+        m.addAttribute("bobot",staffRoleDao.bobot(staffRole2));
+
 
     }
 
