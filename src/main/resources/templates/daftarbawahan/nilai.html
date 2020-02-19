@@ -33,6 +33,7 @@
                             <li style="margin-left: 50%;">
 
                             </li>
+
                         </ul>
 
 
@@ -73,7 +74,7 @@
                                 </div>
                             </div>
 
-                            <!--TAZKI VALUE PANEL-->
+                            <!--TAZKIA VALUE PANEL-->
                             <div role="tabpanel" class="tab-pane fade" id="tazkiavalue">
 
                                 <div class="container">
@@ -111,10 +112,20 @@
                             </div>
                             <!--ENDTAZKIAVALUE-->
                         </div>
+
+
+                        <center><tr>
+                            <td>
+                                <a target="output" th:href="@{/lihatpenilaian/total(staff=${s.id})}"
+                                   class="btn btn-warning">See Total Score</a>
+                            </td>
+                        </tr></center>
+                        <hr>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 
