@@ -49,8 +49,13 @@
                                                     <tr>
                                                         <td><b>Upload Evidence</b></td>
                                                         <td>
-                                                            <input id="file" type="file" name="file"
-                                                                   class="form-control" multiple /><br>
+                                                            <input id="file" type="file" name="file" required
+                                                                   class="form-control" multiple th:if="${k.category.id == '001'}" />
+
+                                                            <input id="file2" type="file" name="file"
+                                                                   class="form-control" multiple th:if="${k.category.id == '002'}" />
+
+                                                            <br>
                                                             <small style="color: red">format file must <b>pdf / jpg / png</b></small>
                                                             <br>
                                                             <small style="color: red">maximum file uploaded <b>10000KB / 10MB</b></small>
@@ -126,6 +131,15 @@
 
     $(function(){
         $('#file').change(function(){
+            var combinedSize = 0;
+            for(var i=0;i<this.files.length;i++) {
+                combinedSize += (this.files[i].size||this.files[i].fileSize);
+            }
+            document.getElementById("demo").innerHTML = "the size of the file that has been selected : " + Math.round((combinedSize / 1024))+"KB";
+        })
+    })
+    $(function(){
+        $('#file2').change(function(){
             var combinedSize = 0;
             for(var i=0;i<this.files.length;i++) {
                 combinedSize += (this.files[i].size||this.files[i].fileSize);
