@@ -185,7 +185,7 @@ public class StaffController {
         staff.setDepartment(isd.getDepartment());
 
         UserPassword userPassword = userPasswordDao.findByUser(user);
-        userPassword.setPassword(isd.getPassword());
+        userPassword.setPassword(passwordEncoder.encode(isd.getPassword()));
         userPassword.setUser(user);
         userPassword.setId(isd.getUserPassword().getId());
 
