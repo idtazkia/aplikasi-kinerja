@@ -67,7 +67,7 @@
                                         <td th:if="${sd.statusPenilaian == null}" style="color: red">UNDONE</td>
 
 
-                                        <td><a target="output" th:href="@{/lihatpenilaian/total(staff=${sd.id})}"
+                                        <td><a target="output" th:href="@{/lihatpenilaian/total(staff=${sd.id},periode=${periode.id})}"
                                                class="btn btn-warning">See Total Score</a></td>
                                         <span>
                                             <td><a th:href="@{/daftarbawahan/form(role=${sd.idRole},staff=${sd.id})}"

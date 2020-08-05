@@ -42,7 +42,7 @@
                                     <td th:text="${sd.jumlahKpi}" style="font-weight:bold"></td>
                                     </td>
 
-                                    <td><a  th:href="@{/lihatpenilaian/total(role=${roles.id},staff=${sd.id})}"
+                                    <td><a  th:href="@{/lihatpenilaian/total(role=${roles.id},staff=${sd.id},periode=${periode.id})}"
                                            class="btn btn-success">See Total Score</a></td>
 
                                     <td><a  th:href="@{/daftarbawahan/nilai(role=${roles.id},staff=${sd.id})}"

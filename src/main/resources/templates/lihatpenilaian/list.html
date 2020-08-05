@@ -24,7 +24,7 @@
                         </div>
                         <hr>
                         <td>
-                           &nbsp;&nbsp; <a target="output" th:href="@{/lihatpenilaian/total(staff=${staff.id})}" class="btn btn-warning">See Total Score</a>
+                           &nbsp;&nbsp; <a target="output" th:href="@{/lihatpenilaian/total(staff=${staff.id},periode=${periode.id})}" class="btn btn-warning">See Total Score</a>
                         </td>
                         <hr/>
                         <ul class="nav nav-tabs" role="tablist">
@@ -56,6 +56,7 @@
                                                             <th>Key Result</th>
                                                             <th>Score</th>
                                                             <th>Remark</th>
+                                                            <th>Role</th>
                                                             <th><center>#</center></th>
                                                             </thead>
                                                             <tbody>
@@ -64,6 +65,9 @@
                                                                 <td th:text="${sd.kpi.keyResult}" >Thuba Jazil, M.Sc., (Fin)</td>
                                                                 <td th:text="${sd.score}">Prodi Bisnis & Manajemen Islam</td>
                                                                 <td th:text="${sd.remark}">Puket I</td>
+                                                                <div th:each="ro,row : ${sd.kpi.roles}">
+                                                                    <td th:text="${ro.roleName}">Rolenya</td>
+                                                                </div>
                                                                 <td><center><a th:href="@{/lihatpenilaian/comment(id=${sd.id})}" target="output" class="btn btn-info">Submit your comment</a></center></td>
                                                             </tr>
 

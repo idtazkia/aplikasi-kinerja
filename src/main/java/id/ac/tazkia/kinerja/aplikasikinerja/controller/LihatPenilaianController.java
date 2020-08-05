@@ -85,6 +85,7 @@ public class LihatPenilaianController {
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
 
         model.addAttribute("staff",p);
+        model.addAttribute("periode",periode);
         model.addAttribute("individual", scoreDao.findByStaffAndKpiCategoryAndPeriode(p, individualCategory,periode));
         model.addAttribute("tazkiaValue", scoreDao.findByStaffAndKpiCategoryAndPeriode(p, tazkiaValueCategory,periode));
 
@@ -142,9 +143,9 @@ public class LihatPenilaianController {
 
     @RequestMapping(value = "/lihatpenilaian/total", method = RequestMethod.GET)
 
-    public void tampilkanFormTotal(@RequestParam Staff staff, Model model){
-        List<LihatScoreDto> score = scoreDao.pisahkanScore(staff);
-        List<LihatScoreDto> scoreAkhir = scoreDao.totalAkhir(staff);
+    public void tampilkanFormTotal(@RequestParam Staff staff, @RequestParam Periode periode, Model model){
+        List<LihatScoreDto> score = scoreDao.pisahkanScore(staff, periode);
+        List<LihatScoreDto> scoreAkhir = scoreDao.totalAkhir(staff, periode);
 
 
         model.addAttribute("score", score);

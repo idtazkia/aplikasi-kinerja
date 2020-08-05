@@ -55,6 +55,7 @@ public class PengecekController {
 
         List<RekapPengisianKpi> rekap = new ArrayList<>();
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+        model.addAttribute("periode",periode);
 //        Staff staffnya = (Staff) staffDao.findByStatus(AktifConstants.Aktif);
 
 

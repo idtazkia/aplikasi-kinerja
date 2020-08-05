@@ -118,7 +118,8 @@ public class DaftarBawahanController {
         model.addAttribute("roles",staffRole);
         System.out.println(jumlahKpiTerisi.size());
 
-
+        Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+        model.addAttribute("periode",periode);
         model.addAttribute("listSubordinate",rekap);
         return "daftarbawahan/list";
 
@@ -463,6 +464,7 @@ public class DaftarBawahanController {
     @GetMapping("/daftarbawahan/nilai")
     public void nilai(Model model,@RequestParam Staff staff){
         Periode periode = periodeDao.findByActive(AktifConstants.Aktif);
+        model.addAttribute("periode",periode);
         model.addAttribute("s",staff);
         model.addAttribute("individual",scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,individualCategory,periode));
         model.addAttribute("tazkia",scoreDao.findByStaffAndKpiCategoryAndPeriode(staff,tazkiaValueCategory,periode));
